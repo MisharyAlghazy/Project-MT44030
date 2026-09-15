@@ -22,7 +22,10 @@
 \addbibresource{report.bib}
 
 \usepackage{changes}
-\usepackage[math]{blindtext} % filler text
+
+\usepackage{enumitem}  % a., b., c. and i., ii., iii. sub-lists in the questions
+\usepackage{booktabs}  % tables of plate thicknesses, constants, etc.
+\usepackage{verbatim}  % \verbatiminput of the calculation scripts in the appendix
 
 % Hyperlinks are blue, except in print mode, when they are all black.
 \usepackage[
@@ -31,6 +34,27 @@
   linkcolor=accent,
   urlcolor=accent,
 ]{hyperref}
+
+% ---------------------------------------------------------------------------
+% Werkomgeving voor dit verslag (zie ook README.md)
+% ---------------------------------------------------------------------------
+% \questionbox{...}  zet de vraag uit de opgave letterlijk in een kader, zodat
+%                    tijdens het schrijven altijd zichtbaar is wat er gevraagd
+%                    wordt. Laat staan tot vlak voor de inlevering; verwijder de
+%                    kaders pas als de begeleiders dat willen.
+% \tbd{...}          markeert wat nog gedaan moet worden (rood, dus niet over
+%                    het hoofd te zien). Aan het eind mag geen enkele \tbd meer
+%                    in het document staan.
+% \workedby{...}     wie deze paragraaf uitwerkt (Aymen / Matthijs / samen).
+% \finalanswer{...}  het eindantwoord van een (deel)vraag, kort en expliciet.
+% ---------------------------------------------------------------------------
+\newcommand{\questionbox}[1]{%
+  \bigskip\noindent\fbox{\parbox{0.96\textwidth}{\itshape #1}}\par\bigskip}
+\newcommand{\tbd}[1]{\textcolor{tud Red}{\textbf{[TE DOEN:} #1\textbf{]}}}
+\newcommand{\workedby}[1]{%
+  {\raggedleft\small\textcolor{tud DarkGrey}{\textsf{uitwerking: #1}}\par}}
+\newcommand{\finalanswer}[1]{%
+  \bigskip\noindent\textbf{Final answer.} #1\par}
 
 
 \begin{document}
@@ -54,10 +78,21 @@
 
 \include{introduction}
 
+\part{Part 1}
+\include{assignment1}
+\include{assignment2}
+\include{assignment3}
+
+\part{Part 2}
+\include{assignment4}
+\include{assignment5}
+\include{assignment6}
+\include{assignment7}
+
 % Use letters for the chapter numbers of the appendices.
 \appendix
 
-\include{lorem-ipsum}
+\include{appendix}
 
 % Chapters without numbers in the back
 \backmatter%
@@ -66,4 +101,3 @@
 \MakeCoverBack%
 
 \end{document}
-
