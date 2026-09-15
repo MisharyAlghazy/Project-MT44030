@@ -1,0 +1,96 @@
+\chapter{Idealised Section U --- Analytical vs.\ ANSYS}
+\label{ch:assignment4}
+
+\begingroup\itshape Assignment 4 --- 20 points\endgroup
+
+\workedby{\tbd{naam}}
+
+\bigskip
+\tbd{Inleiding van dit hoofdstuk: de geidealiseerde sectie BU uit
+Assignment~2.5--2.6 ($I_p$, $I_w$, $e$, $\omega(s)$, $S_\omega(s)$), de
+gegeneraliseerde torsievergelijking $GI_p\theta'-EI_w\theta'''=M_t$ met
+$\lambda=\sqrt{GI_p/(EI_w)}$, en de randvoorwaarden van het beschouwde
+balkgeval.}
+
+\section{Analytical model vs.\ ANSYS model}
+\label{sec:a4-1}
+
+\paragraph{Parameter matching.}
+\tbd{Lees $a$, $t_p$, $L$, $E$, $\nu$ en $M_t$ uit het ANSYS-script van
+Brightspace en zet de analytische uitdrukkingen op dezelfde waarden.}
+
+\paragraph{Modelling approach in ANSYS (common to all sub-questions).}
+\begin{enumerate}[label=(\arabic*), leftmargin=*]
+  \item \emph{Geometry}: \tbd{model, elementtype}
+  \item \emph{Mesh}: \tbd{meshdichtheid en convergentiecheck}
+  \item \emph{Free-warping load case}: \tbd{belasting en opleggingen}
+  \item \emph{Constrained-warping load case}: \tbd{belasting en opleggingen}
+  \item \emph{Post-processing}: \tbd{paden, uitvoer en export}
+\end{enumerate}
+
+\subsection{Free warping shear stress}
+\label{sec:a4-a}
+
+\questionbox{Calculate and compare the analytical and numerical free warping
+shear stress components $\tau_{xy}$ and $\tau_{xz}$ (through-thickness
+distribution) in all structural members. Use $I_p$ obtained in
+Assignment~2.6. \textbf{(5 pts)}}
+
+\begin{enumerate}[label=\roman*., leftmargin=*]
+  \item Analytical $\tau_{xy}(y,z)$ and $\tau_{xz}(y,z)$ in all structural
+        members. \textbf{(1 pt)} \\ \tbd{Uitwerking}
+  \item ANSYS plot of $\tau_{xy}$ and $\tau_{xz}$ in all members, with input and
+        settings. \textbf{(1 pt)} \\ \tbd{screenshot en instellingen}
+  \item Analytical and numerical solution in a single plot per component.
+        \textbf{(1 pt)} \\ \tbd{overlay-plot}
+  \item Discussion of the through-thickness distribution and maximum values.
+        \textbf{(2 pts)} \\ \tbd{discussie}
+\end{enumerate}
+
+\subsection{Free warping displacement}
+\label{sec:a4-b}
+
+\questionbox{Calculate and compare the analytical and numerical free warping
+displacement distribution $u(s)$. Use $\omega(s)$ obtained in
+Assignment~2.5. \textbf{(5 pts)}}
+
+\begin{enumerate}[label=\roman*., leftmargin=*]
+  \item Analytical $u(s)$. \textbf{(1 pt)} \\ \tbd{Uitwerking}
+  \item ANSYS plot of $u(s)$ in all members, with settings. \textbf{(1 pt)}
+        \\ \tbd{screenshot en instellingen}
+  \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}
+  \item Discussion of the $s$-distribution and extreme values. \textbf{(2 pts)}
+        \\ \tbd{discussie}
+\end{enumerate}
+
+\subsection{Constrained warping stress}
+\label{sec:a4-c}
+
+\questionbox{Calculate and compare the analytical and numerical constrained
+warping stress distribution $\sigma_{xx}(s)$. Use $I_w$ obtained in
+Assignment~2.6. \textbf{(5 pts)}}
+
+\begin{enumerate}[label=\roman*., leftmargin=*]
+  \item Analytical $\sigma_{xx}(s)$. \textbf{(1 pt)} \\ \tbd{Uitwerking}
+  \item ANSYS plot of $\sigma_{xx}(s)$ with settings. \textbf{(1 pt)}
+        \\ \tbd{screenshot en instellingen}
+  \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}
+  \item Discussion. \textbf{(2 pts)} \\ \tbd{discussie}
+\end{enumerate}
+
+\subsection{Constrained warping shear stress}
+\label{sec:a4-d}
+
+\questionbox{Calculate and compare the constrained warping shear stress
+distribution $\tau_{xy}(s)$ and $\tau_{xz}(s)$. Use $S_\omega(s)$ obtained in
+Assignment~2.5. \textbf{(5 pts)}}
+
+\begin{enumerate}[label=\roman*., leftmargin=*]
+  \item Analytical $\tau_{xy}(s)$, $\tau_{xz}(s)$. \textbf{(1 pt)}
+        \\ \tbd{Uitwerking}
+  \item ANSYS plot with settings. \textbf{(1 pt)}
+        \\ \tbd{screenshot en instellingen}
+  \item Overlay plot per component. \textbf{(1 pt)} \\ \tbd{overlay-plot}
+  \item Discussion of through-thickness and $s$-distribution and maxima.
+        \textbf{(2 pts)} \\ \tbd{discussie}
+\end{enumerate}
