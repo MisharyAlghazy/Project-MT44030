@@ -769,13 +769,6 @@ With the numbers this gives the same answer as before which is a good check:
       = \frac{4\,382\,000}{1884}\,a^5t_p = 2326\,a^5t_p .
 \end{equation}
 
-\paragraph{Checks.}
-The units work out: $I_p$ is in $a\,t_p^3$ (m$^4$) and $I_w$ in $a^5 t_p$
-(m$^6$). We also compared with Table~1 of the assignment. For $a=1$\,m and
-$t_p=10$\,mm we get $I_p = 8.75\cdot10^{-4}$\,m$^4$ and $I_w = 23.3$\,m$^6$,
-and the table gives $8.71\cdot10^{-4}$\,m$^4$ and $22.6$\,m$^6$ for BU. That is
-a difference of $(8.75-8.71)/8.71 = 0.5\,\%$ for $I_p$ and
-$(23.3-22.6)/22.6 = 3\,\%$ for $I_w$, so our answers are close.
 
 \finalanswer{
 \begin{align*}
@@ -799,6 +792,108 @@ and closed (BUH). What is the improvement in $I_p(a,t_p)$ when closing the hatch
 cover? The thickness of the hatch cover is $t_{hp}=2.5t_p$; Bredt's thin-walled
 theory is assumed for the closed section. \textbf{(4 pts)}}
 
-\tbd{Uitwerking}
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+
+When the hatch cover is closed, the U-section becomes a single closed cell (design BUH), see Figure~\ref{fig:BUH_section}. The bottom plate and side shells stay the same as in BU, and on top we now have the hatch cover with thickness $t_{hp} = 2.5t_p$.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.6, >={Stealth[length=2mm,width=1.6mm]},
+        dim/.style={thin, {Latex[length=1.6mm,width=1.2mm]}-{Latex[length=1.6mm,width=1.2mm]}},
+        ext/.style={very thin, gray}]
+        % enclosed area
+        \fill[blue!8] (-4,0) rectangle (4,5);
+        \node at (0,3.3) {$\Omega = A\cdot B$};
+        % plates (line width ~ thickness)
+        \draw[line width=2.6pt, line cap=rect] (-4,0) -- (4,0);   % bottom
+        \draw[line width=1.4pt] (-4,0) -- (-4,5);                 % port side
+        \draw[line width=1.4pt] ( 4,0) -- ( 4,5);                 % stb side
+        \draw[line width=1.0pt, line cap=rect] (-4,5) -- (4,5);   % hatch cover
+        % shear flow (counter-clockwise)
+        \draw[->, red!75!black, thick] (-1.2,1.1) -- (1.2,1.1);
+        \draw[->, red!75!black, thick] (3.2,1.2) -- (3.2,3.8);
+        \draw[->, red!75!black, thick] (1.2,3.9) -- (-1.2,3.9);
+        \draw[->, red!75!black, thick] (-3.2,3.8) -- (-3.2,1.2);
+        \node[red!75!black] at (0,1.6) {$q$};
+        % labels
+        \node[above, font=\small] at (0,5.05) {$t_{hp}$};
+        \node[below, font=\small] at (0,-0.1) {$t_{bp}$};
+        \node[left,  font=\small] at (-4.1,2.5) {$t_{sp}$};
+        \node[right, font=\small] at ( 4.1,2.5) {$t_{sp}$};
+        % dimensions
+        \foreach \x in {-4,4} \draw[ext] (\x,-0.2) -- (\x,-1.45);
+        \draw[dim] (-4,-1.3) -- node[below, font=\small] {$A = 8a$} (4,-1.3);
+        \foreach \y in {0,5} \draw[ext] (4.2,\y) -- (5.95,\y);
+        \draw[dim] (5.8,0) -- node[right, font=\small] {$B = 5a$} (5.8,5);
+    \end{tikzpicture}
+    \caption{Design BUH: the U-section with a closed hatch cover forms one closed
+             cell with enclosed area $\Omega$ and a constant shear flow $q$.}
+    \label{fig:BUH_section}
+\end{figure}
+
+\subsection{Torsion constant of the closed section (Bredt)}
+
+For a thin-walled closed section we use Bredt's theory. In the lectures the
+torsion constant of a single cell follows from the 2nd Bredt formula:
+\begin{equation}
+  I_p = \frac{4\,\Omega^2}{\displaystyle\oint_s \frac{1}{t_p(s)}\,\mathrm{d}s} ,
+  \label{eq:a27-bredt}
+\end{equation}
+where $\Omega$ is the area enclosed by the centre line of the walls.
+
+\paragraph{Enclosed area.}
+The cell is a rectangle of $A$ by $B$:
+\begin{equation}
+  \Omega = A\,B = 8a\cdot5a = 40\,a^2 .
+\end{equation}
+
+\paragraph{Contour integral.}
+The thickness is constant per plate, so the contour integral is again done piecewise, now over all four walls of the cell:
+\begin{equation}
+  \oint_s \frac{1}{t_p(s)}\,\mathrm{d}s
+  = \frac{A}{t_{bp}} + \frac{2B}{t_{sp}} + \frac{A}{t_{hp}} .
+\end{equation}
+With the numbers:
+\begin{align}
+  \oint_s \frac{1}{t_p(s)}\,\mathrm{d}s
+  &= \left(\frac{8}{6.5} + \frac{2\cdot5}{3.5} + \frac{8}{2.5}\right)\frac{a}{t_p} \nonumber\\
+  &= \left(1.231 + 2.857 + 3.200\right)\frac{a}{t_p} = 7.288\,\frac{a}{t_p} .
+\end{align}
+The hatch cover gives the largest term: it is as long as the bottom plate but much thinner.
+
+\paragraph{Torsion constant.}
+Putting this in Equation~\eqref{eq:a27-bredt}:
+\begin{equation}
+  I_{p,BUH}(A,B,t_{bp},t_{sp},t_{hp})
+  = \frac{4A^2B^2}{\dfrac{A}{t_{bp}} + \dfrac{2B}{t_{sp}} + \dfrac{A}{t_{hp}}} ,
+\end{equation}
+\begin{equation}
+  I_{p,BUH} = \frac{4\cdot(40a^2)^2}{7.288\,a/t_p}
+            = \frac{6400}{7.288}\,a^3t_p = 878\,a^3t_p .
+\end{equation}
+
+\subsection{Improvement compared to the open section}
+
+From Section~\ref{sec:a2-6} the open section has $I_{p,BU} = 875\,a\,t_p^3$.
+The ratio between the two is
+\begin{equation}
+  \frac{I_{p,BUH}}{I_{p,BU}} = \frac{878\,a^3t_p}{875\,a\,t_p^3}
+  = 1.00\left(\frac{a}{t_p}\right)^2 .
+\end{equation}
+So closing the hatch cover increases $I_p$ by a factor $(a/t_p)^2$. Since $t_p$ is much smaller than $a$ this is a very large number. For example, with $a = 1$\,m and $t_p = 10$\,mm we get $a/t_p = 100$, so the section becomes about $10^4$ times stiffer in torsion. This is the same kind of result as the open and closed circular section from the lectures, where the closed one also came out a factor $3\,(r/t_p)^2$ stiffer.
+
+\paragraph{Why the difference is so big.}
+In the open section BU the shear stresses can only go up and down within the thickness of each plate, so the lever arm is of the order of $t_p$. That is why $I_{p,BU}$ scales with $t_p^3$. In the closed section the shear flow $q$ goes around the whole cell, so the lever arm is of the order of the size of the cell ($a$). That is why $I_{p,BUH}$ scales with $\Omega^2 t_p$, so with $a^3 t_p$.
+
+
+\finalanswer{
+With the hatch cover closed the section is one closed cell, and Bredt gives
+\[
+  I_{p,BUH} = \frac{4A^2B^2}{\dfrac{A}{t_{bp}} + \dfrac{2B}{t_{sp}} + \dfrac{A}{t_{hp}}}
+  = 878\,a^3t_p ,
+\]
+compared to $I_{p,BU} = 875\,a\,t_p^3$ for the open section. The improvement is
+\[
+  \frac{I_{p,BUH}}{I_{p,BU}} = 1.00\left(\frac{a}{t_p}\right)^2 ,
+\]
+so about $10^4$ for $a/t_p = 100$.}
