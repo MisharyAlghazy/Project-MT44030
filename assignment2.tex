@@ -10,7 +10,7 @@
 dubbele bodem, de ontwerpen B1 en B2, de afgelezen plaatdiktes (tabel
 hieronder), de celindeling en de gebruikte Bredt--Batho-relaties.}
 
-\begin{table}[htb]
+\begin{table}[h]
   \centering\small
   \caption{\tbd{Plate thicknesses of the half section (read from the figures of the brief).}}
   \label{tab:B1B2}
@@ -26,29 +26,175 @@ hieronder), de celindeling en de gebruikte Bredt--Batho-relaties.}
 \section{Shear flow sketch for design B2}
 \label{sec:a2-1}
 
-\questionbox{Sketch the shear flow (using arrows) for design B2. \textbf{(1 pt)}}
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=1.3, >={Stealth[length=2.2mm,width=1.8mm]},
+        cell/.style={circle, draw, inner sep=1pt, minimum size=4.6mm,
+                     font=\footnotesize, fill=white},
+        dim/.style={thin, {Latex[length=1.6mm,width=1.2mm]}-{Latex[length=1.6mm,width=1.2mm]}},
+        ext/.style={very thin, gray}]
 
-\tbd{Uitwerking}
+        % \flow{x}{y}{dx}{dy}{q}: arrow at (x,y) in direction (dx,dy), thickness ~ q,
+        % plus the mirrored arrow in the port half
+        \def\flow#1#2#3#4#5{%
+            \pgfmathsetmacro{\lw}{max(0.4,#5/0.0331*2.4)}%
+            \draw[->, red!75!black, line width=\lw pt]
+                ({#1-0.2*(#3)},{#2-0.2*(#4)}) -- ({#1+0.2*(#3)},{#2+0.2*(#4)});
+            \draw[->, red!75!black, line width=\lw pt]
+                ({-(#1)-0.2*(#3)},{#2+0.2*(#4)}) -- ({-(#1)+0.2*(#3)},{#2-0.2*(#4)});
+        }
 
-% \begin{figure}[htb]
-%   \centering
-%   \includegraphics[width=0.9\textwidth]{figures/<bestandsnaam>}
-%   \caption{\tbd{onderschrift}}
-%   \label{fig:b2flow}
-% \end{figure}
+        % ---------------- structure (starboard half, mirrored to port) ----------------
+        \foreach \s in {1,-1}{
+            \begin{scope}[xscale=\s]
+                \draw[line width=1pt] (0,0) -- (3.5,0) arc (-90:0:0.5) -- (4,5) -- (2.5,5) -- (2.5,0);
+                \draw[line width=1pt] (0,1) -- (4,1);   % inner bottom
+                \draw[line width=1pt] (2.5,3) -- (4,3); % stringer deck
+                \draw[line width=1pt] (1,0) -- (1,1);   % side girder
+            \end{scope}
+        }
+        \draw[line width=2pt] (0,0) -- (0,1);           % centre girder
+        \draw[dashed, gray] (0,-0.3) -- (0,5.3) node[above, black] {\small C.L.};
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+        % applied torque (counter-clockwise)
+        \draw[->, thick] (0,3) ++(-30:0.6) arc (-30:210:0.6);
+        \node at (0,3) {$M_t$};
 
-\section{Shear flow per cell for design B2}
-\label{sec:a2-2}
+        % ---------------- shear flow arrows ----------------
+        % bottom shell
+        \flow{0.5}{0}{1}{0}{0.0331}
+        \flow{1.75}{0}{1}{0}{0.0312}
+        \flow{3.0}{0}{1}{0}{0.0278}
+        % inner bottom
+        \flow{0.5}{1}{-1}{0}{0.0331}
+        \flow{1.75}{1}{-1}{0}{0.0312}
+        \flow{3.25}{1}{-1}{0}{0.0053}
+        % girders in the double bottom
+        \flow{1}{0.5}{0}{1}{0.0019}
+        \flow{2.5}{0.5}{0}{1}{0.0034}
+        % side shell
+        \flow{4}{0.75}{0}{1}{0.0278}
+        \flow{4}{2}{0}{1}{0.0225}
+        \flow{4}{4}{0}{1}{0.0203}
+        % inner side wall of the wing tanks
+        \flow{2.5}{2}{0}{-1}{0.0225}
+        \flow{2.5}{4}{0}{-1}{0.0203}
+        % stringer deck and deck
+        \flow{3.25}{3}{-1}{0}{0.0021}
+        \flow{3.25}{5}{-1}{0}{0.0203}
 
-\questionbox{Calculate the shear flow per cell for design B2. Present all
-partial answers. \textbf{(2 pts)}}
+        % ---------------- cell numbers ----------------
+        \foreach \x/\y/\n in {0.5/0.5/1, 1.75/0.5/2, 2.8/0.5/3, 3.25/2/4, 3.25/4/5}{
+            \node[cell] at (\x,\y) {\n};                          % starboard
+            \node[cell, draw=gray, text=gray] at (-\x,\y) {\n};   % port (mirror)
+        }
 
-\tbd{Uitwerking: celoppervlakken, celvergelijkingen, oplossing en de netto
-wandstromen.}
+        % ---------------- bilge radius ----------------
+        \fill (3.5,0.5) circle (0.8pt);
+        \draw[thin, -{Latex[length=1.4mm,width=1mm]}] (3.5,0.5) -- ({3.5+0.5*cos(-45)},{0.5+0.5*sin(-45)});
+        \node[font=\scriptsize, anchor=south] at (3.5,0.52) {$r=0.5a$};
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+        % ---------------- horizontal dimensions ----------------
+        \foreach \x/\ytop in {0/-0.05, 1/-0.05, 2.5/-0.05, 4/0.4}{
+            \draw[ext] (\x,\ytop) -- (\x,-0.65);
+        }
+        \draw[dim] (0,-0.5)   -- node[below, font=\small] {$a$}    (1,-0.5);
+        \draw[dim] (1,-0.5)   -- node[below, font=\small] {$1.5a$} (2.5,-0.5);
+        \draw[dim] (2.5,-0.5) -- node[below, font=\small] {$1.5a$} (4,-0.5);
+
+        % ---------------- vertical dimensions ----------------
+        \foreach \y/\xl in {0/3.55, 1/4.05, 3/4.05, 5/4.05}{
+            \draw[ext] (\xl,\y) -- (5.0,\y);
+        }
+        \draw[dim] (4.9,0) -- node[right, font=\small] {$a$}  (4.9,1);
+        \draw[dim] (4.9,1) -- node[right, font=\small] {$2a$} (4.9,3);
+        \draw[dim] (4.9,3) -- node[right, font=\small] {$2a$} (4.9,5);
+    \end{tikzpicture}
+    \caption{Shear flow in design B2 for a counter-clockwise torque $M_t$. The arrow
+    thickness is proportional to the magnitude of the shear flow. The cells are
+    numbered 1--5 on both sides; the port cells (grey) are the mirror images of the
+    starboard cells and carry the same shear flow. Because the two cells~1 on either
+    side of the centre girder have equal flow, there is no net shear flow through
+    the centre girder.}
+    \label{fig:shearflow-B2}
+\end{figure}
+
+\subsection{Shear flow per cell for design B2}
+\label{sec:B2_shearflow}
+
+Because design B2 is symmetric about the centre plane, only the starboard half is
+analysed; the port cells carry the mirrored shear flows. As a consequence, the flows
+in cell 1 and its mirror cell 1$'$ are equal, so the net shear flow in the centre
+girder is zero and this wall drops out of the equations. The cell numbering follows
+Figure~\ref{fig:shearflow-B2}.
+
+\paragraph{Cell areas}
+\begin{align*}
+A_1 &= a \cdot a = a^2 && \text{(double bottom, } 0<y<a\text{)}\\
+A_2 &= 1.5a \cdot a = 1.5a^2 && \text{(double bottom, } a<y<2.5a\text{)}\\
+A_3 &= ........a^2 && \text{(double bottom under the wing tank)}\\
+A_4 &= 1.5a \cdot 2a = 3a^2 && \text{(lower wing tank)}\\
+A_5 &= 3a^2 && \text{(upper wing tank)}
+\end{align*}
+
+\paragraph{Compatibility condition}
+All cells rotate with the same rate of twist $\theta'$. For each cell $i$ this gives
+(Bredt--Batho for a multi-cell section):
+\begin{equation}
+  \oint_i \frac{q}{t}\,\mathrm{d}s
+  = \sum_{\text{walls of } i} \frac{L}{t}\,q_i
+  - \sum_{j \neq i} \left(\frac{L}{t}\right)_{ij} q_j
+  = 2A_i\,G\theta ,
+  \label{eq:B2_compat}
+\end{equation}
+where the first sum runs over all walls of cell $i$ and the second over the walls
+shared with neighbouring cell $j$. Below, $L/t$ is expressed in units of $a/t_p$.
+
+\section{shear flow per cell}
+
+\paragraph{Cell equations for one half}
+\begin{align*}
+\text{cell 1:}\quad & \tfrac{a}{t_p}\Big[\frac{3}{3}q_1+\frac{1}{2}q_1
+  -\frac{1}{3}q_2\Big] = a^2G\theta\\
+\text{cell 2:}\quad & \tfrac{a}{t_p}\Big[-\frac{1}{3}q_1
+  + \big({\frac{1.5}{3}}+{\frac{1.5}{3}}+\frac{1}{3}+1\big)q_2 - q_3\Big]
+  = \frac{3}{2}a^2G\theta \\
+\text{cell 3:}\quad & \tfrac{a}{t_p}\Big[- q_2
+  + \big(\tfrac12+\frac{\pi}{8}+\tfrac14+\tfrac{1.5}3+1\big)q_3 -\frac{1.5}{3}q_4\Big]
+  = (1.25+\frac{\pi}{16})a^2G\theta\\
+\text{cell 4:}\quad & \tfrac{a}{t_p}\Big[-\frac{1.5}{3} q_3
+  + \big(2+\frac{2}{2}+1.5+\frac{1.5}{3}\big)q_4 - 1.5 q_5\Big]
+  = 2a^2G\theta\\
+\text{cell 5:}\quad & \tfrac{a}{t_p}\Big[-1.5 q_4
+  + \big(2+\frac{2}{2}+1.5+\frac{1.5}{3}\big)q_5\Big]
+  = 2a^2G\theta 
+\end{align*}
+
+Written as a linear system:
+\begin{equation}
+\frac{a}{t_p}
+\begin{bmatrix}
+ 1.5    & -\tfrac13 & 0    & 0    & 0    \\
+ -\tfrac13     & \tfrac73  & -1   & 0    & 0    \\
+ 0      & -1     & \tfrac94+\frac{\pi}{8} & -\tfrac12 & 0    \\
+ 0      & 0      & -\tfrac12 & 5    & -1.5 \\
+ 0      & 0      & 0    & -1.5 & 5
+\end{bmatrix}
+\begin{Bmatrix} q_1\\ q_2\\ q_3\\ q_4\\ q_5 \end{Bmatrix}
+= 2a^2G\theta
+\begin{Bmatrix} 1\\ \frac{3}{2}\\ 1.25+\frac{\pi}{16}\\3 \\ 3 \end{Bmatrix}.
+\label{eq:B2_system}
+\end{equation}
+
+\paragraph{Solution}
+Solving \eqref{eq:B2_system}  by inversing the S $\rightarrow \textbf{q}=\textbf{S}^{-1}\Omega$
+
+matrix gives
+\begin{equation*}
+q_1 = 0. , \quad q_2 = 0. , \quad q_3 = 0. , \quad
+q_4 = 0., \quad q_5 = 0. \qquad [\,a\,t_p\,G\theta\,].
+\end{equation*}
+
 
 \section{Maximum shear stress for design B2}
 \label{sec:a2-3}
@@ -56,9 +202,41 @@ wandstromen.}
 \questionbox{Locate the position of maximum shear stress and its magnitude for
 design B2. \textbf{(2 pts)}}
 
-\tbd{Uitwerking}
+The shear stress in each wall is \ref{equation shear stress} with \textit{q} as the net flow. The largest value will accur at the thinnest spot. Ever
+
+\begin{equation}
+    \tau= \frac{q}{t}
+    \label{equation shear stress}
+\end{equation}
+
+\begin{equation}
+    \tau(s_i) = \frac{q_i}{t_p(s_i)}
+\end{equation}
+
+\begin{table}[h]
+  \centering
+  \caption{Net shear flow and shear stress per wall for design B2.}
+  \label{tab:B2walls}
+  \begin{tabular}{llll}
+    \toprule
+    Plate zone & $t$ & $q_{net}$ & $\tau = q_{net}/t$ \\
+    \midrule
+    Bottom/tank top cell 1             & $3t_p$ & 0.1989 & $0.0663/t_p$ \\
+    Bottom/tank top cell 2             & $3t_p$ & 0.4624 & $0.1541/t_p$ \\
+    Bottom + bilge + side shell cell 3 & $2t_p$ & 0.6130 & $0.3065/t_p$ \\
+    Longitudinal bulkhead cell 4       & $t_p$  & 0.6831 & $0.6831/t_p$ \\
+    Side shell cell 4                  & $2t_p$ & 0.6831 & $0.3416/t_p$ \\
+    Longitudinal bulkhead cell 5       & $t_p$  & 0.5750 & $0.5750/t_p$ \\
+    Deck cell 5                        & $3t_p$ & 0.5750 & $0.1917/t_p$ \\
+ \bottomrule
+  \end{tabular}
+\end{table}
+\textbf{\textit{Q WAARDES Kloppen niet meer!!!!!!!!!}}
+
+
 
 \finalanswer{\tbd{kort en expliciet antwoord}}
+Bij vier hebben we dus de grootste waarde.
 
 \section{Torsional stiffness and strength}
 \label{sec:a2-4}
@@ -76,13 +254,23 @@ design B2. \textbf{(2 pts)}}
 \end{enumerate}}
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
+  \item Strength determines the maximum force a piece of material can endure before it breaks, while stiffness says something about the amount of strain a material has for a said amount of force.
+
+  Stiffness is the resistance against deformation.
+
+  \textbf{Mss glas ook als voorbeeld geven van materiaal dat heel sterk is maar niet stiff is ofz?}
+  \item 
+Rewriting the standard equation SQ = $\Omega$ to q = $S^-1*Q$ by inverting the matrix from 2.2 gives the \textbf{q} Vector. \\ Then multiplying again with the transpose gives $I_p = 4*\Omega^T*S*\Omega$ This results in an $I_{p,b2}$ of 114.65$a^3t_p$. This increase results from the addition of stringers and girders in the frame section, which increases the overal resistance despite the lower plate thicknesses.
+  
   \item \tbd{Uitwerking}
-  \item \tbd{Uitwerking}
-  \item \tbd{Uitwerking}
+
+
+  
 \end{enumerate}
 
 \finalanswer{\tbd{kort en expliciet antwoord per deelvraag}}
 
+\newpage
 \section{Sectorial coordinate and sectorial area moment}
 \label{sec:a2-5}
 
@@ -92,18 +280,359 @@ $S_\omega(s)$ for design BU, in order to show the cross-sectional warping
 displacement and shear stress distribution. Sketch the distributions in the
 U-shaped section. \textbf{(3 pts)}}
 
-\tbd{Uitwerking: keuze van de pool (dwarskrachtencentrum), $s$-coordinaat,
-$\omega(s)$, normalisatie en $S_\omega(s)$.}
+\subsection{pole coordinates}
 
-% \begin{figure}[htb]
-%   \centering
-%   \includegraphics[width=0.9\textwidth]{figures/<bestandsnaam>}
-%   \caption{\tbd{onderschrift}}
-%   \label{fig:omega}
-% \end{figure}
+The pole must be placed in the twist centre, because only then does $\omega$ describe pure warping without a contribution from bending. The twist centre is at the same place with the shear centre S, the point through which a shear force causes bending without twisting. Because of the symmetry of the section, S lies on the centre line. Its distance $e$ below the bottom plate comes from moment equilibrium of the shear flows due to a horizontal shear force $F_y$ acting through S. The geometry, contour points and pole are shown in Figure~\ref{fig:BU_section}.
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
 
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.75, >={Stealth[length=2.2mm,width=1.8mm]},
+        pt/.style={circle, draw, inner sep=1pt, minimum size=4.6mm,
+                   font=\footnotesize, fill=white},
+        dim/.style={thin, {Latex[length=1.6mm,width=1.2mm]}-{Latex[length=1.6mm,width=1.2mm]}},
+        ext/.style={very thin, gray}]
+
+        \pgfmathsetmacro{\ee}{1.672}   % e = 1.672a
+
+        % ---------------- structure (line width ~ plate thickness) ----------------
+        \draw[line width=1.4pt] (-4,5) -- (-4,0);                 % port side,  t_sp
+        \draw[line width=1.4pt] ( 4,5) -- ( 4,0);                 % stb side,   t_sp
+        \draw[line width=2.6pt, line cap=rect] (-4,0) -- (4,0);   % bottom,     t_bp
+        \draw[dashed, gray] (0,-2.0) -- (0,5.4) node[above, black] {\small C.L.};
+
+        % ---------------- contour points ----------------
+        \node[pt] at (-4, 5.55)     {1};
+        \node[pt] at (-4.55,-0.55)  {2};
+        \node[pt] at ( 0.5, 0.5)    {3};
+        \node[pt] at ( 4.55,-0.55)  {4};
+        \node[pt] at ( 4, 5.55)     {5};
+
+        % ---------------- z = e (omega = 0 on the sides) ----------------
+        \foreach \s in {-1,1} \draw[thin] ({\s*3.8},\ee) -- ({\s*4.2},\ee);
+        \node[font=\scriptsize, right] at (-3.8,\ee) {$z=e$};
+
+        % ---------------- shear centre / pole ----------------
+        \fill[red!70!black] (0,-\ee) circle (2.2pt);
+        \node[right, font=\small, red!70!black] at (0.1,-\ee) {S ($=$ CT)};
+
+        % ---------------- thickness labels ----------------
+        \node[left,  font=\small] at (-4.1,2.8) {$t_{sp}$};
+        \node[below, font=\small] at (-2,-0.1)  {$t_{bp}$};
+
+        % ---------------- dimension e ----------------
+        \draw[ext] (0,-\ee) -- (-0.85,-\ee);
+        \draw[dim] (-0.7,0) -- node[left, font=\small] {$e$} (-0.7,-\ee);
+
+        % ---------------- dimension A ----------------
+        \foreach \x in {-4,4} \draw[ext] (\x,-0.15) -- (\x,-2.55);
+        \draw[dim] (-4,-2.4) -- node[below, font=\small] {$A = 8a$} (4,-2.4);
+
+        % ---------------- dimension B ----------------
+        \foreach \y in {0,5} \draw[ext] (4.15,\y) -- (5.15,\y);
+        \draw[dim] (5.0,0) -- node[right, font=\small] {$B = 5a$} (5.0,5);
+
+        % ---------------- coordinate system ----------------
+        \draw[->] (-6.2,-1.8) -- (-5.4,-1.8) node[right, font=\small] {$y$};
+        \draw[->] (-6.2,-1.8) -- (-6.2,-1.0) node[above, font=\small] {$z$};
+    \end{tikzpicture}
+    \caption{U-shaped section of design BU ($A=8a$, $B=5a$, $t_{sp}=3.5t_p$,
+             $t_{bp}=6.5t_p$) with contour points 1--5 and shear (twist) centre S at a
+             distance $e=1.672a$ below the bottom plate.}
+    \label{fig:BU_section}
+\end{figure}
+
+The shear flow due to $F_y$ follows from
+\begin{equation}
+    q(s) = \frac{F_y\,S_z(s)}{I_{zz}},
+\end{equation}
+With $S_z(s)$ is the first moment of area of the part between the free edge and the
+considered point, and
+\begin{equation}
+    I_{zz} = \frac{t_{bp}A^3}{12} + 2Bt_{sp}\left(\frac{A}{2}\right)^2 = 837.3\,a^3t_p .
+\end{equation}
+Because the entire side shell lies at $|y| = A/2$, the first moment of area of a side
+shell, measured from the free edge down to height $z$, is
+$S_z = \frac{A}{2}\,t_{sp}(B-z)$. The shear flow in a side shell is therefore
+\begin{equation}
+    q(z) = F_y\,\frac{\frac{A}{2}\,t_{sp}\,(B-z)}{I_{zz}},
+\end{equation}
+giving a vertical resultant per side shell
+\begin{equation}
+    V = \int_0^B q(z)\,\mathrm{d}z = F_y\,\frac{\frac{A}{2}\,t_{sp}\,\frac{B^2}{2}}{I_{zz}} .
+\end{equation}
+The resultants in the two side shells act in opposite directions and form a couple $V \cdot A$. The resultant of the shear flow in the bottom plate acts along the bottom plate itself and has no moment about point 3. The couple must therefore be balanced by
+$F_y$ acting at a distance $e$ below the bottom:
+\begin{equation}
+    F_y\,e = V A \quad\Rightarrow\quad
+    e = \frac{3B^2t_{sp}}{A\,t_{bp} + 6B\,t_{sp}} = \frac{262.5}{157}\,a = 1.672\,a .
+\end{equation}
+The pole coordinates are therefore $(y,z)_S = (0,\,-1.672a)$.
+
+\subsection{Sectorial coordinate}
+
+With free warping torsion, the crosssection warps out of its plane. The warping displacement is written as the product of an amplitude and a distribution:
+\begin{equation}
+    \underbrace{u(s)}_{\substack{\text{Warping}\\ \text{displacement}}}
+    = \underbrace{\theta}_{\substack{\text{Warping amplitude}\\ \text{(twist rate)}}}
+    \cdot \underbrace{\omega(s)}_{\substack{\text{Warping distribution}\\ \text{(\textbf{sectorial coordinate})}}}
+\end{equation}
+with the sectorial coordinate
+\begin{equation}
+    \omega(s) = -\int_s \rho(s)\,\mathrm{d}s + C ,
+\end{equation}
+where $\rho$ is the perpendicular distance from the pole S to the tangent of the
+contour, taken positive when the radius vector from S rotates counterclockwise
+along $s$. The integration starts at point 3, where the contour intersects the
+symmetry axis; there $\omega = 0$, so $C = 0$.
+
+The contour is split into parts. Each part gets its own local coordinate $s$, which
+starts at $s=0$ at the beginning of that part. The constant $C$ of a part is the
+value of $\omega$ at the end of the previous part, so that $\omega$ stays continuous
+at the corners.
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.9\textwidth]{figures/rho_figuur}
+  \caption{Definition of $\rho$ for the U-shaped section BU: the perpendicular
+    distance from the pole S to the tangent of the contour at P (orange), not
+    the distance S--P (grey). Left: P on the bottom plate (part 3--4),
+    $\rho=-e$. Right: P on the side shell (part 4--5), $\rho=+A/2$. Red: area
+    swept clockwise ($\rho<0$); green: area swept counterclockwise ($\rho>0$).}
+  \label{fig:rho}
+\end{figure}
+
+
+
+\newpage
+
+\paragraph{Part 3--2 (bottom plate, port half).}
+The bottom plate lies at a distance $e$ above the pole, so $|\rho| = e$. Walking from
+point 3 to point 2 (in negative $y$-direction), the radius vector from S turns
+counter-clockwise, so $\rho = +e$. With $C=0$ this gives
+\begin{equation}
+    \omega_{32}(s) = -\int_0^s e\,\mathrm{d}s = -e\,s ,
+    \qquad 0 \le s \le \tfrac{A}{2},
+\end{equation}
+so in point 2
+\begin{equation}
+    \omega_2 = -e\,\frac{A}{2} = -1.672 \cdot 4\,a^2 = -6.69\,a^2 .
+\end{equation}
+
+\paragraph{Part 2--1 (port side shell).}
+The side shell is vertical and lies at a distance $A/2$ from the pole, so
+$|\rho| = A/2$. Walking upwards from point 2 to point 1, the radius vector turns
+clockwise, so $\rho = -A/2$. The integration now starts at $\omega_2$, so
+$C = -eA/2$:
+\begin{equation}
+    \omega_{21}(s) = -\int_0^s \left(-\frac{A}{2}\right)\mathrm{d}s - e\,\frac{A}{2}
+                   = \frac{A}{2}\,(s-e) ,
+    \qquad 0 \le s \le B .
+\end{equation}
+Here $s$ is equal to the height $z$ above the bottom. The sectorial coordinate is
+zero at $s = z = e$ and reaches its maximum at the free edge:
+\begin{equation}
+    \omega_1 = \frac{A}{2}\,(B-e) = 4 \cdot 3.328\,a^2 = 13.31\,a^2 .
+\end{equation}
+
+\paragraph{Starboard half (3--4--5).}
+Because the section is symmetric about the centre line, $\omega$ is antisymmetric:
+the starboard half has the same magnitudes with the opposite sign,
+\begin{equation}
+    \omega_{34}(s) = e\,s , \qquad
+    \omega_{45}(s) = -\frac{A}{2}\,(s-e) ,
+\end{equation}
+so $\omega_4 = +6.69\,a^2$ and $\omega_5 = -13.31\,a^2$.
+
+\paragraph{Normalisation and check.} 
+The constant $C=0$ in point 3 is only correct if free warping does not create a net normal force, so $\int_A \omega\,\mathrm{d}A = 0$ must be true. Since $\omega$ is antisymmetric about the centre line, the contributions of the port and starboard halves cancel eachother out, so that means that this condition is satisfied.
+
+As a check on the pole position, free warping should also not create a bending
+moment, so $\int_A \omega\,y\,\mathrm{d}A = 0$. With $\omega_{bottom} = e\,y$ and
+$y = \pm A/2$ on the side shells:
+\begin{equation}
+    \int_A \omega\,y\,\mathrm{d}A
+    = e\,\frac{t_{bp}A^3}{12} - \frac{A^2}{2}\,t_{sp}\left(\frac{B^2}{2} - eB\right)
+    = 463.7 - 463.7 = 0\ \ [a^5t_p],
+\end{equation}
+which confirms that $e = 1.672a$ is the correct pole position.
+
+
+\subsection{Sectorial area moment}
+
+When warping is blocked, a warping shear flow develops in the crosssection. Its distribution over the contour is given by the sectorial area moment
+\begin{equation}
+    S_\omega(s) = -t\int_s \omega(s)\,\mathrm{d}s + C .
+\end{equation}
+The integration starts at a free edge, because no shear flow can leave the section there. Starting at point 1 therefore gives $S_\omega = 0$ and $C = 0$. Again every part gets its own local $s$, and $C$ is the value at the end of the previous part.
+
+\paragraph{Part 1--2 (port side shell, downwards).}
+Now $s$ runs downwards from point 1, so the height is $z = B - s$ and the sectorial
+coordinate in this local coordinate is
+\begin{equation}
+    \omega_{12}(s) = \frac{A}{2}\,(B - s - e) .
+\end{equation}
+Integrating gives
+\begin{equation}
+    S_{\omega,12}(s) = -t_{sp}\int_0^s \frac{A}{2}\,(B - e - s)\,\mathrm{d}s
+    = t_{sp}\,\frac{A}{2}\left[\frac{s^2}{2} - (B-e)\,s\right],
+    \qquad 0 \le s \le B ,
+\end{equation}
+with $t_{sp}\,A/2 = 14\,a\,t_p$. Since $\mathrm{d}S_\omega/\mathrm{d}s = -t\,\omega$,
+the extremum lies where $\omega = 0$, so at $s = B-e$ (height $z=e$):
+\begin{equation}
+    S_{\omega,\max} = -t_{sp}\,\frac{A}{2}\,\frac{(B-e)^2}{2}
+    = -14 \cdot 5.54\,a^3t_p = -77.5\,a^3t_p .
+\end{equation}
+In point 2 ($s = B$):
+\begin{equation}
+    S_{\omega,2} = t_{sp}\,\frac{A}{2}\left(eB - \frac{B^2}{2}\right)
+    = 14\,(8.36 - 12.5)\,a^3t_p = -58.0\,a^3t_p .
+\end{equation}
+
+\paragraph{Part 2--3 (bottom plate, towards the centre).}
+Now $s$ runs from point 2 to point 3, so
+\begin{equation}
+    \omega_{23}(s) = -e\,\frac{A}{2} + e\,s .
+\end{equation}
+The integration starts at $S_{\omega,2}$:
+\begin{equation}
+    S_{\omega,23}(s) = -t_{bp}\int_0^s \left(-e\,\frac{A}{2} + e\,s\right)\mathrm{d}s
+                       + S_{\omega,2}
+    = t_{bp}\,e\left[\frac{A}{2}\,s - \frac{s^2}{2}\right] + S_{\omega,2},
+    \qquad 0 \le s \le \tfrac{A}{2}.
+\end{equation}
+In point 3 ($s = A/2$), where $\omega = 0$ and $S_\omega$ has its second extremum:
+\begin{equation}
+    S_{\omega,3} = t_{bp}\,e\,\frac{A^2}{8} + S_{\omega,2}
+    = (86.9 - 58.0)\,a^3t_p = +29.0\,a^3t_p .
+\end{equation}
+
+\paragraph{Starboard half (3--4--5) and check.}
+Because $\omega$ is antisymmetric, $S_\omega$ is symmetric about the centre line. So
+$S_{\omega,4} = -58.0\,a^3t_p$, the extremum in the starboard side shell is again
+$-77.5\,a^3t_p$ at $z=e$, and at the free edge
+\begin{equation}
+    S_{\omega,5} = -\int_A \omega\,\mathrm{d}A = 0 .
+\end{equation}
+This is exactly what should happen at a free edge, and it is the same condition as
+the normalisation $\int_A \omega\,\mathrm{d}A = 0$, so it is a good check on the
+whole calculation.
+
+\newpage
+\subsection{Distributions}
+
+Both distributions are sketched in the U-shaped section in Figure~\ref{fig:BU_distributions}, and the values in the characteristic points are listed in Table~\ref{tab:BU_values}. The sectorial coordinate is linear along each part, the sectorial area moment is quadratic along each part.
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=0.45,
+        pos/.style={fill=red!25, draw=red!70!black, thin},
+        neg/.style={fill=blue!20, draw=blue!70!black, thin},
+        val/.style={font=\scriptsize}]
+
+        \pgfmathsetmacro{\ee}{1.672}
+
+        % ================= sectorial coordinate omega =================
+        \begin{scope}
+            \filldraw[pos] (-4,5) -- (-5.6,5) -- (-4,\ee) -- cycle;   % port, upper
+            \filldraw[neg] (-4,\ee) -- (-3.2,0) -- (-4,0) -- cycle;   % port, lower
+            \filldraw[neg] (4,5) -- (2.4,5) -- (4,\ee) -- cycle;      % stb, upper
+            \filldraw[pos] (4,\ee) -- (4.8,0) -- (4,0) -- cycle;      % stb, lower
+            \filldraw[neg] (-4,0) -- (-4,0.8) -- (0,0) -- cycle;      % bottom, port
+            \filldraw[pos] (0,0) -- (4,-0.8) -- (4,0) -- cycle;       % bottom, stb
+
+            \draw[line width=1.2pt] (-4,5) -- (-4,0) -- (4,0) -- (4,5);
+            \draw[dashed, gray] (0,-1.2) -- (0,5.6);
+
+            \node[val, above] at (-5.6,5) {$+13.31$};
+            \node[val, above] at (2.4,5)  {$-13.31$};
+            \node[val, right] at (-3.1,1.1) {$-6.69$};
+            \node[val, right] at (4.8,-0.4) {$+6.69$};
+            \node at (0,-2.2) {$\omega$ [$a^2$]};
+        \end{scope}
+
+        % ================= sectorial area moment S_omega =================
+        \begin{scope}[shift={(13,0)}]
+            % port side shell (all negative, plotted inside)
+            \filldraw[neg] plot[domain=0:5, samples=40]
+                ({-4-0.02*14*(1.672*(5-\x)-(25-(\x)*(\x))/2)},{\x})
+                -- (-4,5) -- (-4,0) -- cycle;
+            % starboard side shell (mirror)
+            \filldraw[neg] plot[domain=0:5, samples=40]
+                ({4+0.02*14*(1.672*(5-\x)-(25-(\x)*(\x))/2)},{\x})
+                -- (4,5) -- (4,0) -- cycle;
+            % bottom plate: negative near the corners, positive in the middle
+            \filldraw[neg] plot[domain=-4:-2.308, samples=20]
+                ({\x},{-0.02*(-57.96-5.434*((\x)*(\x)-16))})
+                -- (-2.308,0) -- (-4,0) -- cycle;
+            \filldraw[neg] plot[domain=2.308:4, samples=20]
+                ({\x},{-0.02*(-57.96-5.434*((\x)*(\x)-16))})
+                -- (4,0) -- (2.308,0) -- cycle;
+            \filldraw[pos] plot[domain=-2.308:2.308, samples=30]
+                ({\x},{-0.02*(-57.96-5.434*((\x)*(\x)-16))}) -- cycle;
+
+            \draw[line width=1.2pt] (-4,5) -- (-4,0) -- (4,0) -- (4,5);
+            \draw[dashed, gray] (0,-1.2) -- (0,5.6);
+
+            \node[val, above] at (-4,5.1) {$0$};
+            \node[val, above] at (4,5.1)  {$0$};
+            \node[val, right] at (-2.4,\ee) {$-77.5$};
+            \node[val, left]  at (2.4,\ee)  {$-77.5$};
+            \node[val, below left]  at (-4,-0.1) {$-58.0$};
+            \node[val, below right] at (4,-0.1)  {$-58.0$};
+            \node[val, below] at (0,-0.6) {$+29.0$};
+            \node at (0,-2.2) {$S_\omega$ [$a^3t_p$]};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Sectorial coordinate $\omega$ (left) and sectorial area moment $S_\omega$
+             (right) along the contour of design BU. Positive values are plotted on
+             the outside of the section, negative values on the inside.}
+    \label{fig:BU_distributions}
+\end{figure}
+
+\begin{table}[h]
+    \centering
+    \caption{Sectorial coordinate and sectorial area moment in the characteristic
+             points of design BU.}
+    \label{tab:BU_values}
+    \begin{tabular}{llrr}
+        \hline
+        Point & Location & $\omega$ [$a^2$] & $S_\omega$ [$a^3t_p$] \\
+        \hline
+        1 & top of port side       & $+13.31$ & $0$     \\
+          & port side, $z=e$       & $0$      & $-77.5$ \\
+        2 & port corner            & $-6.69$  & $-58.0$ \\
+        3 & bottom centre          & $0$      & $+29.0$ \\
+        4 & starboard corner       & $+6.69$  & $-58.0$ \\
+          & starboard side, $z=e$  & $0$      & $-77.5$ \\
+        5 & top of starboard side  & $-13.31$ & $0$     \\
+        \hline
+    \end{tabular}
+\end{table}
+
+\paragraph{Warping displacement.}
+Since $u = \theta\,\omega$, the shape of $\omega$ directly shows how the section warps. The tops of the side shells warp the most, and in opposite directions: one moves forward while the other moves aft. The bottom corners warp a bit in the opposite direction of the top of the same side shell. Point 3 and the points at $z=e$ on the
+side shells do not warp at all.
+
+\paragraph{Warping shear stress.}
+The warping shear stress is proportional to $S_\omega/t$. It is zero at the free edges and largest in the side shells at $z=e$, where $|S_\omega|/t_{sp} = 77.5/3.5 = 22.1\,a^3$. In the bottom plate it is much lower: $58.0/6.5 = 8.9\,a^3$ in the corners and $29.0/6.5 = 4.5\,a^3$ in the bottom centre. This is because $|S_\omega|$ is smaller there and the bottom plate is
+almost twice as thick. So the side shells carry most of the warping shear stress.
+
+
+\finalanswer{The sectorial coordinate is linear along each part of the contour. It is zero in point 3 and on the side shells at $z = e = 1.672a$, equals $\mp 6.69\,a^2$ in the bottom corners and reaches $\pm 13.31\,a^2$ at the tops of the side shells, so the warping displacement $u = \theta\,\omega$ is largest there. The sectorial area moment is quadratic along each part: it is zero at both free edges, $-77.5\,a^3t_p$ in the side shells at $z=e$, $-58.0\,a^3t_p$ in the corners and $+29.0\,a^3t_p$ in point 3.The warping shear stress ($\propto S_\omega/t$) is therefore largest in the side shells
+at $z = e$.}
+
+\begin{figure}[h]
+  \centering
+  \includegraphics[width=0.85\textwidth]{figures/BU_omega_Somega_plot}
+  \caption{Sectorial coordinate $\omega(s)$ (top) and sectorial area moment
+    $S_\omega(s)$ (bottom) along the contour of design BU, from point 1 (top of
+    the port side shell) to point 5 (top of the starboard side shell).}
+  \label{fig:BU_plot}
+\end{figure}
+
+\newpage
 \section{Torsion and warping constants of design BU}
 \label{sec:a2-6}
 
@@ -112,9 +641,155 @@ constant $I_w(A,B,t_{bp},t_{sp})$ for the simplified model of section BU.
 Present $I_w(a,t_p)$ using $A=8a$, $B=5a$, $t_{sp}=3.5t_p$ and $t_{bp}=6.5t_p$.
 \textbf{(3 pts)}}
 
-\tbd{Uitwerking}
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+
+\subsection{Torsion constant}
+
+BU is an open thinwalled section. In the lectures we saw that for one thin plate with length $L$ and thickness $t$ the torsion constant is
+
+\begin{equation}
+  I_{p,i} = \frac{1}{3}\,L_i\,t_i^3 .
+\end{equation}
+
+An open section is just a number of these plates connected to each other, so we can add them up piecewise:
+
+\begin{equation}
+  I_p = \frac{1}{3}\sum_i L_i\,t_i^3 .
+  \label{eq:a26-Ip-sum}
+\end{equation}
+
+Our U-section has one bottom plate (length $A$, thickness $t_{bp}$) and two side shells (length $B$, thickness $t_{sp}$), so
+
+\begin{equation}
+  \boxed{\;I_p(A,B,t_{bp},t_{sp}) = \frac{1}{3}\left(A\,t_{bp}^3 + 2B\,t_{sp}^3\right)\;}
+  \label{eq:a26-Ip}
+\end{equation}
+
+Filling in $A=8a$, $B=5a$, $t_{bp}=6.5t_p$ and $t_{sp}=3.5t_p$ gives
+
+\begin{align}
+  I_{p,bottom} &= \tfrac{1}{3}\cdot 8a\cdot(6.5t_p)^3 = \tfrac{1}{3}\cdot 2197\,a t_p^3 = 732.3\,a t_p^3,\\
+  I_{p,sides}  &= \tfrac{2}{3}\cdot 5a\cdot(3.5t_p)^3 = \tfrac{1}{3}\cdot 428.8\,a t_p^3 = 142.9\,a t_p^3,\\
+  I_p &= 732.3 + 142.9 = 875\,a t_p^3 .
+\end{align}
+
+The bottom plate gives $732.3/875 = 0.84$, so 84\,\% of $I_p$, while the two side shells together are actually longer ($10a$ vs.\ $8a$). This is because the thickness is cubed, so the thicker bottom plate counts much more.
+
+\subsection{Warping constant}
+
+The warping constant is
+
+\begin{equation}
+  I_w = \int_A \omega^2\,\mathrm{d}A = \int_s \omega^2(s)\,t(s)\,\mathrm{d}s .
+  \label{eq:a26-Iw-def}
+\end{equation}
+
+For $\omega$ we use the sectorial coordinate from Section~\ref{sec:a2-5}. It is important that this one is taken around the shear centre S, because otherwise $\omega$ also contains some bending and $I_w$ becomes too big.
+
+The thickness is constant per plate, so we do the integral piecewise with the same parts and local $s$ as in Section~\ref{sec:a2-5}:
+
+\begin{equation}
+  I_w = \sum_i t_i \int_{s} \omega_i^2\,\mathrm{d}s .
+\end{equation}
+
+$\omega$ is antisymmetric, so $\omega^2$ is the same on both sides of the centre line. That means we only have to do the port half (parts 3--2 and 2--1)
+and multiply by two.
+
+\paragraph{Part 3--2 (bottom plate, port half).}
+With $\omega_{32}(s) = -e\,s$ for $0\le s\le A/2$:
+
+\begin{align}
+  I_{w,32} &= t_{bp}\int_0^{A/2} \left(-e\,s\right)^2\mathrm{d}s
+            = t_{bp}\,e^2\int_0^{A/2} s^2\,\mathrm{d}s \nonumber\\
+           &= t_{bp}\,e^2\left[\frac{s^3}{3}\right]_0^{A/2}
+            = \frac{t_{bp}\,e^2A^3}{24} .
+\end{align}
+
+\paragraph{Part 2--1 (port side shell).}
+With $\omega_{21}(s) = \frac{A}{2}\,(s-e)$ for $0\le s\le B$:
+\begin{align}
+  I_{w,21} &= t_{sp}\int_0^{B} \frac{A^2}{4}\,(s-e)^2\,\mathrm{d}s
+            = t_{sp}\,\frac{A^2}{4}\int_0^{B} \left(s^2 - 2e\,s + e^2\right)\mathrm{d}s \nonumber\\
+           &= t_{sp}\,\frac{A^2}{4}\left[\frac{s^3}{3} - e\,s^2 + e^2 s\right]_0^{B}
+            = t_{sp}\,\frac{A^2}{4}\left(\frac{B^3}{3} - e\,B^2 + e^2B\right) .
+\end{align}
+
+\paragraph{Total.}
+Using the symmetry:
+\begin{align}
+  I_w &= 2\left\{\frac{t_{bp}\,e^2A^3}{24} + t_{sp}\,\frac{A^2}{4}\left(\frac{B^3}{3} - e\,B^2 + e^2B\right)\right\} \nonumber\\
+      &= \frac{t_{bp}\,e^2A^3}{12} + t_{sp}\,\frac{A^2}{2}\left(\frac{B^3}{3} - e\,B^2 + e^2B\right),
+  \label{eq:a26-Iw-e}
+\end{align}
+with $e = 3B^2 t_{sp}/(A t_{bp} + 6B t_{sp})$ from Section~\ref{sec:a2-5}.
+
+\subsection{Warping constant in terms of $a$ and $t_p$}
+
+Now we fill in $A=8a$, $B=5a$, $t_{bp}=6.5t_p$, $t_{sp}=3.5t_p$ and $e=1.672a$:
+\begin{align}
+  I_{w,32} &= \frac{6.5\cdot1.672^2\cdot8^3}{24}\,a^5t_p = 387.7\,a^5t_p,\\
+  I_{w,21} &= 3.5\cdot\frac{8^2}{4}\left(\frac{5^3}{3} - 1.672\cdot5^2 + 1.672^2\cdot5\right)a^5t_p \nonumber\\
+           &= 56\,(41.67 - 41.80 + 13.98)\,a^5t_p = 775.3\,a^5t_p,
+\end{align}
+so
+\begin{equation}
+  I_w = 2\,(387.7 + 775.3)\,a^5t_p = 2326\,a^5t_p \approx 2.33\cdot10^3\,a^5t_p .
+\end{equation}
+The side shells give $2\cdot775.3/2326 = 0.67$, so about two thirds of $I_w$.
+That makes sense, since the warping is largest at the top of the side shells
+($|\omega| = 13.31a^2$) and $\omega$ is squared.
+
+\subsection{Closed-form expression}
+
+Equation~\eqref{eq:a26-Iw-e} still has $e$ in it. To get $I_w$ only in $A$, $B$,
+$t_{bp}$ and $t_{sp}$ we also fill in $e$. First we write everything over
+$A^2/12$:
+\begin{equation}
+  I_w = \frac{A^2}{12}\Big[e^2\left(A t_{bp} + 6B t_{sp}\right) - 6B^2 t_{sp}\,e + 2B^3 t_{sp}\Big] .
+\end{equation}
+To keep it short we call $D = A t_{bp} + 6B t_{sp}$, so $e = 3B^2 t_{sp}/D$.
+Then
+\begin{equation}
+  e^2 D = \frac{9B^4 t_{sp}^2}{D},\qquad 6B^2 t_{sp}\,e = \frac{18B^4 t_{sp}^2}{D},
+\end{equation}
+so the part between the brackets becomes
+\begin{equation}
+  -\frac{9B^4 t_{sp}^2}{D} + 2B^3 t_{sp}
+  = \frac{B^3 t_{sp}\left(2D - 9B t_{sp}\right)}{D}
+  = \frac{B^3 t_{sp}\left(2A t_{bp} + 3B t_{sp}\right)}{A t_{bp} + 6B t_{sp}} .
+\end{equation}
+and we get
+\begin{equation}
+  \boxed{\;I_w(A,B,t_{bp},t_{sp}) = \frac{A^2 B^3 t_{sp}\left(2A t_{bp} + 3B t_{sp}\right)}{12\left(A t_{bp} + 6B t_{sp}\right)}\;}
+  \label{eq:a26-Iw}
+\end{equation}
+With the numbers this gives the same answer as before which is a good check:
+\begin{equation}
+  I_w = \frac{64\cdot125\cdot3.5\,(104+52.5)}{12\,(52+105)}\,a^5t_p
+      = \frac{4\,382\,000}{1884}\,a^5t_p = 2326\,a^5t_p .
+\end{equation}
+
+\paragraph{Checks.}
+The units work out: $I_p$ is in $a\,t_p^3$ (m$^4$) and $I_w$ in $a^5 t_p$
+(m$^6$). We also compared with Table~1 of the assignment. For $a=1$\,m and
+$t_p=10$\,mm we get $I_p = 8.75\cdot10^{-4}$\,m$^4$ and $I_w = 23.3$\,m$^6$,
+and the table gives $8.71\cdot10^{-4}$\,m$^4$ and $22.6$\,m$^6$ for BU. That is
+a difference of $(8.75-8.71)/8.71 = 0.5\,\%$ for $I_p$ and
+$(23.3-22.6)/22.6 = 3\,\%$ for $I_w$, so our answers are close.
+
+\finalanswer{
+\begin{align*}
+  I_p(A,B,t_{bp},t_{sp}) &= \tfrac{1}{3}\left(A\,t_{bp}^3 + 2B\,t_{sp}^3\right),
+  \qquad I_p(a,t_p) = 875\,a\,t_p^3,\\[4pt]
+  I_w(A,B,t_{bp},t_{sp}) &= \frac{t_{bp}\,e^2A^3}{12} + t_{sp}\,\frac{A^2}{2}\left(\frac{B^3}{3} - e\,B^2 + e^2B\right)\\
+  &= \frac{A^2 B^3 t_{sp}\left(2A t_{bp} + 3B t_{sp}\right)}{12\left(A t_{bp} + 6B t_{sp}\right)},\\[4pt]
+  I_w(a,t_p) &= 2.33\cdot10^3\,a^5 t_p .
+\end{align*}}
+
+
+
+
+
 
 \section{Effect of closing the hatch cover}
 \label{sec:a2-7}
