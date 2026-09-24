@@ -102,13 +102,17 @@ The trapezoids form three extra closed cells with the bottom plate. In the legs 
 \section{T-stiffener versus L-stiffener}
 \label{sec:a3-2}
 
-\questionbox{Explain the consequences for the torsion stiffness contribution of
-open sections if a T-stiffener is exchanged for an L-stiffener, in case the web
-and flange dimensions remain the same. \textbf{(1 pt)}}
+\questionbox{Explain the consequences for the torsion stiffness contribution of open sections if a T-stiffener is exchanged for an L-stiffener, in case the web and flange dimensions remain the same. \textbf{(1 pt)}}
 
-\tbd{Uitwerking}
+The T-stiffener is an open section, so its torsion stiffness follows from Saint-Venant for thin plates:
+\begin{equation}
+  I_{p,open} = \frac{1}{3}\sum_i b_i\,t_i^3 .
+\end{equation}
+This only depends on the length and thickness of the web and flange, not on how they are connected. In the lecturesslides from week 2 page 46. we saw that no matter how the plates are connected or oriented, $I_p$ stays the same. So an L-stiffener with the same web and flange gives exactly the same contribution to the torsion stiffness.
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+\finalanswer{There is no difference. $I_{p,open} = \frac{1}{3}\sum b_i t_i^3$ only
+depends on the plate lengths and thicknesses, so the T- and L-stiffener give the
+same torsion stiffness contribution.}
 
 \section{Shear flow components}
 \label{sec:a3-3}
