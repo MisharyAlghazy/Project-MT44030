@@ -17,17 +17,88 @@ plaatdiktes), de opsplitsing in open en gesloten delen en de aannames
 \questionbox{Sketch the shear flow using arrows for Configurations 1 and 2.
 \textbf{(2 pts)}}
 
-\tbd{Uitwerking}
+$M_t$ is applied counter-clockwise, so the shear flow in the closed cells also runs counter-clockwise (Figure~\ref{fig:a3flow}). The T-stiffeners are open sections: they are only attached with their web, so there is no closed path for a shear flow. Like we saw in the lectures, the shear stress in an open section only goes up and down within the plate thickness, so the T-stiffeners carry no
+shear flow $q$.
 
-% \begin{figure}[htb]
-%   \centering
-%   \includegraphics[width=0.9\textwidth]{figures/<bestandsnaam>}
-%   \caption{\tbd{onderschrift}}
-%   \label{fig:a3flow}
-% \end{figure}
+\paragraph{Configuration 1.}
+The box is one closed cell, so the shear flow $q$ is constant along all four
+plates.
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+\paragraph{Configuration 2.}
+The trapezoids form three extra closed cells with the bottom plate. In the legs and top of the trapezoids the flows of the two cells go against each other, so only the small difference $q_m - q_t$ is left there.
 
+
+\begin{figure}[h]
+    \centering
+    \begin{tikzpicture}[scale=2.0, >={Stealth[length=2mm,width=1.6mm]}]
+        \tikzset{
+          big/.style={->, red!75!black, line width=2.2pt},
+          mid/.style={->, red!75!black, line width=1.8pt},
+          small/.style={->, red!75!black, line width=0.7pt},
+          stiff/.style={line width=0.8pt}}
+        % T-stiffener: \Tdown{x}{y_plate}{height}, \Tup{x}{y_plate}{height}
+        \def\Tdown#1#2#3{\draw[stiff] (#1,#2) -- (#1,{#2-#3});
+                         \draw[stiff] ({#1-0.125},{#2-#3}) -- ({#1+0.125},{#2-#3});}
+        \def\Tup#1#2#3{\draw[stiff] (#1,#2) -- (#1,{#2+#3});
+                       \draw[stiff] ({#1-0.125},{#2+#3}) -- ({#1+0.125},{#2+#3});}
+
+        % ======================= Configuration 1 =======================
+        \begin{scope}[yshift=2.75cm]
+            \draw[line width=1.2pt] (0,0) rectangle (5,2);
+            \foreach \x in {0.833,1.667,2.5,3.333,4.167}{\Tdown{\x}{2}{0.5}\Tup{\x}{0}{0.5}}
+            % shear flow (constant)
+            \foreach \x in {1.25,2.917,4.583}{
+                \draw[big] ({\x-0.2},0) -- ({\x+0.2},0);
+                \draw[big] ({\x+0.2},2) -- ({\x-0.2},2);}
+            \draw[big] (5,0.8) -- (5,1.2);
+            \draw[big] (0,1.2) -- (0,0.8);
+            \node[red!75!black, below] at (2.917,-0.05) {$q$};
+            % torque
+            \draw[->, thick] (2.5,1) ++(-30:0.3) arc (-30:210:0.3);
+            \node at (2.5,1) {\small $M_t$};
+            \node[anchor=east] at (-0.3,1) {(a)};
+        \end{scope}
+
+        % ======================= Configuration 2 =======================
+        \begin{scope}
+            \draw[line width=1.2pt] (0,0) rectangle (5,2);
+            \foreach \x in {0.833,1.667,2.5,3.333,4.167}{\Tdown{\x}{2}{0.5}}
+            % trapezoids: base from x0 to x0+5/6, height b/4, 45 deg legs
+            \foreach \x in {0.625,2.083,3.542}{
+                \draw[line width=0.6pt] (\x,0) -- ({\x+0.25},0.25) -- ({\x+0.5833},0.25) -- ({\x+0.8333},0);
+                \Tup{\x+0.4167}{0.25}{0.25}
+                % net flow in legs and crown (q_m - q_t), thin
+                \draw[small] ({\x+0.07},0.07) -- ({\x+0.18},0.18);
+                \draw[small] ({\x+0.30},0.25) -- ({\x+0.40},0.25);
+                \draw[small] ({\x+0.763},0.07) ++(-0.11,0.11) -- ({\x+0.763},0.07);
+                % base (q_t)
+                \draw[mid] ({\x+0.3},0) -- ({\x+0.53},0);}
+            % bottom plate between trapezoids (q_m)
+            \foreach \x in {0.31,1.77,3.23,4.69}{\draw[big] ({\x-0.15},0) -- ({\x+0.15},0);}
+            % top plate and sides (q_m)
+            \foreach \x in {1.25,2.917,4.583}{\draw[big] ({\x+0.2},2) -- ({\x-0.2},2);}
+            \draw[big] (5,0.8) -- (5,1.2);
+            \draw[big] (0,1.2) -- (0,0.8);
+            % labels
+            \node[red!75!black, below] at (1.77,-0.05) {$q_m$};
+            \node[red!75!black, below] at (2.5,-0.05) {$q_t$};
+            \draw[very thin, gray] (2.62,0.27) -- (3.0,0.75);
+            \node[red!75!black, above, font=\small] at (3.05,0.72) {$q_m - q_t$};
+            % torque
+            \draw[->, thick] (2.5,1.05) ++(-30:0.3) arc (-30:210:0.3);
+            \node at (2.5,1.05) {\small $M_t$};
+            \node[anchor=east] at (-0.3,1) {(b)};
+        \end{scope}
+    \end{tikzpicture}
+    \caption{Shear flow for a counter-clockwise torque $M_t$ in (a) Configuration~1
+    and (b) Configuration~2. The arrow thickness gives the size of the shear flow.
+    The T-stiffeners are open sections and carry no shear flow.}
+    \label{fig:a3flow}
+\end{figure}
+
+\finalanswer{See Figure~\ref{fig:a3flow}. Configuration~1 has one constant shear flow around the box. In Configuration~2 the box plating carries $q_m$, the bottom plate under the trapezoids $q_t$ and the trapezoid legs and top the small difference $q_m - q_t$. The open T-stiffeners carry no shear flow.}
+
+\newpage
 \section{T-stiffener versus L-stiffener}
 \label{sec:a3-2}
 
