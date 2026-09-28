@@ -6,10 +6,13 @@
 \workedby{\tbd{naam}}
 
 \bigskip
-\tbd{Inleiding van dit hoofdstuk: de drie stijfferconfiguraties van het
-torsiekaster/dek, de afmetingen uit de opgave (T-stijffers, trapeziums,
-plaatdiktes), de opsplitsing in open en gesloten delen en de aannames
-($b\gg t_p$).}
+The three configurations are a box of $5b \times 2b$ with different stiffeners on the top and bottom plate. $M_t$ acts counter-clockwise through CT. We use the following geometry from Figures~7--9 of the assignment:
+\begin{itemize}
+    \item T-stiffener (Configuration~1 and the top of Configuration~2): web $b/2 \times t_p$, flange $b/4 \times 2t_p$.
+    \item Trapezoid (Configuration~2 and 3): base $5b/6$ on the plate, crown $b/3$ with thickness $t_p$, legs under $45^\circ$ with thickness $t_p/2$, so the height is $b/4$ and each leg is $\sqrt{2}\,b/4$ long. The small T on the crown has web and flange $b/4 \times t_p$.
+    \item The stiffeners are evenly distributed, so the three trapezoids have their centres at $y = 1.25b$, $2.5b$ and $3.75b$ from the side.
+\end{itemize}
+The thickness of the box plating is not given in the figures. We assumed $2t_p$. To check this, we modelled Configuration~3 with the same multi-cell method as in Assignment~2 (with $t_p$ for the vertical webs). With $2t_p$ plating this gives $I_p = 61.3\,b^3t_p$, $\tau_{max} = 0.0276\,M_t/(b^2t_p)$ and $M_t = 36.3\,b^2t_p\tau_{max}$, which is within 0.5\,\% of the given values. With $t_p$ plating all values are a factor two off.
 
 \section{Shear flow sketch for Configurations 1 and 2}
 \label{sec:a3-1}
@@ -63,8 +66,9 @@ The trapezoids form three extra closed cells with the bottom plate. In the legs 
         \begin{scope}
             \draw[line width=1.2pt] (0,0) rectangle (5,2);
             \foreach \x in {0.833,1.667,2.5,3.333,4.167}{\Tdown{\x}{2}{0.5}}
-            % trapezoids: base from x0 to x0+5/6, height b/4, 45 deg legs
-            \foreach \x in {0.625,2.083,3.542}{
+            % trapezoids: base from x0 to x0+5/6, height b/4, 45 deg legs,
+            % centres at 1.25b, 2.5b, 3.75b
+            \foreach \x in {0.833,2.083,3.333}{
                 \draw[line width=0.6pt] (\x,0) -- ({\x+0.25},0.25) -- ({\x+0.5833},0.25) -- ({\x+0.8333},0);
                 \Tup{\x+0.4167}{0.25}{0.25}
                 % net flow in legs and crown (q_m - q_t), thin
@@ -74,13 +78,13 @@ The trapezoids form three extra closed cells with the bottom plate. In the legs 
                 % base (q_t)
                 \draw[mid] ({\x+0.3},0) -- ({\x+0.53},0);}
             % bottom plate between trapezoids (q_m)
-            \foreach \x in {0.31,1.77,3.23,4.69}{\draw[big] ({\x-0.15},0) -- ({\x+0.15},0);}
+            \foreach \x in {0.42,1.875,3.125,4.58}{\draw[big] ({\x-0.15},0) -- ({\x+0.15},0);}
             % top plate and sides (q_m)
             \foreach \x in {1.25,2.917,4.583}{\draw[big] ({\x+0.2},2) -- ({\x-0.2},2);}
             \draw[big] (5,0.8) -- (5,1.2);
             \draw[big] (0,1.2) -- (0,0.8);
             % labels
-            \node[red!75!black, below] at (1.77,-0.05) {$q_m$};
+            \node[red!75!black, below] at (1.875,-0.05) {$q_m$};
             \node[red!75!black, below] at (2.5,-0.05) {$q_t$};
             \draw[very thin, gray] (2.62,0.27) -- (3.0,0.75);
             \node[red!75!black, above, font=\small] at (3.05,0.72) {$q_m - q_t$};
@@ -108,21 +112,92 @@ The T-stiffener is an open section, so its torsion stiffness follows from Saint-
 \begin{equation}
   I_{p,open} = \frac{1}{3}\sum_i b_i\,t_i^3 .
 \end{equation}
-This only depends on the length and thickness of the web and flange, not on how they are connected. In the lecturesslides from week 2 page 46. we saw that no matter how the plates are connected or oriented, $I_p$ stays the same. So an L-stiffener with the same web and flange gives exactly the same contribution to the torsion stiffness.
+This only depends on the length and thickness of the web and flange, not on how they are connected. In the lecture slides (week~2, slide~46) we saw that no matter how the plates are connected or oriented, $I_p$ stays the same. So an L-stiffener with the same web and flange gives exactly the same contribution to the torsion stiffness.
 
 \finalanswer{There is no difference. $I_{p,open} = \frac{1}{3}\sum b_i t_i^3$ only
 depends on the plate lengths and thicknesses, so the T- and L-stiffener give the
 same torsion stiffness contribution.}
 
+\newpage
 \section{Shear flow components}
 \label{sec:a3-3}
 
 \questionbox{Calculate the shear flow components $q_i(b,t_p,M_t)$ for
 Configurations 1 and 2. \textbf{(4 pts)}}
 
-\tbd{Uitwerking}
+Both configurations have closed parts (the cells) and open parts (the T-stiffeners). We use the same approach as in the lectures: the closed part follows from Bredt, the open part from Saint-Venant, and both parts twist with the same twist rate $\theta$:
+\begin{equation}
+  I_{p,c} = 4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\},
+  \qquad
+  I_{p,o} = \frac{1}{3}\sum_i L_i\,t_i^3,
+  \qquad
+  M_t = G\theta\,(I_{p,c} + I_{p,o}) .
+  \label{eq:a3-Ip}
+\end{equation}
+Filling $\theta$ into the $q$--$\theta$ relation $[\mathbf{S}]\{\mathbf{q}\} = 2G\theta\{\boldsymbol{\Omega}\}$ gives the shear flows:
+\begin{equation}
+  \{\mathbf{q}\} = \frac{2M_t\,[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}{I_{p,c} + I_{p,o}} .
+  \label{eq:a3-q}
+\end{equation}
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+\paragraph{Configuration 1.}
+One cell with $\Omega = 5b\cdot2b = 10b^2$ and
+$S = \oint \mathrm{d}s/t = 14b/(2t_p) = 7\,b/t_p$, so
+\begin{equation}
+  I_{p,c1} = \frac{4\,(10b^2)^2}{7b/t_p} = 57.14\,b^3t_p .
+\end{equation}
+Each T-stiffener gives $\frac{1}{3}\left(\frac{b}{2}t_p^3 + \frac{b}{4}(2t_p)^3\right) = \frac{5}{6}\,bt_p^3$. There are ten of them, so $I_{p,o1} = 8.33\,bt_p^3$. With Eq.~\eqref{eq:a3-q}:
+\begin{equation}
+  q_1 = \frac{2M_t\cdot\frac{10}{7}\,bt_p}{57.14\,b^3t_p + 8.33\,bt_p^3}
+      = \frac{M_t}{20b^2 + 2.92\,t_p^2}
+      \approx 0.0500\,\frac{M_t}{b^2} \quad (b \gg t_p).
+\end{equation}
+
+\paragraph{Configuration 2.}
+There is one main cell (m) and three trapezoid cells (t1--t3). The cell areas are
+\begin{equation*}
+  \Omega_t = \tfrac{1}{2}\left(\tfrac{5b}{6} + \tfrac{b}{3}\right)\tfrac{b}{4} = \tfrac{7}{48}\,b^2 = 0.146\,b^2,
+  \qquad
+  \Omega_m = 10b^2 - 3\Omega_t = 9.56\,b^2 .
+\end{equation*}
+The contour integrals (all in $b/t_p$) per part are:
+\begin{align*}
+  \text{box plating without the 3 bases:}\quad & \tfrac{14 - 3\cdot5/6}{2} = 5.750\\
+  \text{legs + crown of one trapezoid (shared wall):}\quad & \tfrac{2\cdot\sqrt{2}/4}{1/2} + \tfrac{1/3}{1} = 1.414 + 0.333 = 1.748\\
+  \text{base of one trapezoid:}\quad & \tfrac{5/6}{2} = 0.417
+\end{align*}
+This gives
+\begin{equation}
+  [\mathbf{S}] = \frac{b}{t_p}
+  \begin{bmatrix}
+    10.99  & -1.748 & -1.748 & -1.748 \\
+    -1.748 & 2.164  & 0      & 0      \\
+    -1.748 & 0      & 2.164  & 0      \\
+    -1.748 & 0      & 0      & 2.164
+  \end{bmatrix},
+  \qquad
+  \{\boldsymbol{\Omega}\} = b^2
+  \begin{Bmatrix} 9.563 \\ 0.146 \\ 0.146 \\ 0.146 \end{Bmatrix},
+\end{equation}
+where $S_{mm} = 5.750 + 3\cdot1.748$ and $S_{tt} = 1.748 + 0.417$. Solving:
+\begin{equation*}
+  [\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = bt_p\left\{1.467,\ 1.252,\ 1.252,\ 1.252\right\}^T,
+  \qquad
+  I_{p,c2} = 4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = 58.30\,b^3t_p .
+\end{equation*}
+The open part is five large T's and three small T's on the crowns, $\frac{1}{3}\left(\frac{b}{4} + \frac{b}{4}\right)t_p^3 = \frac{1}{6}bt_p^3$ each:
+$I_{p,o2} = 5\cdot\frac{5}{6} + 3\cdot\frac{1}{6} = 4.67\,bt_p^3$. With Eq.~\eqref{eq:a3-q}:
+\begin{align}
+  q_m &= \frac{2M_t\cdot1.467\,bt_p}{58.30\,b^3t_p + 4.67\,bt_p^3}
+      = \frac{M_t}{19.87b^2 + 1.59\,t_p^2} \approx 0.0503\,\frac{M_t}{b^2},\\
+  q_t &= \frac{2M_t\cdot1.252\,bt_p}{58.30\,b^3t_p + 4.67\,bt_p^3}
+      = \frac{M_t}{23.28b^2 + 1.86\,t_p^2} \approx 0.0430\,\frac{M_t}{b^2} .
+\end{align}
+The legs and crown carry the difference $q_m - q_t = 0.0074\,M_t/b^2$. The flow in the box plating is almost the same as in Configuration~1, because the trapezoid cells are small.
+
+\finalanswer{
+Configuration 1: $q_1 = \dfrac{M_t}{20b^2 + 2.92t_p^2} \approx 0.0500\,M_t/b^2$.\\
+Configuration 2: $q_m = \dfrac{M_t}{19.87b^2 + 1.59t_p^2} \approx 0.0503\,M_t/b^2$ (box plating), $q_t = \dfrac{M_t}{23.28b^2 + 1.86t_p^2} \approx 0.0430\,M_t/b^2$ (trapezoid base), and $q_m - q_t \approx 0.0074\,M_t/b^2$ in the legs and crowns. All counter-clockwise; the open T-stiffeners carry no shear flow.}
 
 \section{Maximum shear stress}
 \label{sec:a3-4}
@@ -136,12 +211,43 @@ Configurations 1 and 2. \textbf{(4 pts)}}
 \end{enumerate}}
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item \tbd{Uitwerking}
-  \item \tbd{Uitwerking}
+  \item In the closed walls $\tau = q/t$, with $q$ the net flow in that wall. In the open stiffeners the stress is largest at the surface of the thickest plate, $\tau_o = G\theta\,t = M_t\,t/(I_{p,c} + I_{p,o})$. For the $2t_p$ flanges of Configuration~1 this is $\tau_o = 2t_pM_t/(57.14\,b^3t_p) = 0.035\,(t_p/b)\,M_t/(b^2t_p)$, which is very small for $b \gg t_p$. So the maximum is always in the closed walls.
+
+  \emph{Configuration 1:} the flow is constant and all plating is $2t_p$, so the stress is the same everywhere in the box plating:
+  \begin{equation}
+    \tau_{max,1} = \frac{q_1}{2t_p} = \frac{M_t}{40\,b^2t_p} = 0.0250\,\frac{M_t}{b^2t_p} .
+  \end{equation}
+
+  \emph{Configuration 2:} Table~\ref{tab:a3-tau} gives the stress per wall. The largest value is in the box plating (sides, top plate and the bottom plate between the trapezoids). The thin legs ($t_p/2$) stay lower because they only carry the difference $q_m - q_t$.
+  \begin{table}[h]
+    \centering
+    \caption{Shear stress per wall in Configuration~2.}
+    \label{tab:a3-tau}
+    \begin{tabular}{lccc}
+      \toprule
+      Wall & $t$ & $q_{net}$ [$M_t/b^2$] & $\tau$ [$M_t/(b^2t_p)$] \\
+      \midrule
+      Box plating      & $2t_p$   & $q_m = 0.0503$         & \textbf{0.0252} \\
+      Trapezoid base   & $2t_p$   & $q_t = 0.0430$         & 0.0215 \\
+      Trapezoid legs   & $t_p/2$  & $q_m - q_t = 0.0074$   & 0.0148 \\
+      Trapezoid crown  & $t_p$    & $q_m - q_t = 0.0074$   & 0.0074 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+  \begin{equation}
+    \tau_{max,2} = \frac{q_m}{2t_p} = 0.0252\,\frac{M_t}{b^2t_p} .
+  \end{equation}
+
+  \item Configuration~3 has $\tau_{max,3} = 0.0277\,M_t/(b^2t_p)$, which is about 10\,\% higher than Configurations~1 and 2 (0.0250 and 0.0252). In Configurations~1 and 2 almost all torque goes through one big cell, so the flow is close to the average value $M_t/(2\cdot10b^2)$ everywhere. In Configuration~3 the vertical webs split the box into four cells next to each other. In our own model of Configuration~3 the two middle cells get a higher flow ($3.38\,G\theta bt_p$) than the two outer cells ($2.83\,G\theta bt_p$). The middle cells have no side wall, only webs that are shared with the neighbouring cell, so their contour is ``cheaper'' and they attract more flow. The highest stress is therefore in the top and bottom plating of the middle cells, between the trapezoids.
 \end{enumerate}
 
-\finalanswer{\tbd{kort en expliciet antwoord per deelvraag}}
+\finalanswer{
+\begin{enumerate}[label=\alph*., leftmargin=*]
+  \item Configuration~1: $\tau_{max,1} = 0.0250\,M_t/(b^2t_p)$, constant in all box plating. Configuration~2: $\tau_{max,2} = 0.0252\,M_t/(b^2t_p)$ in the box plating (sides, top plate and bottom plate between the trapezoids). The open stiffeners have a stress of order $t_p/b$ smaller.
+  \item Configuration~3 ($0.0277$) is about 10\,\% higher, because the webs make the flow uneven: the middle cells carry more flow than the outer cells.
+\end{enumerate}}
 
+\newpage
 \section{Specific torsion stiffness and strength}
 \label{sec:a3-5}
 
@@ -157,9 +263,59 @@ Configurations 1 and 2. \textbf{(4 pts)}}
 \end{enumerate}}
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item \tbd{Uitwerking}
-  \item \tbd{Uitwerking}
-  \item \tbd{Uitwerking}
+  \item From Eq.~\eqref{eq:a3-Ip}:
+  \begin{align}
+    I_{p,1} &= 57.14\,b^3t_p + 8.33\,bt_p^3 \approx 57.1\,b^3t_p,\\
+    I_{p,2} &= 58.30\,b^3t_p + 4.67\,bt_p^3 \approx 58.3\,b^3t_p .
+  \end{align}
+  The strength follows by setting $\tau_{max}$ from Section~\ref{sec:a3-4} equal to the allowable stress:
+  \begin{equation}
+    M_{t,1} = \frac{b^2t_p\,\tau_{max}}{0.0250} = 40.0\,b^2t_p\tau_{max},
+    \qquad
+    M_{t,2} = \frac{b^2t_p\,\tau_{max}}{0.0252} = 39.7\,b^2t_p\tau_{max} .
+  \end{equation}
+  As a check, for Configuration~1 the 1st Bredt formula gives directly $M_t = 2\Omega\,t\,\tau_{max} = 2\cdot10b^2\cdot2t_p\,\tau_{max} = 40\,b^2t_p\tau_{max}$.
+
+  For the specific values we divide by the amount of material $A$ (like the specific polar moment of inertia $I_p/A$ from the lectures). The box plating is $14b\cdot2t_p = 28\,bt_p$ in all configurations, so the difference is only in the stiffeners (Table~\ref{tab:a3-compare}).
+
+  \begin{table}[h]
+    \centering
+    \caption{Stiffness and strength of the three configurations. For Configuration~3 the material area is our own estimate (webs of $t_p$).}
+    \label{tab:a3-compare}
+    \begin{tabular}{lccc}
+      \toprule
+       & Config.~1 & Config.~2 & Config.~3 (given) \\
+      \midrule
+      $I_p$ [$b^3t_p$]                 & 57.1  & 58.3  & 61.6 \\
+      $\tau_{max}$ [$M_t/(b^2t_p)$]    & 0.0250 & 0.0252 & 0.0277 \\
+      $M_t$ [$b^2t_p\tau_{max}$]       & 40.0  & 39.7  & 36.1 \\
+      Material $A$ [$bt_p$]            & 38.0  & 36.6  & 36.6 \\
+      $I_p/A$ [$b^2$]                  & 1.50  & 1.59  & 1.68 \\
+      $M_t/A$ [$b\,\tau_{max}$]        & 1.05  & 1.09  & 0.99 \\
+      \bottomrule
+    \end{tabular}
+  \end{table}
+
+  \item \emph{Stiffness.} All three configurations have the same box with the same enclosed area $10b^2$ and the same plating. So the single cell of Configuration~1 is the base value. In Configuration~2 the three trapezoids add small closed cells, which gives 2\,\% extra. In Configuration~3 the trapezoids on both sides are connected by webs, so there are many more closed walls that can carry shear flow, which gives 8\,\% extra. Configuration~3 does this with less material than Configuration~1, so it has the highest specific stiffness.
+
+  \emph{Strength.} Here Configuration~3 is the weakest, about 10\,\% lower than Configurations~1 and 2. As explained in Section~\ref{sec:a3-4}, the webs make the flow in the middle cells higher than the average, so $\tau_{max}$ is reached at a lower torque. Configurations~1 and 2 are almost the same, because the trapezoid cells in Configuration~2 are small and hardly change the flow in the box.
+
+  \item Since all parts twist with the same $\theta$, the torque is divided over the parts in the same ratio as their $I_p$:
+  \begin{equation}
+    \frac{M_{t,o}}{M_{t,c}} = \frac{I_{p,o}}{I_{p,c}} =
+    \begin{cases}
+      \dfrac{8.33\,bt_p^3}{57.14\,b^3t_p} = 0.146\left(\dfrac{t_p}{b}\right)^2 & \text{Configuration 1}\\[10pt]
+      \dfrac{4.67\,bt_p^3}{58.30\,b^3t_p} = 0.080\left(\dfrac{t_p}{b}\right)^2 & \text{Configuration 2}
+    \end{cases}
+  \end{equation}
+  For example $b/t_p = 50$ gives $6\cdot10^{-5}$ and $3\cdot10^{-5}$, so the open stiffeners contribute practically nothing to the stiffness. For the strength it is the same: the stress in the open parts is $\tau_o = G\theta\,t$, which is a factor $\approx1.4\,t_p/b$ smaller than in the closed walls (about 3\,\% for $b/t_p = 50$). So the closed walls decide both the stiffness and the strength.
+
+  The difference between Configuration~1 and 2 shows why. In Configuration~2 the five T-stiffeners on the bottom are replaced by three closed trapezoids. Together they add $58.30 - 57.14 = 1.16\,b^3t_p$, so about $0.39\,b^3t_p$ per trapezoid. One T-stiffener only gives $\frac{5}{6}bt_p^3$, which is a factor of the order $(b/t_p)^2$ smaller. So a stiffener only helps for torsion when it forms a closed cell with the plate. Open stiffeners are useful for plate bending and buckling, not for torsion.
 \end{enumerate}
 
-\finalanswer{\tbd{kort en expliciet antwoord per deelvraag}}
+\finalanswer{
+\begin{enumerate}[label=\alph*., leftmargin=*]
+  \item $I_{p,1} = 57.14\,b^3t_p + 8.33\,bt_p^3 \approx 57.1\,b^3t_p$ and $M_{t,1} = 40.0\,b^2t_p\tau_{max}$; $I_{p,2} = 58.30\,b^3t_p + 4.67\,bt_p^3 \approx 58.3\,b^3t_p$ and $M_{t,2} = 39.7\,b^2t_p\tau_{max}$. Specific: $I_p/A = 1.50$ and $1.59\,b^2$.
+  \item Configuration~3 is the stiffest ($61.6\,b^3t_p$, +8\,\%) because it has the most closed walls, but the weakest ($36.1\,b^2t_p\tau_{max}$, $-10$\,\%) because the flow concentrates in the middle cells.
+  \item The open parts give only $0.146(t_p/b)^2$ (Config.~1) and $0.080(t_p/b)^2$ (Config.~2) of the stiffness and torque, and their stress is a factor $\approx1.4\,t_p/b$ lower. The closed parts decide both stiffness and strength.
+\end{enumerate}}
