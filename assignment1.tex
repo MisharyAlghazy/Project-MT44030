@@ -29,14 +29,18 @@ At the bottom of the section the contour lines are far apart, so the stress is l
 \end{figure}
 
 \finalanswer{$|\tau_{xy}|$ is maximal at the middle of the top plate, $(y,z)=(0,a)$. $|\tau_{xz}|$ is maximal on the two inclined side walls just below the $y$-axis (on both sides, with opposite sign).}
-\newpage
+
+
 \section{Inaccuracies of the Prandtl-based prediction}
 \label{sec:a1-2}
 
-For a hollow section, the solid-section stress function only gives the exact solution if the inner boundary lies exactly on one of its contour lines (so $\phi$ is constant along it). Figure~\ref{fig:a1-prandtl} shows that this is not the case here: the scaled inner boundary cuts across several contour lines instead of following one. This happens most near the inner top corners (dashed in the figure) and, to a lesser extent, at the upper part of the inclined walls. Because of this, two things go wrong. First, the predicted shear stress on the inner wall is not fully tangent to the boundary, so part of it points through the free surface. This is not possible in reality, because the inner surface is free of stress. Second, the size of the stress is wrong: a thin hollow wall should carry a roughly constant shear flow around the section, while the solid-section solution gives a stress that changes a lot from point to point. As a result, the torque-twist relation that follows from this stress function is also only approximate. The prediction is closest to reality at the centre of the top wall and at the bottom, because there the inner boundary runs almost parallel to a contour line.
+The stress function we used was derived for a solid section. For a hollow section it would only be exact if the inner boundary followed one of the contour lines of $\phi$, because then $\phi$ is constant along it. In Figure~\ref{fig:a1-prandtl} we can see that this is not really the case: the inner boundary crosses several contour lines. This is worst near the inner top corners (dashed in the figure), and to a smaller extent on the upper part of the inclined walls.
 
-\finalanswer{The Prandtl-based prediction does not satisfy the traction-free condition on the inner wall and gives the wrong shear flow magnitude. The error is largest at the inner top corners (dashed in Figure~\ref{fig:a1-prandtl}), and smallest at the centre of the top wall and at the bottom.}
+This causes two problems. First, the shear stress on the inner wall is no longer tangent to the boundary, so part of it would point through the inner surface. That cannot happen, since nothing acts on that surface. Second, the magnitude is off. In a thin-walled closed section we would expect a roughly constant shear flow around the section, but this solution gives a stress that varies quite a lot along the wall.
 
+The prediction works best at the centre of the top wall and at the bottom, since there the inner boundary runs almost parallel to the contour lines.
+
+\finalanswer{The largest error is at the inner top corners (dashed in Figure~\ref{fig:a1-prandtl}), where the predicted shear stress is not tangent to the inner wall and the shear flow is not constant. The prediction is most accurate at the centre of the top wall and at the bottom.}
 
 \section{Cross-sectional efficiency}
 \label{sec:a1-3}

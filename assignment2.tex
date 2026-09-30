@@ -165,7 +165,8 @@ With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
 \begin{align*}
 \text{cell 1:}\quad S_{11} &= \underbrace{\tfrac{1}{3}}_{\text{bottom}}
    + \underbrace{\tfrac{1}{3}}_{\text{inner bottom}}
-   + \underbrace{\tfrac{1}{3}}_{\text{side girder}} = 1,
+   + \underbrace{\tfrac{1}{3}}_{\text{side girder}} 
++ \underbrace{\tfrac{1}{2}}_{\text{Centre girder}}= 1.5,
    && S_{12} = -\tfrac{1}{3}\\
 \text{cell 2:}\quad S_{22} &= \underbrace{\tfrac{1.5}{3}}_{\text{bottom}}
    + \underbrace{\tfrac{1.5}{3}}_{\text{inner bottom}}
@@ -194,7 +195,7 @@ With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
 \begin{equation}
 [\mathbf{S}] = \frac{a}{t_p}
 \begin{bmatrix}
- 1          & -\tfrac13 & 0                          & 0          & 0    \\
+ 1.5         & -\tfrac13 & 0                          & 0          & 0    \\
  -\tfrac13  & \tfrac73  & -1                         & 0          & 0    \\
  0          & -1        & \tfrac94+\tfrac{\pi}{8}    & -\tfrac12  & 0    \\
  0          & 0         & -\tfrac12                  & 5          & -1.5 \\
@@ -203,11 +204,11 @@ With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
 \ \rightarrow\
 [\mathbf{S}]^{-1} = \frac{t_p}{a}
 \begin{bmatrix}
- 1.0605 & 0.1816 & 0.0702 & 0.0077 & 0.0023 \\
- 0.1816 & 0.5447 & 0.2105 & 0.0231 & 0.0069 \\
- 0.0702 & 0.2105 & 0.4678 & 0.0514 & 0.0154 \\
- 0.0077 & 0.0231 & 0.0514 & 0.2254 & 0.0676 \\
- 0.0023 & 0.0069 & 0.0154 & 0.0676 & 0.2203
+ 0.693035 & 0.118656 & 0.04583 & 0.0050389 & 0.00151164 \\
+ 0.118656 & 0.53953 & 0.20638 & 0.0226746 & 0.00680237 \\
+ 0.04583 & 0.20638 & 0.46617 & 0.051277 & 0.0153683 \\
+ 0.0050389 & 0.0226746 & 0.051277 & 0.2254 & 0.0676229 \\
+ 0.00151164 & 0.00680237 & 0.0153683 & 0.0676229 & 0.22087
 \end{bmatrix}
 \label{eq:B2_S}
 \end{equation}
@@ -217,42 +218,40 @@ Solving the $q$--$\theta$ relation gives
 $\{\mathbf{q}\} = 2G\theta[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}$ with
 \begin{equation*}
   [\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-  = a\,t_p\left\{1.4644,\ 1.3933,\ 1.2630,\ 0.9959,\ 0.8988\right\}^T,
+  = a\,t_p\left\{0.9504,\ 1.3065,\ 1.2294,\ 0.9922,\ 0.8977\right\}^T,
   \qquad
-  \{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = 11.065\,a^3t_p .
+  \{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = 10.36\,a^3t_p .
 \end{equation*}
 This is for the starboard half. The port half gives exactly the same contribution, so for the whole section $M_t = 2\cdot2\{\boldsymbol{\Omega}\}^T\{\mathbf{q}\}$
-(half-section vectors). Filling in $\{\mathbf{q}\}$ gives
+(half-section vectors). Filling in $\{\mathbf{q}\}$ for the entire section gives
 \begin{equation*}
   M_t = 8\,G\theta\,\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-      = 88.52\,G\theta\,a^3t_p
+      = 165.83\,G\theta\,a^3t_p
   \quad\rightarrow\quad
-  \theta = \frac{M_t}{88.52\,G\,a^3t_p} .
+  \theta = \frac{M_t}{165.83\,G\,a^3t_p} .
 \end{equation*}
-Substituting $\theta$ back into $\{\mathbf{q}\}$:
+Substituting $\theta$ back into $\{\mathbf{q}\}$ (halve section):
 \begin{equation*}
-  \{\mathbf{q}\} = \frac{M_t}{4}\cdot
+  \{\mathbf{q}\} = \frac{M_t}{2}\cdot
   \frac{[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
        {\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
 \end{equation*}
 \begin{equation}
-  \{\mathbf{q}\} = G\theta\,a\,t_p
-  \begin{Bmatrix} 2.929\\ 2.787\\ 2.526\\ 1.992\\ 1.798 \end{Bmatrix}
   = \frac{M_t}{a^2}
-  \begin{Bmatrix} 0.0331\\ 0.0315\\ 0.0285\\ 0.0225\\ 0.0203 \end{Bmatrix} .
+  \begin{Bmatrix} 0.02310\\ 0.0315\\ 0.0297\\ 0.0239\\ 0.0217 \end{Bmatrix} .
   \label{eq:B2_q}
 \end{equation}
 
 
 \finalanswer{
 \[
-q_1 = 0.0331\,\frac{M_t}{a^2},\quad
+q_1 = 0.0231\,\frac{M_t}{a^2},\quad
 q_2 = 0.0315\,\frac{M_t}{a^2},\quad
-q_3 = 0.0285\,\frac{M_t}{a^2},\quad
-q_4 = 0.0225\,\frac{M_t}{a^2},\quad
-q_5 = 0.0203\,\frac{M_t}{a^2},
+q_3 = 0.0297\,\frac{M_t}{a^2},\quad
+q_4 = 0.0239\,\frac{M_t}{a^2},\quad
+q_5 = 0.0217\,\frac{M_t}{a^2},
 \]
-all counter-clockwise, with $\theta = M_t/(88.52\,G\,a^3t_p)$. The same flows act in
+all counter-clockwise, with $\theta = M_t/(82.92\,G\,a^3t_p)$. The same flows act in
 the mirrored port cells.}
 
 
@@ -280,19 +279,19 @@ For an outer wall (or a wall facing the open hold) $q_i$ is the flow of that cel
     \toprule
     Wall & $t$ & $q_{net}$ [$M_t/a^2$] & $\tau = q_{net}/t$ [$M_t/(a^2t_p)$] \\
     \midrule
-    Centre girder                           & $2t_p$ & $0$                       & $0$ \\
-    Bottom and inner bottom, cell 1         & $3t_p$ & $q_1 = 0.0331$            & $0.0110$ \\
-    Side girder                             & $3t_p$ & $q_1-q_2 = 0.0016$        & $0.0005$ \\
+    Centre girder                           & $2t_p$ & $q_1 = 0.231$                       & $0.1155$ \\
+    Bottom and inner bottom, cell 1         & $3t_p$ & $q_1 = 0.0231$            & $0.0110$ \\
+    Side girder                             & $3t_p$ & $|q_1-q_2| = 0.084$        & $0.028$ \\
     Bottom and inner bottom, cell 2         & $3t_p$ & $q_2 = 0.0315$            & $0.0105$ \\
-    Bulkhead in double bottom               & $t_p$  & $q_2-q_3 = 0.0029$        & $0.0029$ \\
-    Bottom, bilge and side shell, cell 3    & $2t_p$ & $q_3 = 0.0285$            & $0.0143$ \\
-    Inner bottom under wing tank            & $3t_p$ & $q_3-q_4 = 0.0060$        & $0.0020$ \\
-    Side shell, cell 4                      & $2t_p$ & $q_4 = 0.0225$            & $0.0113$ \\
-    \textbf{Bulkhead, cell 4}               & $\boldsymbol{t_p}$ & $\boldsymbol{q_4 = 0.0225}$ & $\boldsymbol{0.0225}$ \\
-    Stringer deck                           & $t_p$  & $q_4-q_5 = 0.0022$        & $0.0022$ \\
-    Side shell, cell 5                      & $2t_p$ & $q_5 = 0.0203$            & $0.0102$ \\
-    Bulkhead, cell 5                        & $t_p$  & $q_5 = 0.0203$            & $0.0203$ \\
-    Deck                                    & $3t_p$ & $q_5 = 0.0203$            & $0.0068$ \\
+    Bulkhead in double bottom               & $t_p$  & $q_2-q_3 = 0.00191$        & $0.00191$ \\
+    Bottom, bilge and side shell, cell 3    & $2t_p$ & $q_3 = 0.0297$            & $0.01485$ \\
+    Inner bottom under wing tank            & $3t_p$ & $q_3-q_4 = 0.00572$        & $0.00191$ \\
+    Side shell, cell 4                      & $2t_p$ & $q_4 = 0.0239$            & $0.01195$ \\
+    \textbf{Bulkhead, cell 4}               & $\boldsymbol{t_p}$ & $\boldsymbol{q_4 = 0.0239}$ & $\boldsymbol{0.0239}$ \\
+    Stringer deck                           & $t_p$  & $q_4-q_5 = 0.0023$        & $0.0023$ \\
+    Side shell, cell 5                      & $2t_p$ & $q_5 = 0.0217$            & $0.01085$ \\
+    Bulkhead, cell 5                        & $t_p$  & $q_5 = 0.0217$            & $0.0217$ \\
+    Deck                                    & $3t_p$ & $q_5 = 0.0217$            & $0.0072$ \\
     \bottomrule
   \end{tabular}
 \end{table}
@@ -302,7 +301,7 @@ The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~
 \finalanswer{The maximum shear stress occurs in the longitudinal bulkhead of the lower wing tank (cell~4, $y=\pm2.5a$, $a<z<3a$), on both sides of the ship:
 
 \[
-  \tau_{max} = \frac{q_4}{t_p} = 0.0225\,\frac{M_t}{a^2t_p} = 1.99\,G\theta\,a .
+  \tau_{max} = \frac{q_4}{t_p} = 0.0239\,\frac{M_t}{a^2t_p}
 \]}
 
 \newpage
@@ -311,49 +310,10 @@ The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~
 \section{Torsional stiffness and strength}
 \label{sec:a2-4}
 
-\questionbox{\begin{enumerate}[label=\alph*., leftmargin=*]
-  \item Explain the difference between strength and stiffness. \textbf{(1 pt)}
-  \item Analytically calculate the torsional stiffness $I_{p,B2}(a,t_p)$ for
-        design B2 and compare this with the value
-        $I_{p,B1}(a,t_p)\approx108.70\,a^3t_p$ of design B1. Discuss the origin
-        of possible differences. \textbf{(2 pts)}
-  \item Calculate the strength $M_{t,B2}(a,t_p,\tau_{max})$ for design B2 and
-        compare this with the value
-        $M_{t,B1}(a,t_p,\tau_{max})\approx75.50\,a^2t_p\tau_{max}$ of design B1.
-        Discuss the origin of possible differences. \textbf{(2 pts)}
-\end{enumerate}}
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
    \item \textbf{Strength vs.\ stiffness.}
-  Stiffness says how much something deforms under a load, strength says how much load it can take before it breaks or yields. They sound similar, but they are really two different things.
-
-  A good example of something that is stiff but not strong is glass. A glass plate hardly bends when you push on it (its $E$ of about 70\,GPa is similar to aluminium), but it breaks suddenly at a fairly low stress because it is brittle and small surface cracks grow very fast. The other way around, a nylon fishing
-  line is strong but not stiff: it can hold a heavy fish without breaking, but it stretches a lot before that happens.
-
-  For torsion it works the same way. The stiffness follows from the
-  
-  $M_t$--$\theta$ relation
-  \begin{equation}
-    M_t = G\,\theta\,I_p ,
-  \end{equation}
-  
-  so $GI_p$ tells you how much torque is needed to twist the section. $G$ comes from the material and $I_p$ from the shape of the whole section. The strength is the torque at which the shear stress $\tau = q/t_p$ reaches $\tau_{max}$ somewhere in the section. That means strength is decided by one weak spot, usually a thin plate with a large shear flow, while stiffness depends on the whole section.
-
-
-
-  \emph{Strength} is the maximum load the section can carry before the stress
-  somewhere reaches the allowable value $\tau_{max}$. For torsion we look at the
-  shear stress $\tau(s_i) = q_i/t_p(s_i)$ and find the location where it is highest.
-  The strength is the torque $M_t$ for which $\tau$ at that location equals
-  $\tau_{max}$. So strength is decided by one critical point in the section,
-  usually a thin plate that carries a large shear flow.
-
-  Because of this, a design change can affect the two very differently. An example
-  from the lectures is the open and closed thin walled circular section: closing
-  the section makes it a factor $3(r/t_p)^2$ stiffer, but the maximum stress also
-  depends on where the thinnest, most loaded plate is. A structure can be stiff
-  but not strong (a thin plate somewhere is overloaded), or strong but not stiff
-  (low stresses, but still a lot of twist).
+  Stiffness says how much something deforms under a load, strength says how much load it can take before it breaks or yields. 
 
   \item \textbf{Torsional stiffness of B2.}
   From the $M_t$--$\theta$ relation of the lectures:
@@ -364,15 +324,14 @@ The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~
   halves:
   \begin{equation}
     I_{p,B2} = 2\cdot4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-             = 8\cdot11.065\,a^3t_p = 88.52\,a^3t_p .
+             = 8\cdot20.73\,a^3t_p = 165.83\,a^3t_p .
   \end{equation}
   Compared to B1:
   \begin{equation}
-    \frac{I_{p,B2}}{I_{p,B1}} = \frac{88.52}{108.70} = 0.81 ,
+    \frac{I_{p,B2}}{I_{p,B1}} = \frac{165.83}{108.70} = 1.53 ,
   \end{equation}
-  so B2 is about 19\,\% \emph{less} stiff, even though it uses the same amount of material and has one extra stringer and girder.
+  so B2 is about 50\,\% \emph{more} stiff, this is due to the addition of an extra deck and an extra girder in the double hull \& bottom.
 
-  The reason is where the material is placed. In Bredt theory the stiffness is mainly decided by the enclosed area and by $\oint\mathrm{d}s/t$ along the outer contour of the closed part (the walls that carry the full cell flow). The outer parts is the same for both designs, so $\{\boldsymbol{\Omega}\}$ hardly changes. The new side girder and stringer deck are internal walls: they only carry the difference between two cell flows ($q_1-q_2$ and $q_4-q_5$, both below $0.0025\,M_t/a^2$), so they add almost nothing to $I_p$. The material for these walls is taken from the longitudinal bulkhead, which goes from $2.5t_p$ to $t_p$. That bulkhead is part of the outer contour of the closed structure (it faces the open hold), so its $L/t$ term goes up from $5a/(2.5t_p) = 2\,a/t_p$ to $5a/t_p$. The thicker inner bottom in B2 ($3t_p$ instead of $2t_p$) helps a bit, but not enough to compensate.
 
   \item \textbf{Strength of B2.}
   The shear stress reaches $\tau_{max}$ first in the bulkhead of cell~4
@@ -381,41 +340,27 @@ The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~
   Section~\ref{sec:a2-2}:
   \begin{equation}
     \tau_{max} = \frac{q_4}{t_p}
-    = \frac{M_t}{4\,t_p}\cdot
+    = \frac{M_t}{2\,t_p}\cdot
       \frac{\big([\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}\big)_4}
            {\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
-    = \frac{M_t}{4\,t_p}\cdot\frac{0.9959\,a\,t_p}{11.065\,a^3t_p}
-    = 0.0225\,\frac{M_t}{a^2t_p} .
+    = 0.0239\,\frac{M_t}{a^2t_p} .
   \end{equation}
   Setting $\tau = \tau_{max}$ and solving for $M_t$:
   \begin{equation}
     M_{t,B2} = \frac{4\,t_p\,\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
                     {\big([\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}\big)_4}\,\tau_{max}
-             = \frac{4\cdot11.065}{0.9959}\,a^2t_p\,\tau_{max}
-             = 44.44\,a^2t_p\,\tau_{max} .
+             = \frac{4\cdot20.72}{1.9844}\,a^2t_p\,\tau_{max}
+             = 41.77\,a^2t_p\,\tau_{max} .
   \end{equation}
   Compared to B1:
   \begin{equation}
-    \frac{M_{t,B2}}{M_{t,B1}} = \frac{44.44}{75.50} = 0.59 ,
+    \frac{M_{t,B2}}{M_{t,B1}} = \frac{41.77}{75.50} = 0.55 ,
   \end{equation}
-  so B2 can carry about 41\,\% less torque.
-
-  In B1 the maximum stress is in the $2t_p$ side shell of the wing tank. In B2 it moves to the bulkhead of cell~4, which is only $t_p$ thick but carries exactly the same flow $q_4$ as the side shell next to it. The flow there is actually a bit lower than in B1 ($0.0225$ vs.\ $0.0265\,M_t/a^2$), because the wing tank is now split into two cells. But since the plate is half as thick, the stress still goes up by a factor of about 1.7. That is why the strength drops much more (41\,\%) than the stiffness (19\,\%). The extra side girder and stringer deck may be useful for other things (bending, buckling of the plating, local loads from the tanks), but for torsion they make the section worse.
+  so B2 can carry about 45\,\% less torque.
+The B2 section is significantly worse for torque in comparison to B1. This is mainly due to the smaller plate thicknesses in the inner tank hull plate, the most load carrying plate zone. The addition of decks and girders is insufficient to this reduction in thickness.
 \end{enumerate}
 
-\finalanswer{
-\begin{enumerate}[label=\alph*., leftmargin=*]
-  \item Stiffness ($GI_p$, from $M_t = G\theta I_p$) is the resistance against
-        twisting of the whole section; strength is the maximum torque before
-        $\tau = q/t_p$ reaches $\tau_{max}$ in the most critical point.
-  \item $I_{p,B2} = 8\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-        = 88.52\,a^3t_p$, which is 19\,\% lower than $I_{p,B1} = 108.70\,a^3t_p$,
-        because material is moved from the outer contour (bulkhead $2.5t_p\to t_p$)
-        to internal walls that carry almost no net shear flow.
-  \item $M_{t,B2} = 44.44\,a^2t_p\,\tau_{max}$, which is 41\,\% lower than
-        $M_{t,B1} = 75.50\,a^2t_p\,\tau_{max}$, because the maximum stress now occurs
-        in the thin ($t_p$) bulkhead of the lower wing tank.
-\end{enumerate}}
+
 
 
 \newpage
@@ -423,13 +368,6 @@ The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~
 \newpage
 \section{Sectorial coordinate and sectorial area moment}
 \label{sec:a2-5}
-
-\questionbox{Calculate and plot, for this U-shaped structure, the sectorial
-coordinate distribution $\omega(s)$ as well as the sectorial area moment
-$S_\omega(s)$ for design BU, in order to show the cross-sectional warping
-displacement and shear stress distribution. Sketch the distributions in the
-U-shaped section. \textbf{(3 pts)}}
-
 \subsection{Pole coordinates}
 
 The pole must be placed in the twist centre, because only then does $\omega$ describe pure warping without a contribution from bending. The twist centre is at the same place as the shear centre S, the point through which a shear force causes bending without twisting. Because of the symmetry of the section, S lies on the centre line. Its distance $e$ below the bottom plate comes from moment equilibrium of the shear flows due to a horizontal shear force $F_y$ acting through S. The geometry, contour points and pole are shown in Figure~\ref{fig:BU_section}.
