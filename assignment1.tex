@@ -1,83 +1,68 @@
 \chapter{Closed Section A}
 \label{ch:assignment1}
 
-\bigskip
+\begingroup\itshape Assignment 1 (9 points)\endgroup
 
 \section{Location of maximum shear stress}
 \label{sec:a1-1}
-The shear stresses follow from the derivatives of the Prandtl stress function:
+
+The shear stresses follow from the Prandtl stress function:
 \begin{equation}
     \tau_{xy} = \frac{\partial\phi}{\partial z},
     \qquad
     \tau_{xz} = -\frac{\partial\phi}{\partial y}
     \label{eq:a1-tau}
 \end{equation}
-So the shear stress is always tangent to the contour lines of $\phi$, and its size is equal to the slope of $\phi$. In a contour plot the slope is large where the contour lines are close together. Each stress component only depends on the slope in one direction: $\tau_{xy}$ on the slope in $z$-direction and $\tau_{xz}$ on the slope in $y$-direction.
+The shear stress is tangent to the contour lines of $\phi$ and its size is equal to the slope of $\phi$. The slope is large where many contour lines are close together. $\tau_{xy}$ depends on the slope in $z$-direction and $\tau_{xz}$ on the slope in $y$-direction.
 
-In Figure~\ref{fig:a1-prandtl} we see the following:
-\begin{itemize}
-    \item At the \emph{middle of the top plate}, around $(y,z)=(0,a)$, all contour lines are squeezed into the thin top wall and they run horizontally. So $\phi$ changes fast in $z$-direction and not at all in $y$-direction. From Eq.~\eqref{eq:a1-tau} this means that $\tau_{xy}$ is maximal here and $\tau_{xz}=0$.
-    \item On the \emph{inclined side walls}, just below the $y$-axis, the contour lines are also close together, but here they run steeply. So $\phi$ now changes mostly in $y$-direction, which gives the maximum $\tau_{xz}$. Because the flow goes around the section, $\tau_{xz}$ has opposite signs on the left and right wall.
-\end{itemize}
-At the bottom of the section the contour lines are far apart, so the stress is low there. In the outer top corners the contour lines bend away from the corner, so the stress goes to zero there.
+In Figure~\ref{fig:a1-prandtl} the most contour lines (13) fit in the top plate, and there they run horizontally. So $\phi$ changes fast in $z$-direction, which gives the maximum $|\tau_{xy}|$ in the middle of the top plate, with $\tau_{xz}=0$. On the inclined walls the lines run steeply, so there $\phi$ changes mostly in $y$-direction. Most lines fit in these walls just below the $y$-axis (11), which gives the maximum $|\tau_{xz}|$ there, with opposite sign on the left and right wall. In the bottom only 5 to 7 lines fit in the wall, so the stress is lower there.
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.95\linewidth]{figures/A1_prandtl (2).jpeg}
-    \caption{Contours of the Prandtl stress function in the wall of section A (based on Figure~4 of the assignment, $k=0.8$). Marked are the locations of maximum $|\tau_{xy}|$ and $|\tau_{xz}|$ (Question~\ref{sec:a1-1}) and the regions with the highest inaccuracy (dashed, Question~\ref{sec:a1-2}).}
+    \includegraphics[width=0.8\linewidth]{figures/a1_prandtl_marked}
+    \caption{Contours of the Prandtl stress function of section A (Figure~4 of the assignment) with the locations of maximum $|\tau_{xy}|$ and $|\tau_{xz}|$ and the regions with the highest inaccuracy (dashed).}
     \label{fig:a1-prandtl}
 \end{figure}
 
-\finalanswer{$|\tau_{xy}|$ is maximal at the middle of the top plate, $(y,z)=(0,a)$. $|\tau_{xz}|$ is maximal on the two inclined side walls just below the $y$-axis (on both sides, with opposite sign).}
-
+\finalanswer{$|\tau_{xy}|$ is maximal in the middle of the top plate. $|\tau_{xz}|$ is maximal on the two inclined walls just below the $y$-axis, with opposite sign on both sides.}
 
 \section{Inaccuracies of the Prandtl-based prediction}
 \label{sec:a1-2}
 
-The stress function we used was derived for a solid section. For a hollow section it would only be exact if the inner boundary followed one of the contour lines of $\phi$, because then $\phi$ is constant along it. In Figure~\ref{fig:a1-prandtl} we can see that this is not really the case: the inner boundary crosses several contour lines. This is worst near the inner top corners (dashed in the figure), and to a smaller extent on the upper part of the inclined walls.
+The inner boundary is free of stress, so for an exact solution $\phi$ would have to be constant along it, which means the inner boundary should follow one contour line. In Figure~\ref{fig:a1-prandtl} this is not the case. This gives two errors:
+\begin{itemize}
+    \item At the inner top corners and along the inner side of the inclined walls, contour lines end on the inner boundary. There the predicted shear stress is not tangent to the boundary, so part of it points through the free surface.
+    \item The value of $\phi$ on the inner boundary is about $0.2$ at the top plate, but only about $0.1$ at the bottom. In a closed thin-walled section the shear flow should be constant around the section (Bredt), so the predicted stress at the bottom is too low.
+\end{itemize}
+The prediction is only good in the middle of the top plate, where the inner boundary follows the contour lines.
 
-This causes two problems. First, the shear stress on the inner wall is no longer tangent to the boundary, so part of it would point through the inner surface. That cannot happen, since nothing acts on that surface. Second, the magnitude is off. In a thin-walled closed section we would expect a roughly constant shear flow around the section, but this solution gives a stress that varies quite a lot along the wall.
-
-The prediction works best at the centre of the top wall and at the bottom, since there the inner boundary runs almost parallel to the contour lines.
-
-\finalanswer{The largest error is at the inner top corners (dashed in Figure~\ref{fig:a1-prandtl}), where the predicted shear stress is not tangent to the inner wall and the shear flow is not constant. The prediction is most accurate at the centre of the top wall and at the bottom.}
+\finalanswer{The inner boundary is not a contour line of $\phi$, so the predicted stress is not tangent to the inner boundary and the shear flow is not constant. The largest errors are at the inner top corners and along the inner side of the inclined walls (dashed in Figure~\ref{fig:a1-prandtl}).}
 
 \section{Cross-sectional efficiency}
 \label{sec:a1-3}
 
-\paragraph{Areas.}
-The inner boundary is the outer boundary scaled by $k$. Areas scale with length$^2$, so
+The inner boundary is the outer boundary scaled by $k$. Areas scale with length$^2$ and torsional constants with length$^4$, so
 \begin{equation}
-    A_{inner} = k^2 A_{solid},
-    \qquad
-    A_{hollow} = A_{solid} - A_{inner} = (1-k^2)\,A_{solid}
+    A_{inner} = k^2 A_{solid}, \qquad A_{hollow} = (1-k^2)\,A_{solid}, \qquad I_{p,inner} = k^4\,I_{p,solid}
 \end{equation}
-
-\paragraph{Torsional constants.}
-The torsional constant has the unit length$^4$ (e.g.\ $I_p = \frac{\pi}{2}r^4$ for a circle). Since the inner section is the solid section scaled by $k$:
-\begin{equation}
-    I_{p,inner} = k^4\,I_{p,solid}
-\end{equation}
-In the lectures, the hollow ellipse was solved by subtracting the torsional constant of the hole from that of the solid section, $M_t = G\theta\,(I_{p,0} - I_{p,i})$. This is exact when the inner boundary lies on a contour line of $\phi$. As shown in Question~\ref{sec:a1-2}, that is not fully true for section A, so here it is an approximation:
+As for the hollow ellipse in the lectures, the torsional constant of the hole is subtracted from that of the solid section. This is only exact when the inner boundary is a contour line, which is not fully the case here (Question~\ref{sec:a1-2}), so
 \begin{equation}
     I_{p,hollow} \approx I_{p,solid} - I_{p,inner} = (1-k^4)\,I_{p,solid}
 \end{equation}
-
-\paragraph{Cross-sectional efficiency.}
+and
 \begin{equation}
     \eta(k) = \frac{(I_p/A)_{hollow}}{(I_p/A)_{solid}}
     = \frac{1-k^4}{1-k^2}
     = \frac{(1-k^2)(1+k^2)}{1-k^2}
-    = 1+k^2
+    = 1+k^2 .
 \end{equation}
-This is the same result as for the hollow circle in the lectures. It is plotted in Figure~\ref{fig:efficiency}.
 
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
         \begin{axis}[
-            width=0.7\textwidth,
-            height=0.45\textwidth,
+            width=0.65\textwidth,
+            height=0.4\textwidth,
             xlabel={Scaling factor $k$ [-]},
             ylabel={Ratio hollow / solid [-]},
             xmin=0, xmax=1,
@@ -91,20 +76,15 @@ This is the same result as for the hollow circle in the lectures. It is plotted 
             \addplot[thick, blue] {1 + x^2};
             \addlegendentry{$\eta(k) = 1+k^2$}
             \addplot[thick, red, dashed] {1 - x^4};
-            \addlegendentry{$I_{p,hollow}/I_{p,solid} = 1-k^4$ (stiffness, strength)}
+            \addlegendentry{$I_{p,hollow}/I_{p,solid} = 1-k^4$}
             \addplot[thick, black, dotted] {1 - x^2};
             \addlegendentry{$A_{hollow}/A_{solid} = 1-k^2$}
         \end{axis}
     \end{tikzpicture}
-    \caption{Cross-sectional efficiency $\eta(k)$ and the relative stiffness, strength and area of the hollow section as a function of $k$.}
+    \caption{Cross-sectional efficiency $\eta(k)$ and the relative stiffness and area of the hollow section.}
     \label{fig:efficiency}
 \end{figure}
 
-\paragraph{Efficiency versus strength.}
-The efficiency increases with $k$, from 1 for the solid section to 2 for a very thin wall. Taking material away from the core is efficient, because the core only carries a small part of the stress. But the absolute stiffness goes down with $(1-k^4)$. The strength goes down in the same way: the maximum shear stress stays on the outer boundary, and for the same torque it becomes a factor $1/(1-k^4)$ higher (compare $\phi \propto M_t/(1-k^4)$ for the hollow ellipse in the lectures). So
-\begin{equation}
-    M_{t,max,hollow} = (1-k^4)\,M_{t,max,solid}
-\end{equation}
-For example, at $k=0.8$ the section uses 36\% of the material and $\eta=1.64$, but it only carries 59\% of the torque of the solid section. Above $k\approx0.9$ the efficiency hardly increases anymore, while the strength drops quickly. Very thin walls can also buckle in shear, and the Prandtl approximation becomes worse (Question~\ref{sec:a1-2}). So a moderate $k$ gives the best balance between saving material and keeping enough strength.
+The efficiency goes up with $k$, from 1 for a solid section to 2 for a very thin wall, because the material near the centre carries little stress. But the stiffness goes down with $(1-k^4)$, and so does the strength: the maximum stress stays on the outer boundary and becomes $1/(1-k^4)$ times higher for the same torque, so $M_{t,max,hollow} = (1-k^4)\,M_{t,max,solid}$. At $k=0.8$ the section uses 36\,\% of the material with $\eta=1.64$, but carries only 59\,\% of the torque. Above $k\approx0.9$ the efficiency hardly increases, while the strength drops fast and thin walls can buckle. So $k$ should not be chosen too close to 1.
 
 \finalanswer{$A_{inner}=k^2A_{solid}$, $A_{hollow}=(1-k^2)A_{solid}$, $I_{p,inner}=k^4I_{p,solid}$, $I_{p,hollow}\approx(1-k^4)I_{p,solid}$ and $\eta(k)=1+k^2$. The efficiency increases with $k$, but the stiffness and strength decrease with $(1-k^4)$.}
