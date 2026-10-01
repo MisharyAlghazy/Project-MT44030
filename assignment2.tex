@@ -1,19 +1,20 @@
 \chapter{Open Sections B}
 \label{ch:assignment2}
 
-\begingroup\itshape Assignment 2 --- 20 points\endgroup
-
-
+\begingroup\itshape Assignment 2 (20 points)\endgroup
 
 \bigskip
-
+The plate thicknesses of designs B1 and B2 are read from Figures~5 and~6 of the assignment and are listed in Table~\ref{tab:B1B2}. Because of symmetry we only work with the starboard half of the section.
 
 \begin{table}[h]
   \centering\small
-  \caption{Plate thicknesses of the half section.}
+  \caption{Plate thicknesses of the half section (from the legends of Figures~5 and~6).}
   \label{tab:B1B2}
   \begin{tabular}{llcc}
-        centre girder (half)      & $y=0$, $0<z<a$          & $2t_p$   & $2t_p$ \\
+    \toprule
+    Plate & Position & B1 & B2 \\
+    \midrule
+    centre girder (half)      & $y=0$, $0<z<a$          & $2t_p$   & $2t_p$ \\
     bottom plating            & $0<y<2.5a$              & $3t_p$   & $3t_p$ \\
     bottom, bilge, side shell & $y>2.5a$ up to the deck & $2t_p$   & $2t_p$ \\
     inner bottom              & $0<y<4a$, $z=a$         & $2t_p$   & $3t_p$ \\
@@ -21,11 +22,17 @@
     deck                      & $2.5a<y<4a$, $z=5a$     & $3t_p$   & $3t_p$ \\
     side girder               & $y=a$, $0<z<a$          & --       & $3t_p$ \\
     stringer deck             & $2.5a<y<4a$, $z=3a$     & --       & $t_p$  \\
+    \bottomrule
   \end{tabular}
 \end{table}
 
+
+\newpage
 \section{Shear flow sketch for design B2}
 \label{sec:a2-1}
+
+
+All cells have a counter-clockwise shear flow, in the same direction as $M_t$. In a wall between two cells only the difference between the two flows is left. The port cells are the mirror image of the starboard cells and carry the same flow, so the two flows cancel in the centre girder. The arrow sizes in Figure~\ref{fig:shearflow-B2} follow from the values of Question~\ref{sec:a2-2}.
 
 \begin{figure}[H]
     \centering
@@ -64,24 +71,24 @@
         % ---------------- shear flow arrows ----------------
         % bottom shell
         \flow{0.5}{0}{1}{0}{0.0331}
-        \flow{1.75}{0}{1}{0}{0.0312}
-        \flow{3.0}{0}{1}{0}{0.0278}
+        \flow{1.75}{0}{1}{0}{0.0315}
+        \flow{3.0}{0}{1}{0}{0.0285}
         % inner bottom
         \flow{0.5}{1}{-1}{0}{0.0331}
-        \flow{1.75}{1}{-1}{0}{0.0312}
-        \flow{3.25}{1}{-1}{0}{0.0053}
+        \flow{1.75}{1}{-1}{0}{0.0315}
+        \flow{3.25}{1}{-1}{0}{0.0060}
         % girders in the double bottom
-        \flow{1}{0.5}{0}{1}{0.0019}
-        \flow{2.5}{0.5}{0}{1}{0.0034}
+        \flow{1}{0.5}{0}{1}{0.0016}
+        \flow{2.5}{0.5}{0}{1}{0.0030}
         % side shell
-        \flow{4}{0.75}{0}{1}{0.0278}
+        \flow{4}{0.75}{0}{1}{0.0285}
         \flow{4}{2}{0}{1}{0.0225}
         \flow{4}{4}{0}{1}{0.0203}
         % inner side wall of the wing tanks
         \flow{2.5}{2}{0}{-1}{0.0225}
         \flow{2.5}{4}{0}{-1}{0.0203}
         % stringer deck and deck
-        \flow{3.25}{3}{-1}{0}{0.0021}
+        \flow{3.25}{3}{-1}{0}{0.0022}
         \flow{3.25}{5}{-1}{0}{0.0203}
 
         % ---------------- cell numbers ----------------
@@ -113,37 +120,38 @@
     \end{tikzpicture}
     \caption{Shear flow in design B2 for a counter-clockwise torque $M_t$. The arrow
     thickness is proportional to the magnitude of the shear flow. The cells are
-    numbered 1--5 on both sides; the port cells (grey) are the mirror images of the
-    starboard cells and carry the same shear flow. Because the two cells~1 on either
-    side of the centre girder have equal flow, there is no net shear flow through
-    the centre girder.}
+    numbered 1--5 on both sides; the port cells (grey) are the mirror image of the
+    starboard cells and carry the same shear flow, so there is no net shear flow
+    through the centre girder.}
     \label{fig:shearflow-B2}
 \end{figure}
 
-\newpage
 \section{Shear flow per cell for design B2}
 \label{sec:a2-2}
 
-\questionbox{Calculate the shear flow per cell for design B2. Present all partial
-answers. \textbf{(2 pts)}}
+
 
 We use the multi-cell Bredt theory from the lectures. The $M_t$--$q$ relation (1st Bredt formula) and the $q$--$\theta$ relation (2nd Bredt formula, one for every cell) are
-
 \begin{equation}
   M_t = 2\{\boldsymbol{\Omega}\}^T\{\mathbf{q}\}, \qquad
   [\mathbf{S}]\{\mathbf{q}\} = 2G\theta\{\boldsymbol{\Omega}\},
   \label{eq:B2_bredt}
 \end{equation}
-
-where all cells have the same twist rate $\theta$ (compatibility because the section
-rotates as a rigid body). The contour matrix $[\mathbf{S}]$ has on the diagonal the
-contour integral around cell $i$ and off the diagonal minus the integral over the
-wall shared by cells $i$ and $j$:
+where all cells have the same twist rate $\theta$, because the section twists as a rigid body. Solving this system gives
+\begin{equation}
+  \theta = \frac{M_t}{4G}\,\frac{1}{\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}},
+  \qquad
+  \{\mathbf{q}\} = \frac{M_t}{2}\,\frac{[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}{\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}} .
+  \label{eq:B2_solution}
+\end{equation}
+The contour matrix $[\mathbf{S}]$ has the contour integral around cell $i$ on the diagonal, and minus the integral over the wall shared by cells $i$ and $j$ off the diagonal:
 \begin{equation}
   S_{ii} = \oint_i \frac{\mathrm{d}s}{t_p(s)}, \qquad
   S_{ij} = -\int_{ij} \frac{\mathrm{d}s}{t_p(s)} .
 \end{equation}
 
+\paragraph{Symmetry.}
+Port cell~1 and starboard cell~1 have the same shear flow $q_1$, and they share the centre girder. In the centre girder the two flows go in opposite directions, so the net flow there is $q_1-q_1=0$. The centre girder therefore does not count in $S_{11}$, and we only have to solve the five starboard cells. For the full section every product $\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}$ is twice the value of the half section. As a check we used the same approach for B1, which gives $I_{p,B1}=108.7\,a^3t_p$ and $M_{t,B1}=75.5\,a^2t_p\tau_{max}$, the same as the values given in the assignment.
 
 \paragraph{Cell areas}
 \begin{align*}
@@ -155,18 +163,13 @@ wall shared by cells $i$ and $j$:
 \Omega_4 &= 1.5a\cdot 2a = 3a^2 && \text{(lower wing tank)}\\
 \Omega_5 &= 1.5a\cdot 2a = 3a^2 && \text{(upper wing tank)}
 \end{align*}
-so
-\begin{equation*}
-  \{\boldsymbol{\Omega}\} = a^2\left\{1,\ 1.5,\ 1.25+\tfrac{\pi}{16},\ 3,\ 3\right\}^T .
-\end{equation*}
 
 \paragraph{Contour integrals per cell}
-With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
+With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$; the bilge arc has length $\frac{\pi}{2}\cdot0.5a$):
 \begin{align*}
 \text{cell 1:}\quad S_{11} &= \underbrace{\tfrac{1}{3}}_{\text{bottom}}
    + \underbrace{\tfrac{1}{3}}_{\text{inner bottom}}
-   + \underbrace{\tfrac{1}{3}}_{\text{side girder}} 
-+ \underbrace{\tfrac{1}{2}}_{\text{Centre girder}}= 1.5,
+   + \underbrace{\tfrac{1}{3}}_{\text{side girder}} = 1,
    && S_{12} = -\tfrac{1}{3}\\
 \text{cell 2:}\quad S_{22} &= \underbrace{\tfrac{1.5}{3}}_{\text{bottom}}
    + \underbrace{\tfrac{1.5}{3}}_{\text{inner bottom}}
@@ -179,7 +182,7 @@ With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
    + \underbrace{\tfrac{1.5}{3}}_{\text{inner bottom}}
    + \underbrace{\tfrac{1}{1}}_{\text{bulkhead}}
    = \tfrac{9}{4}+\tfrac{\pi}{8} = 2.643,
-   && S_{34} = -\tfrac{1}{2}\\
+   && S_{34} = -\tfrac{1.5}{3}=-\tfrac{1}{2}\\
 \text{cell 4:}\quad S_{44} &= \underbrace{\tfrac{1.5}{3}}_{\text{inner bottom}}
    + \underbrace{\tfrac{2}{2}}_{\text{side}}
    + \underbrace{\tfrac{1.5}{1}}_{\text{stringer deck}}
@@ -195,7 +198,7 @@ With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
 \begin{equation}
 [\mathbf{S}] = \frac{a}{t_p}
 \begin{bmatrix}
- 1.5         & -\tfrac13 & 0                          & 0          & 0    \\
+ 1          & -\tfrac13 & 0                          & 0          & 0    \\
  -\tfrac13  & \tfrac73  & -1                         & 0          & 0    \\
  0          & -1        & \tfrac94+\tfrac{\pi}{8}    & -\tfrac12  & 0    \\
  0          & 0         & -\tfrac12                  & 5          & -1.5 \\
@@ -204,72 +207,60 @@ With the thicknesses of Table~\ref{tab:B1B2} (all terms in $a/t_p$):
 \ \rightarrow\
 [\mathbf{S}]^{-1} = \frac{t_p}{a}
 \begin{bmatrix}
- 0.693035 & 0.118656 & 0.04583 & 0.0050389 & 0.00151164 \\
- 0.118656 & 0.53953 & 0.20638 & 0.0226746 & 0.00680237 \\
- 0.04583 & 0.20638 & 0.46617 & 0.051277 & 0.0153683 \\
- 0.0050389 & 0.0226746 & 0.051277 & 0.2254 & 0.0676229 \\
- 0.00151164 & 0.00680237 & 0.0153683 & 0.0676229 & 0.22087
+ 1.0605 & 0.1816 & 0.0702 & 0.0077 & 0.0023 \\
+ 0.1816 & 0.5447 & 0.2105 & 0.0231 & 0.0069 \\
+ 0.0702 & 0.2105 & 0.4678 & 0.0514 & 0.0154 \\
+ 0.0077 & 0.0231 & 0.0514 & 0.2254 & 0.0676 \\
+ 0.0023 & 0.0069 & 0.0154 & 0.0676 & 0.2203
 \end{bmatrix}
 \label{eq:B2_S}
 \end{equation}
 
 \paragraph{Solution}
-Solving the $q$--$\theta$ relation gives
-$\{\mathbf{q}\} = 2G\theta[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}$ with
 \begin{equation*}
   [\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-  = a\,t_p\left\{0.9504,\ 1.3065,\ 1.2294,\ 0.9922,\ 0.8977\right\}^T,
-  \qquad
-  \{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = 10.36\,a^3t_p .
+  = a\,t_p\left\{1.4644,\ 1.3933,\ 1.2630,\ 0.9959,\ 0.8988\right\}^T,
 \end{equation*}
-This is for the starboard half. The port half gives exactly the same contribution, so for the whole section $M_t = 2\cdot2\{\boldsymbol{\Omega}\}^T\{\mathbf{q}\}$
-(half-section vectors). Filling in $\{\mathbf{q}\}$ for the entire section gives
 \begin{equation*}
-  M_t = 8\,G\theta\,\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-      = 165.83\,G\theta\,a^3t_p
+  \{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
+  = 11.065\,a^3t_p \ \text{(half section)}
   \quad\rightarrow\quad
-  \theta = \frac{M_t}{165.83\,G\,a^3t_p} .
+  22.131\,a^3t_p \ \text{(full section)} .
 \end{equation*}
-Substituting $\theta$ back into $\{\mathbf{q}\}$ (halve section):
+Filling this in Eq.~\eqref{eq:B2_solution} gives the twist rate
 \begin{equation*}
-  \{\mathbf{q}\} = \frac{M_t}{2}\cdot
-  \frac{[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
-       {\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
+  \theta = \frac{M_t}{4\cdot22.131\,G\,a^3t_p} = \frac{M_t}{88.52\,G\,a^3t_p}
 \end{equation*}
+and the shear flows
 \begin{equation}
+  \{\mathbf{q}\} = \frac{M_t}{2\cdot22.131\,a^3t_p}\,[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
   = \frac{M_t}{a^2}
-  \begin{Bmatrix} 0.02310\\ 0.0315\\ 0.0297\\ 0.0239\\ 0.0217 \end{Bmatrix} .
+  \begin{Bmatrix} 0.0331\\ 0.0315\\ 0.0285\\ 0.0225\\ 0.0203 \end{Bmatrix} .
   \label{eq:B2_q}
 \end{equation}
 
-
 \finalanswer{
 \[
-q_1 = 0.0231\,\frac{M_t}{a^2},\quad
+q_1 = 0.0331\,\frac{M_t}{a^2},\quad
 q_2 = 0.0315\,\frac{M_t}{a^2},\quad
-q_3 = 0.0297\,\frac{M_t}{a^2},\quad
-q_4 = 0.0239\,\frac{M_t}{a^2},\quad
-q_5 = 0.0217\,\frac{M_t}{a^2},
+q_3 = 0.0285\,\frac{M_t}{a^2},\quad
+q_4 = 0.0225\,\frac{M_t}{a^2},\quad
+q_5 = 0.0203\,\frac{M_t}{a^2},
 \]
-all counter-clockwise, with $\theta = M_t/(82.92\,G\,a^3t_p)$. The same flows act in
-the mirrored port cells.}
+all counter-clockwise, with $\theta = M_t/(88.5\,G\,a^3t_p)$. The mirrored port cells have the same flows.}
 
 
-\newpage
 \section{Maximum shear stress for design B2}
 \label{sec:a2-3}
-
 
 \questionbox{Locate the position of maximum shear stress and its magnitude for design B2. \textbf{(2 pts)}}
 
 The shear stress in a wall follows from the net shear flow in that wall and the local plate thickness:
-
 \begin{equation}
     \tau(s_i) = \frac{q_i}{t_p(s_i)} .
     \label{eq:shear_stress}
 \end{equation}
-
-For an outer wall (or a wall facing the open hold) $q_i$ is the flow of that cell, for an internal wall it is the difference between the two cells. So the maximum does not have to be in the cell with the largest flow: a thin plate with a some smaller flow can give a higher stress. Table~\ref{tab:B2walls} gives all walls of the starboard half.
+For an outer wall (or a wall facing the open hold) $q_i$ is the flow of that cell, for a wall between two cells it is the difference between the two flows. So the maximum does not have to be in the cell with the largest flow: a thin plate with a smaller flow can give a higher stress. Table~\ref{tab:B2walls} gives all walls of the starboard half.
 
 \begin{table}[h]
   \centering
@@ -279,98 +270,81 @@ For an outer wall (or a wall facing the open hold) $q_i$ is the flow of that cel
     \toprule
     Wall & $t$ & $q_{net}$ [$M_t/a^2$] & $\tau = q_{net}/t$ [$M_t/(a^2t_p)$] \\
     \midrule
-    Centre girder                           & $2t_p$ & $q_1 = 0.231$                       & $0.1155$ \\
-    Bottom and inner bottom, cell 1         & $3t_p$ & $q_1 = 0.0231$            & $0.0110$ \\
-    Side girder                             & $3t_p$ & $|q_1-q_2| = 0.084$        & $0.028$ \\
+    Centre girder                           & $4t_p$ & $q_1-q_1 = 0$             & $0$ \\
+    Bottom and inner bottom, cell 1         & $3t_p$ & $q_1 = 0.0331$            & $0.0110$ \\
+    Side girder                             & $3t_p$ & $q_1-q_2 = 0.0016$        & $0.0005$ \\
     Bottom and inner bottom, cell 2         & $3t_p$ & $q_2 = 0.0315$            & $0.0105$ \\
-    Bulkhead in double bottom               & $t_p$  & $q_2-q_3 = 0.00191$        & $0.00191$ \\
-    Bottom, bilge and side shell, cell 3    & $2t_p$ & $q_3 = 0.0297$            & $0.01485$ \\
-    Inner bottom under wing tank            & $3t_p$ & $q_3-q_4 = 0.00572$        & $0.00191$ \\
-    Side shell, cell 4                      & $2t_p$ & $q_4 = 0.0239$            & $0.01195$ \\
-    \textbf{Bulkhead, cell 4}               & $\boldsymbol{t_p}$ & $\boldsymbol{q_4 = 0.0239}$ & $\boldsymbol{0.0239}$ \\
-    Stringer deck                           & $t_p$  & $q_4-q_5 = 0.0023$        & $0.0023$ \\
-    Side shell, cell 5                      & $2t_p$ & $q_5 = 0.0217$            & $0.01085$ \\
-    Bulkhead, cell 5                        & $t_p$  & $q_5 = 0.0217$            & $0.0217$ \\
-    Deck                                    & $3t_p$ & $q_5 = 0.0217$            & $0.0072$ \\
+    Bulkhead in double bottom               & $t_p$  & $q_2-q_3 = 0.0030$        & $0.0030$ \\
+    Bottom, bilge and side shell, cell 3    & $2t_p$ & $q_3 = 0.0285$            & $0.0143$ \\
+    Inner bottom under wing tank            & $3t_p$ & $q_3-q_4 = 0.0060$        & $0.0020$ \\
+    Side shell, cell 4                      & $2t_p$ & $q_4 = 0.0225$            & $0.0113$ \\
+    \textbf{Bulkhead, cell 4}               & $\boldsymbol{t_p}$ & $\boldsymbol{q_4 = 0.0225}$ & $\boldsymbol{0.0225}$ \\
+    Stringer deck                           & $t_p$  & $q_4-q_5 = 0.0022$        & $0.0022$ \\
+    Side shell, cell 5                      & $2t_p$ & $q_5 = 0.0203$            & $0.0102$ \\
+    Bulkhead, cell 5                        & $t_p$  & $q_5 = 0.0203$            & $0.0203$ \\
+    Deck                                    & $3t_p$ & $q_5 = 0.0203$            & $0.0068$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~4, $y=\pm2.5a$, between the inner bottom at $z=a$ and the stringer deck at $z=3a$). This plate is only $t_p$ thick and faces the open hold, so it carries the full flow $q_4$. The bulkhead of the upper wing tank (cell~5) comes second because $q_5$ is a bit smaller. The bottom shell has the largest flow ($q_1$), but it is $3t_p$ thick, so the stress there is only half as large.
+The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~4, $y=\pm2.5a$, between the inner bottom at $z=a$ and the stringer deck at $z=3a$). This plate is only $t_p$ thick and faces the open hold, so it carries the full flow $q_4$. The bulkhead of the upper wing tank (cell~5) comes second, because $q_5$ is a bit smaller. The bottom has the largest flow ($q_1$), but it is $3t_p$ thick, so the stress there is only half as large.
 
 \finalanswer{The maximum shear stress occurs in the longitudinal bulkhead of the lower wing tank (cell~4, $y=\pm2.5a$, $a<z<3a$), on both sides of the ship:
-
 \[
-  \tau_{max} = \frac{q_4}{t_p} = 0.0239\,\frac{M_t}{a^2t_p}
+  \tau_{max} = \frac{q_4}{t_p} = 0.0225\,\frac{M_t}{a^2t_p}
 \]}
 
 \newpage
-
-%=====================================================================
 \section{Torsional stiffness and strength}
 \label{sec:a2-4}
 
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-   \item \textbf{Strength vs.\ stiffness.}
-  Stiffness says how much something deforms under a load, strength says how much load it can take before it breaks or yields. 
+  \item \textbf{Strength vs.\ stiffness.}
+  Stiffness says how much a structure deforms under a load. For torsion this is $GI_p$ in $M_t = G\theta I_p$: a stiffer section twists less for the same torque. Strength says how much load the structure can take before the stress reaches the allowable value. For torsion this is the torque $M_t$ at which the highest shear stress in the section reaches $\tau_{max}$. A section can be stiff and still weak, for example when one thin plate gets a high stress.
 
   \item \textbf{Torsional stiffness of B2.}
-  From the $M_t$--$\theta$ relation of the lectures:
+  From the $M_t$--$\theta$ relation of the lectures, using the full-section value of Question~\ref{sec:a2-2}:
   \begin{equation}
-    I_p = 4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} .
-  \end{equation}
-  Using the half-section vectors of Section~\ref{sec:a2-2} and counting both
-  halves:
-  \begin{equation}
-    I_{p,B2} = 2\cdot4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
-             = 8\cdot20.73\,a^3t_p = 165.83\,a^3t_p .
+    I_{p,B2} = 4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}
+             = 4\cdot22.131\,a^3t_p = 88.5\,a^3t_p .
   \end{equation}
   Compared to B1:
   \begin{equation}
-    \frac{I_{p,B2}}{I_{p,B1}} = \frac{165.83}{108.70} = 1.53 ,
+    \frac{I_{p,B2}}{I_{p,B1}} = \frac{88.5}{108.7} = 0.81 ,
   \end{equation}
-  so B2 is about 50\,\% \emph{more} stiff, this is due to the addition of an extra deck and an extra girder in the double hull \& bottom.
-
+  so B2 is about 19\,\% \emph{less} stiff, even though it has the same amount of material and more cells. In B2 the longitudinal bulkhead is only $t_p$ thick instead of $2.5t_p$. This bulkhead is an outer wall of the wing tanks and carries the full flow of these cells, and the wing tanks enclose the largest area. So $\oint\mathrm{d}s/t_p$ of the wing tanks goes up a lot ($4a/t_p$ instead of $1.6a/t_p$ for the bulkhead). The material that is saved goes into the stringer deck, the side girder and a thicker inner bottom. These are mostly walls between two cells, which only carry the small difference between two flows, so they add little to $I_p$.
 
   \item \textbf{Strength of B2.}
-  The shear stress reaches $\tau_{max}$ first in the bulkhead of cell~4
-  (Section~\ref{sec:a2-3}), with $t_p(s) = t_p$. Using
-  $\tau(s_i) = q_i/t_p(s_i)$ and the expression for $\{\mathbf{q}\}$ from
-  Section~\ref{sec:a2-2}:
+  The shear stress reaches $\tau_{max}$ first in the bulkhead of cell~4 (Question~\ref{sec:a2-3}). With $\tau = q_4/t_p$ and Eq.~\eqref{eq:B2_solution}:
   \begin{equation}
     \tau_{max} = \frac{q_4}{t_p}
     = \frac{M_t}{2\,t_p}\cdot
       \frac{\big([\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}\big)_4}
            {\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
-    = 0.0239\,\frac{M_t}{a^2t_p} .
-  \end{equation}
-  Setting $\tau = \tau_{max}$ and solving for $M_t$:
-  \begin{equation}
-    M_{t,B2} = \frac{4\,t_p\,\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}
-                    {\big([\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}\big)_4}\,\tau_{max}
-             = \frac{4\cdot20.72}{1.9844}\,a^2t_p\,\tau_{max}
-             = 41.77\,a^2t_p\,\tau_{max} .
+    \quad\rightarrow\quad
+    M_{t,B2} = \frac{2\cdot22.131}{0.9959}\,a^2t_p\,\tau_{max}
+             = 44.4\,a^2t_p\,\tau_{max} .
   \end{equation}
   Compared to B1:
   \begin{equation}
-    \frac{M_{t,B2}}{M_{t,B1}} = \frac{41.77}{75.50} = 0.55 ,
+    \frac{M_{t,B2}}{M_{t,B1}} = \frac{44.4}{75.5} = 0.59 ,
   \end{equation}
-  so B2 can carry about 45\,\% less torque.
-The B2 section is significantly worse for torque in comparison to B1. This is mainly due to the smaller plate thicknesses in the inner tank hull plate, the most load carrying plate zone. The addition of decks and girders is insufficient to this reduction in thickness.
+  so B2 can carry about 41\,\% less torque. The strength drops more than the stiffness. In B1 the highest stress is in the $2t_p$ side shell, while in B2 it is in the thin bulkhead of $t_p$, which still carries almost the full wing tank flow. The extra stringer deck and side girder do not help here, because they hardly reduce the flow in the bulkhead.
 \end{enumerate}
 
+\finalanswer{$I_{p,B2} = 88.5\,a^3t_p$, which is 19\,\% lower than B1. $M_{t,B2} = 44.4\,a^2t_p\tau_{max}$, which is 41\,\% lower than B1. Both are caused by the much thinner longitudinal bulkhead in B2.}
 
-
-
-\newpage
-%=====================================================================
 \newpage
 \section{Sectorial coordinate and sectorial area moment}
 \label{sec:a2-5}
-\subsection{Pole coordinates}
 
-The pole must be placed in the twist centre, because only then does $\omega$ describe pure warping without a contribution from bending. The twist centre is at the same place as the shear centre S, the point through which a shear force causes bending without twisting. Because of the symmetry of the section, S lies on the centre line. Its distance $e$ below the bottom plate comes from moment equilibrium of the shear flows due to a horizontal shear force $F_y$ acting through S. The geometry, contour points and pole are shown in Figure~\ref{fig:BU_section}.
+
+For Questions~\ref{sec:a2-5}--\ref{sec:a2-7} the girders and stringer decks are left out, and section B is a U-shape with breadth $A$, depth $B$, bottom thickness $t_{bp}$ and side shell thickness $t_{sp}$ (design BU).
+
+\subsection{Twist centre}
+
+The pole for $\omega$ has to be the twist centre CT. For thin-walled sections the twist centre is the same point as the shear centre. Because of the symmetry, CT lies on the centre line, at a distance $e$ below the bottom plate. The geometry, contour points and CT are shown in Figure~\ref{fig:BU_section}.
 
 \begin{figure}[h]
     \centering
@@ -401,7 +375,7 @@ The pole must be placed in the twist centre, because only then does $\omega$ des
 
         % ---------------- shear centre / pole ----------------
         \fill[red!70!black] (0,-\ee) circle (2.2pt);
-        \node[right, font=\small, red!70!black] at (0.1,-\ee) {S ($=$ CT)};
+        \node[right, font=\small, red!70!black] at (0.1,-\ee) {CT};
 
         % ---------------- thickness labels ----------------
         \node[left,  font=\small] at (-4.1,2.8) {$t_{sp}$};
@@ -424,39 +398,34 @@ The pole must be placed in the twist centre, because only then does $\omega$ des
         \draw[->] (-6.2,-1.8) -- (-6.2,-1.0) node[above, font=\small] {$z$};
     \end{tikzpicture}
     \caption{U-shaped section of design BU ($A=8a$, $B=5a$, $t_{sp}=3.5t_p$,
-             $t_{bp}=6.5t_p$) with contour points 1--5 and shear (twist) centre S at a
+             $t_{bp}=6.5t_p$) with contour points 1--5 and twist centre CT at a
              distance $e=1.672a$ below the bottom plate.}
     \label{fig:BU_section}
 \end{figure}
 
-The shear flow due to $F_y$ follows from
+As in the lectures (channel section), we use moment equilibrium of the shear flow due to a horizontal shear force $F_y$ through CT, with point 3 (bottom centre) as reference point:
 \begin{equation}
-    q(s) = \frac{F_y\,S_z(s)}{I_{zz}},
+    z_s\,I_{zz} = \int_s \rho\,S_z(s)\,\mathrm{d}s ,
+    \qquad S_z(s) = \int_A y\,\mathrm{d}A ,
+    \qquad I_{zz} = \int_A y^2\,\mathrm{d}A .
 \end{equation}
-where $S_z(s)$ is the first moment of area of the part between the free edge and the
-considered point, and
+The bottom plate goes through point 3, so there $\rho=0$ and it does not contribute. On the side shells $\rho = A/2$. Starting at the free edge (point 1, $S_z=0$) and walking down the side shell over a distance $s$:
+\begin{equation}
+    S_z(s) = \frac{A}{2}\,t_{sp}\,s
+    \quad\rightarrow\quad
+    \int_0^B \frac{A}{2}\cdot\frac{A}{2}\,t_{sp}\,s\,\mathrm{d}s = \frac{A^2t_{sp}B^2}{8}
+\end{equation}
+per side shell, so for both side shells $\int_s\rho\,S_z\,\mathrm{d}s = A^2t_{sp}B^2/4$. The second moment of area is
 \begin{equation}
     I_{zz} = \frac{t_{bp}A^3}{12} + 2Bt_{sp}\left(\frac{A}{2}\right)^2
-    = \left(\frac{6.5\cdot8^3}{12} + 2\cdot5\cdot3.5\cdot4^2\right)a^3t_p
-    = (277.3 + 560)\,a^3t_p = 837.3\,a^3t_p .
+    = \left(277.3 + 560\right)a^3t_p = 837.3\,a^3t_p ,
 \end{equation}
-Because the entire side shell lies at $|y| = A/2$, the first moment of area of a side
-shell, measured from the free edge down to height $z$, is
-$S_z = \frac{A}{2}\,t_{sp}(B-z)$. The shear flow in a side shell is therefore
+which gives
 \begin{equation}
-    q(z) = F_y\,\frac{\frac{A}{2}\,t_{sp}\,(B-z)}{I_{zz}},
+    e = |z_s| = \frac{A^2B^2t_{sp}}{4\,I_{zz}} = \frac{3B^2t_{sp}}{A\,t_{bp} + 6B\,t_{sp}}
+      = \frac{262.5}{157}\,a = 1.672\,a .
 \end{equation}
-giving a vertical resultant per side shell
-\begin{equation}
-    V = \int_0^B q(z)\,\mathrm{d}z = F_y\,\frac{\frac{A}{2}\,t_{sp}\,\frac{B^2}{2}}{I_{zz}} .
-\end{equation}
-The resultants in the two side shells act in opposite directions and form a couple $V \cdot A$. The resultant of the shear flow in the bottom plate acts along the bottom plate itself and has no moment about point 3. The couple must therefore be balanced by
-$F_y$ acting at a distance $e$ below the bottom:
-\begin{equation}
-    F_y\,e = V A \quad\Rightarrow\quad
-    e = \frac{3B^2t_{sp}}{A\,t_{bp} + 6B\,t_{sp}} = \frac{262.5}{157}\,a = 1.672\,a .
-\end{equation}
-The pole coordinates are therefore $(y,z)_S = (0,\,-1.672a)$.
+So CT is at $(y,z) = (0,\,-1.672a)$, with $z=0$ at the bottom plate.
 
 \subsection{Sectorial coordinate}
 
@@ -470,10 +439,8 @@ with the sectorial coordinate
 \begin{equation}
     \omega(s) = -\int_s \rho(s)\,\mathrm{d}s + C ,
 \end{equation}
-where $\rho$ is the perpendicular distance from the pole S to the tangent of the
-contour, taken positive when the radius vector from S rotates counterclockwise
-along $s$. The integration starts at point 3, where the contour intersects the
-symmetry axis; there $\omega = 0$, so $C = 0$.
+where $\rho$ is the perpendicular distance from CT to the tangent of the
+contour, positive when it rotates counter-clockwise along $s$. The integration starts at point 3, where the contour crosses the symmetry axis (CT-axis). There $\omega = 0$, so $C = 0$.
 
 The contour is split into parts. Each part gets its own local coordinate $s$, which
 starts at $s=0$ at the beginning of that part. The constant $C$ of a part is the
@@ -492,8 +459,8 @@ at the corners.
 \newpage
 
 \paragraph{Part 3--2 (bottom plate, port half).}
-The bottom plate lies at a distance $e$ above the pole, so $|\rho| = e$. Walking from
-point 3 to point 2 (in negative $y$-direction), the radius vector from S turns
+The bottom plate lies at a distance $e$ above CT, so $|\rho| = e$. Walking from
+point 3 to point 2 (in negative $y$-direction), the radius vector from CT turns
 counter-clockwise, so $\rho = +e$. With $C=0$ this gives
 \begin{equation}
     \omega_{32}(s) = -\int_0^s e\,\mathrm{d}s = -e\,s ,
@@ -505,7 +472,7 @@ so in point 2
 \end{equation}
 
 \paragraph{Part 2--1 (port side shell).}
-The side shell is vertical and lies at a distance $A/2$ from the pole, so
+The side shell is vertical and lies at a distance $A/2$ from CT, so
 $|\rho| = A/2$. Walking upwards from point 2 to point 1, the radius vector turns
 clockwise, so $\rho = -A/2$. The integration now starts at $\omega_2$, so
 $C = -eA/2$:
@@ -529,18 +496,7 @@ the starboard half has the same magnitudes with the opposite sign,
 \end{equation}
 so $\omega_4 = +6.69\,a^2$ and $\omega_5 = -13.31\,a^2$.
 
-\paragraph{Normalisation and check.}
-The constant $C=0$ in point 3 is only correct if free warping does not create a net normal force, so $\int_A \omega\,\mathrm{d}A = 0$ must hold. Since $\omega$ is antisymmetric about the centre line, the contributions of the port and starboard halves cancel each other out, so this condition is satisfied.
-
-As a check on the pole position, free warping should also not create a bending
-moment, so $\int_A \omega\,y\,\mathrm{d}A = 0$. With $\omega_{bottom} = e\,y$ and
-$y = \pm A/2$ on the side shells:
-\begin{equation}
-    \int_A \omega\,y\,\mathrm{d}A
-    = e\,\frac{t_{bp}A^3}{12} - \frac{A^2}{2}\,t_{sp}\left(\frac{B^2}{2} - eB\right)
-    = 463.7 - 463.7 = 0\ \ [a^5t_p],
-\end{equation}
-which confirms that $e = 1.672a$ is the correct pole position.
+Since point 3 lies on the symmetry axis, $\omega$ is antisymmetric and $\int_A\omega\,\mathrm{d}A=0$ automatically, so no correction of $C$ is needed.
 
 \subsection{Sectorial area moment}
 
@@ -609,20 +565,20 @@ Both distributions are sketched in the U-shaped section in Figure~\ref{fig:BU_di
 \begin{figure}[h]
     \centering
     \begin{tikzpicture}[scale=0.45,
-        pos/.style={fill=red!25, draw=red!70!black, thin},
-        neg/.style={fill=blue!20, draw=blue!70!black, thin},
+        posfill/.style={fill=red!25, draw=red!70!black, thin},
+        negfill/.style={fill=blue!20, draw=blue!70!black, thin},
         val/.style={font=\scriptsize}]
 
         \pgfmathsetmacro{\ee}{1.672}
 
         % ================= sectorial coordinate omega =================
         \begin{scope}
-            \filldraw[pos] (-4,5) -- (-5.6,5) -- (-4,\ee) -- cycle;   % port, upper
-            \filldraw[neg] (-4,\ee) -- (-3.2,0) -- (-4,0) -- cycle;   % port, lower
-            \filldraw[neg] (4,5) -- (2.4,5) -- (4,\ee) -- cycle;      % stb, upper
-            \filldraw[pos] (4,\ee) -- (4.8,0) -- (4,0) -- cycle;      % stb, lower
-            \filldraw[neg] (-4,0) -- (-4,0.8) -- (0,0) -- cycle;      % bottom, port
-            \filldraw[pos] (0,0) -- (4,-0.8) -- (4,0) -- cycle;       % bottom, stb
+            \filldraw[posfill] (-4,5) -- (-5.6,5) -- (-4,\ee) -- cycle;   % port, upper
+            \filldraw[negfill] (-4,\ee) -- (-3.2,0) -- (-4,0) -- cycle;   % port, lower
+            \filldraw[negfill] (4,5) -- (2.4,5) -- (4,\ee) -- cycle;      % stb, upper
+            \filldraw[posfill] (4,\ee) -- (4.8,0) -- (4,0) -- cycle;      % stb, lower
+            \filldraw[negfill] (-4,0) -- (-4,0.8) -- (0,0) -- cycle;      % bottom, port
+            \filldraw[posfill] (0,0) -- (4,-0.8) -- (4,0) -- cycle;       % bottom, stb
 
             \draw[line width=1.2pt] (-4,5) -- (-4,0) -- (4,0) -- (4,5);
             \draw[dashed, gray] (0,-1.2) -- (0,5.6);
@@ -637,21 +593,21 @@ Both distributions are sketched in the U-shaped section in Figure~\ref{fig:BU_di
         % ================= sectorial area moment S_omega =================
         \begin{scope}[shift={(13,0)}]
             % port side shell (all negative, plotted inside)
-            \filldraw[neg] plot[domain=0:5, samples=40]
+            \filldraw[negfill] plot[domain=0:5, samples=40]
                 ({-4-0.02*14*(1.672*(5-\x)-(25-(\x)*(\x))/2)},{\x})
                 -- (-4,5) -- (-4,0) -- cycle;
             % starboard side shell (mirror)
-            \filldraw[neg] plot[domain=0:5, samples=40]
+            \filldraw[negfill] plot[domain=0:5, samples=40]
                 ({4+0.02*14*(1.672*(5-\x)-(25-(\x)*(\x))/2)},{\x})
                 -- (4,5) -- (4,0) -- cycle;
             % bottom plate: negative near the corners, positive in the middle
-            \filldraw[neg] plot[domain=-4:-2.308, samples=20]
+            \filldraw[negfill] plot[domain=-4:-2.308, samples=20]
                 ({\x},{-0.02*(-57.96-5.434*((\x)*(\x)-16))})
                 -- (-2.308,0) -- (-4,0) -- cycle;
-            \filldraw[neg] plot[domain=2.308:4, samples=20]
+            \filldraw[negfill] plot[domain=2.308:4, samples=20]
                 ({\x},{-0.02*(-57.96-5.434*((\x)*(\x)-16))})
                 -- (4,0) -- (2.308,0) -- cycle;
-            \filldraw[pos] plot[domain=-2.308:2.308, samples=30]
+            \filldraw[posfill] plot[domain=-2.308:2.308, samples=30]
                 ({\x},{-0.02*(-57.96-5.434*((\x)*(\x)-16))}) -- cycle;
 
             \draw[line width=1.2pt] (-4,5) -- (-4,0) -- (4,0) -- (4,5);
@@ -673,7 +629,7 @@ Both distributions are sketched in the U-shaped section in Figure~\ref{fig:BU_di
     \label{fig:BU_distributions}
 \end{figure}
 
-\begin{table}[h]
+\begin{table}[H]
     \centering
     \caption{Sectorial coordinate and sectorial area moment in the characteristic
              points of design BU.}
@@ -715,10 +671,6 @@ The warping shear stress is proportional to $S_\omega/t$. It is zero at the free
 \section{Torsion and warping constants of design BU}
 \label{sec:a2-6}
 
-\questionbox{Calculate the torsion constant $I_p(A,B,t_{bp},t_{sp})$ and warping
-constant $I_w(A,B,t_{bp},t_{sp})$ for the simplified model of section BU.
-Present $I_w(a,t_p)$ using $A=8a$, $B=5a$, $t_{sp}=3.5t_p$ and $t_{bp}=6.5t_p$.
-\textbf{(3 pts)}}
 
 
 
@@ -763,7 +715,7 @@ The warping constant is
   \label{eq:a26-Iw-def}
 \end{equation}
 
-For $\omega$ we use the sectorial coordinate from Section~\ref{sec:a2-5}. It is important that this one is taken around the shear centre S, because otherwise $\omega$ also contains some bending and $I_w$ becomes too big.
+For $\omega$ we use the sectorial coordinate from Section~\ref{sec:a2-5}. This one is taken around CT, as it should be.
 
 The thickness is constant per plate, so we do the integral piecewise with the same parts and local $s$ as in Section~\ref{sec:a2-5}:
 
@@ -866,10 +818,6 @@ With the numbers this gives the same answer as before which is a good check:
 \section{Effect of closing the hatch cover}
 \label{sec:a2-7}
 
-\questionbox{For the simple geometry, consider the hatch cover both open (BU)
-and closed (BUH). What is the improvement in $I_p(a,t_p)$ when closing the hatch
-cover? The thickness of the hatch cover is $t_{hp}=2.5t_p$; Bredt's thin-walled
-theory is assumed for the closed section. \textbf{(4 pts)}}
 
 
 
