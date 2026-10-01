@@ -110,12 +110,12 @@ $[t_p^2]^T = t_p^2 [11111111114444444444]^T$
 These values allow for the calculation of $q_c $ as follows:
 
 \begin{equation}
-    q_c = \frac{M_t}{2}*\frac{S^{-1}*\Omega}{\Omega^T*S^{-1}*\Omega+\frac{1}{12}*A_p^T*t_p^2} \rightarrow \frac{3*M_t*b}{60*b^3+35*t_p}
+    q_c = \frac{M_t}{2}*\frac{[S^{-1}]*[\Omega]}{[\Omega]^T*[S^{-1}]*[\Omega]+\frac{1}{12}*[A_p]^T*[t_p]^2} \rightarrow \frac{6*M_t}{120*b^2+35*t_p^2}
 \end{equation}
 \begin{equation}
-    q_o = \frac{M_t}{4}*\frac{t_p^2}{\Omega^T *S^{-1}*\Omega+\frac{1}{12}*A_p^T*t_p^2}
+    q_o = \frac{M_t}{4}*\frac{[t_p^2]}{[\Omega]^T *[S^{-1}]*[\Omega]+\frac{1}{12}*[A_p]^T*[t_p]^2}
 \end{equation}
-$q_o$ is a 20x1 matrix with $\frac{21*M_t*t_p}{600*b^3+350*t_p}$ for the first 10 entries and $\frac{42*M_t*t_p}{300*b^3+175*t_p}$ for the last 10 entries.
+$q_o$ is a 20x1 matrix with $\frac{21*M_t*t_p}{600*b^3+175*t_p^2}$ for the first 10 entries and $\frac{84*M_t*t_p}{600*b^3+175*t_p^2}$ for the last 10 entries.
 
  
 
@@ -150,7 +150,7 @@ Using the same formulas as before:
 \end{bmatrix}
 \end{equation}
 \begin{equation}
-    q_o = \frac{M_t}{4}*\frac{t_p^2}{\Omega^T *S^{-1}*\Omega+\frac{1}{12}*A_p^T*t_p^2} \rightarrow \frac{M_tt_p^2}{4(9,303b^3t_p+1.167bt_p^3)}[1111111111114444]
+    q_o = \frac{M_t}{4}*\frac{t_p^2}{\Omega^T *S^{-1}*\Omega+\frac{1}{12}*A_p^T*t_p^2} \rightarrow \frac{M_tt_p^2}{4(9,303b^3t_p+1.167bt_p^3)}[1111111111144444]
 \end{equation}
 
 
@@ -159,41 +159,52 @@ Using the same formulas as before:
 
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item In the closed walls $\tau = q/t$, with $q$ the net flow in that wall. In the open stiffeners the stress is largest at the surface of the thickest plate, $\tau_o = G\theta\,t = M_t\,t/(I_{p,c} + I_{p,o})$. For the $2t_p$ flanges of Configuration~1 this is $\tau_o = 2t_pM_t/(57.14\,b^3t_p) = 0.035\,(t_p/b)\,M_t/(b^2t_p)$, which is very small for $b \gg t_p$. So the maximum is always in the closed walls.
+  \item 
+\begin{equation}
+    \tau_i = \frac{q_i}{t_p} 
+\end{equation}
+\textbf{For configuration 1}
+\begin{equation}
+    \tau_o = \frac{21*M_t}{600*b^3+175*t_p}* [11111111112222222222]^T
+\end{equation}
+\begin{equation}
+    \tau_c = \frac{6*M_t}{120*b^2*t_p+35*t_p^3}
+\end{equation}
+Comparing these 2 equations gives that:
+\begin{equation}
+    \tau_{max} = \frac{6*M_t}{120*b^2*t_p+35*t_p^3}
+\end{equation}
+and therfore the shear stress will be highest in the deck, sides and bottom plating.
 
-  \emph{Configuration 1:} the flow is constant and all plating is $2t_p$, so the stress is the same everywhere in the box plating:
-  \begin{equation}
-    \tau_{max,1} = \frac{q_1}{2t_p} = \frac{M_t}{40\,b^2t_p} = 0.0250\,\frac{M_t}{b^2t_p} .
-  \end{equation}
+\textbf{For configuration 2}
+\begin{equation}
+    \tau_o =  \frac{M_tt_p}{4(9,303b^3t_p+1.167bt_p^3)}[1111111111144444]
+\end{equation}
+\begin{equation}
+    \tau_c = \begin{bmatrix}
+\frac{0.4187M_tb}{9.303b^3t_p+1.167bt_p^3} \\
+\frac{0.3229M_tb}{9.303b^3t_p+1.167bt_p^3}\\
+\frac{0.3229M_tb}{9.303b^3t_p+1.167bt_p^3}\\
+\frac{0.3229M_tb}{9.303b^3t_p+1.167bt_p^3}
+\end{bmatrix}
+\end{equation}
 
-  \emph{Configuration 2:} Table~\ref{tab:a3-tau} gives the stress per wall. The largest value is in the box plating (sides, top plate and the bottom plate between the trapezoids). The thin legs ($t_p/2$) stay lower because they only carry the difference $q_m - q_t$.
-  \begin{table}[h]
-    \centering
-    \caption{Shear stress per wall in Configuration~2.}
-    \label{tab:a3-tau}
-    \begin{tabular}{lccc}
-      \toprule
-      Wall & $t$ & $q_{net}$ [$M_t/b^2$] & $\tau$ [$M_t/(b^2t_p)$] \\
-      \midrule
-      Box plating      & $2t_p$   & $q_m = 0.0503$         & \textbf{0.0252} \\
-      Trapezoid base   & $2t_p$   & $q_t = 0.0430$         & 0.0215 \\
-      Trapezoid legs   & $t_p/2$  & $q_m - q_t = 0.0074$   & 0.0148 \\
-      Trapezoid crown  & $t_p$    & $q_m - q_t = 0.0074$   & 0.0074 \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
-  \begin{equation}
-    \tau_{max,2} = \frac{q_m}{2t_p} = 0.0252\,\frac{M_t}{b^2t_p} .
-  \end{equation}
+given b >> $t_p$ , the highest torsional strain is  $\frac{0.4187M_t}{9.303b^2t_p+1.167t_p^3}$, again at the deck, bottom and side plating.
 
-  \item Configuration~3 has $\tau_{max,3} = 0.0277\,M_t/(b^2t_p)$, which is about 10\,\% higher than Configurations~1 and 2 (0.0250 and 0.0252). In Configurations~1 and 2 almost all torque goes through one big cell, so the flow is close to the average value $M_t/(2\cdot10b^2)$ everywhere. In Configuration~3 the vertical webs split the box into four cells next to each other. In our own model of Configuration~3 the two middle cells get a higher flow ($3.38\,G\theta bt_p$) than the two outer cells ($2.83\,G\theta bt_p$). The middle cells have no side wall, only webs that are shared with the neighbouring cell, so their contour is ``cheaper'' and they attract more flow. The highest stress is therefore in the top and bottom plating of the middle cells, between the trapezoids.
+  \item
+  as per given the maximum shear stress for configuration 3 is:
+
+$t_{max3} = \frac{0.02769M_t}{b^2t_p}$
+
+  comparing these to the other sections: (ignoring the very small $t_p $terms and rewriting to the same form)\\ 
+$\tau_{max2} =\frac{0.045M_t}{b^2t_p}$
+$\tau_{max1} = \frac{0.05*M_t}{b*t_p}$
+
+These 3 equations show a clear trend of decreasing shear stress with the addition of more closed cells in the cross-section.
+  
 \end{enumerate}
 
-\finalanswer{
-\begin{enumerate}[label=\alph*., leftmargin=*]
-  \item Configuration~1: $\tau_{max,1} = 0.0250\,M_t/(b^2t_p)$, constant in all box plating. Configuration~2: $\tau_{max,2} = 0.0252\,M_t/(b^2t_p)$ in the box plating (sides, top plate and bottom plate between the trapezoids). The open stiffeners have a stress of order $t_p/b$ smaller.
-  \item Configuration~3 ($0.0277$) is about 10\,\% higher, because the webs make the flow uneven: the middle cells carry more flow than the outer cells.
-\end{enumerate}}
+
 
 \newpage
 \section{Specific torsion stiffness and strength}
@@ -202,59 +213,107 @@ Using the same formulas as before:
 
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item From Eq.~\eqref{eq:a3-Ip}:
-  \begin{align}
-    I_{p,1} &= 57.14\,b^3t_p + 8.33\,bt_p^3 \approx 57.1\,b^3t_p,\\
-    I_{p,2} &= 58.30\,b^3t_p + 4.67\,bt_p^3 \approx 58.3\,b^3t_p .
-  \end{align}
-  The strength follows by setting $\tau_{max}$ from Section~\ref{sec:a3-4} equal to the allowable stress:
+  \item 
+\textbf{Configuration 1}
+
+\begin{equation}
+    I_{p,1}= 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = \frac{200b^3t_p}{7}+\frac{25bt_p^3}{3}
+    \end{equation}
   \begin{equation}
-    M_{t,1} = \frac{b^2t_p\,\tau_{max}}{0.0250} = 40.0\,b^2t_p\tau_{max},
-    \qquad
-    M_{t,2} = \frac{b^2t_p\,\tau_{max}}{0.0252} = 39.7\,b^2t_p\tau_{max} .
+      \tau_{max,1} = \frac{6*M_t}{120*b^2*t_p+35*t_p^3} \rightarrow M_{t,1} = \frac{\tau_{max,1}(120*b^2*t_p+35*t_p^3)}{6} 
   \end{equation}
-  As a check, for Configuration~1 the 1st Bredt formula gives directly $M_t = 2\Omega\,t\,\tau_{max} = 2\cdot10b^2\cdot2t_p\,\tau_{max} = 40\,b^2t_p\tau_{max}$.
+\textbf{Configuration 2}
 
-  For the specific values we divide by the amount of material $A$ (like the specific polar moment of inertia $I_p/A$ from the lectures). The box plating is $14b\cdot2t_p = 28\,bt_p$ in all configurations, so the difference is only in the stiffeners (Table~\ref{tab:a3-compare}).
 
-  \begin{table}[h]
-    \centering
-    \caption{Stiffness and strength of the three configurations. For Configuration~3 the material area is our own estimate (webs of $t_p$).}
-    \label{tab:a3-compare}
-    \begin{tabular}{lccc}
-      \toprule
-       & Config.~1 & Config.~2 & Config.~3 (given) \\
-      \midrule
-      $I_p$ [$b^3t_p$]                 & 57.1  & 58.3  & 61.6 \\
-      $\tau_{max}$ [$M_t/(b^2t_p)$]    & 0.0250 & 0.0252 & 0.0277 \\
-      $M_t$ [$b^2t_p\tau_{max}$]       & 40.0  & 39.7  & 36.1 \\
-      Material $A$ [$bt_p$]            & 38.0  & 36.6  & 36.6 \\
-      $I_p/A$ [$b^2$]                  & 1.50  & 1.59  & 1.68 \\
-      $M_t/A$ [$b\,\tau_{max}$]        & 1.05  & 1.09  & 0.99 \\
-      \bottomrule
-    \end{tabular}
-  \end{table}
+\begin{equation}
+    I_{p,2} = 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = 37.21b^3t_p+4.667bt_p^3
+\end{equation}
+\begin{equation}
+     \tau_{max,2} = \frac{0.4187M_t}{9.303b^2t_p+1.167t_p^3} \rightarrow M_{t,2} =\frac{\tau_{max,2}*(9.303b^2t_p+1.167t_p^3)}{0.4187}
+\end{equation}
 
-  \item \emph{Stiffness.} All three configurations have the same box with the same enclosed area $10b^2$ and the same plating. So the single cell of Configuration~1 is the base value. In Configuration~2 the three trapezoids add small closed cells, which gives 2\,\% extra. In Configuration~3 the trapezoids on both sides are connected by webs, so there are many more closed walls that can carry shear flow, which gives 8\,\% extra. Configuration~3 does this with less material than Configuration~1, so it has the highest specific stiffness.
 
-  \emph{Strength.} Here Configuration~3 is the weakest, about 10\,\% lower than Configurations~1 and 2. As explained in Section~\ref{sec:a3-4}, the webs make the flow in the middle cells higher than the average, so $\tau_{max}$ is reached at a lower torque. Configurations~1 and 2 are almost the same, because the trapezoid cells in Configuration~2 are small and hardly change the flow in the box.
 
-  \item Since all parts twist with the same $\theta$, the torque is divided over the parts in the same ratio as their $I_p$:
-  \begin{equation}
-    \frac{M_{t,o}}{M_{t,c}} = \frac{I_{p,o}}{I_{p,c}} =
-    \begin{cases}
-      \dfrac{8.33\,bt_p^3}{57.14\,b^3t_p} = 0.146\left(\dfrac{t_p}{b}\right)^2 & \text{Configuration 1}\\[10pt]
-      \dfrac{4.67\,bt_p^3}{58.30\,b^3t_p} = 0.080\left(\dfrac{t_p}{b}\right)^2 & \text{Configuration 2}
-    \end{cases}
-  \end{equation}
-  For example $b/t_p = 50$ gives $6\cdot10^{-5}$ and $3\cdot10^{-5}$, so the open stiffeners contribute practically nothing to the stiffness. For the strength it is the same: the stress in the open parts is $\tau_o = G\theta\,t$, which is a factor $\approx1.4\,t_p/b$ smaller than in the closed walls (about 3\,\% for $b/t_p = 50$). So the closed walls decide both the stiffness and the strength.
 
-  The difference between Configuration~1 and 2 shows why. In Configuration~2 the five T-stiffeners on the bottom are replaced by three closed trapezoids. Together they add $58.30 - 57.14 = 1.16\,b^3t_p$, so about $0.39\,b^3t_p$ per trapezoid. One T-stiffener only gives $\frac{5}{6}bt_p^3$, which is a factor of the order $(b/t_p)^2$ smaller. So a stiffener only helps for torsion when it forms a closed cell with the plate. Open stiffeners are useful for plate bending and buckling, not for torsion.
+
+  \item 
+
+In this comparison section the $T_p $ term is again ignored, due to the very small size and the eqautions for oth the $I_p \& M_t$  are rewritten as follows:
+\[
+I_{p,1}=28.57b^3t_p
+\qquad
+I_{p,2}=37.21b^3t_p
+\qquad
+I_{p,3}=61.558b^3t_p
+\]
+
+\[
+M_{t,1} = \tau_{max,1}(20b^2t_p)
+\qquad
+M_{t,2} = \tau_{max,2}(22.219b^2t_p)
+\qquad
+M_{t,3} = \tau_{max,3}(36.114b^2t_p)
+\]
+The three different equation sets show that the torsional resistance and maximum allowed stress increases with the 3 different configurations. This is mainly due to the increase in material area in the section as well as the addition of cells away from the neutral axis.
+  
+
+  \item 
+\textbf{Configuration 1}
+
+\begin{equation}\label{Cheese}
+    I_{p,1}= 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = \frac{200b^3t_p}{7}+\frac{25bt_p^3}{3}
+    \end{equation}
+The first part of equation \ref{Cheese} represents the closed part of the section while the second term represents the open part. As concluded previously also, the contribution of the first (closed) term is much bigger as stated that b >> $t_p$.
+
+This can also shown by calculating the maximum torsional load for each individual part of the equation:
+
+\[
+\begin{aligned}
+M_{t,\mathrm{open\ Web}}
+&= \frac{\tau_{\mathrm{open},1}\left(600b^2t_p+175t_p^2\right)}{21} \rightarrow 28.57 \tau_{\mathrm{open}}b^2
+\\[6pt]
+M_{t,\mathrm{open\ Flange}}
+&= \frac{\tau_{\mathrm{open},1}\left(600b^2t_p+175t_p^2\right)}{84} \rightarrow 7.14\tau_{\mathrm{open}}  b^2
+\\[6pt]
+M_{t,\mathrm{closed}}
+&= \frac{\tau_{\mathrm{closed},1}\left(120b^2t_p+35t_p^3\right)}{6} \rightarrow 20b^2t_p\tau_{closed}b^2
+\end{aligned}
+\]
+From this can be concluded that maximum torsional moment is largest for the webs and the smallest for the flanges, with the outer plating in between.
+\newpage
+
+\textbf{Configuration 2}
+
+\begin{equation}
+    I_{p,2} = 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = 37.21b^3t_p+4.667bt_p^3
+\end{equation}
+The first part of equation \ref{Cheese} represents the closed part of the section while the second term represents the open part. As concluded previously also, the contribution of the first (closed) term is much bigger as stated that b >> $t_p$.
+
+here the bendingmoments are as follows:
+
+\begin{equation}
+    M_{t,closed} = \tau_{closed}*  \begin{bmatrix}
+\frac{9.303b^2t_p+1.167t_p^3}{0.4187} \\
+\frac{b9.303b^2t_p+1.167t_p^3}{0.3229}\\
+\frac{9.303b^2t_p+1.167t_p^3}{0.3229}\\
+\frac{9.303b^2t_p+1.167t_p^3}{0.3229}
+\end{bmatrix}  \rightarrow \tau_{closed}* \begin{bmatrix}
+{22.2187b^2t_p} \\
+{28.802b^2t_p}\\
+{28.802b^2t_p}\\
+{28.802b^2t_p}
+\end{bmatrix}
+\end{equation}
+
+
+\begin{equation}
+    M_{t,\mathrm{open\ Web}} = 4\tau_{open}* ({9.303b^2t_p+1.167t_p^3}) \rightarrow \tau_{open}* 37.212b^2t_p
+\end{equation}
+
+
+\begin{equation}
+    M_{t,\mathrm{open\ Flange}} = 2\tau_{open}* ({9.303b^2t_p+1.167t_p^3})\rightarrow \tau_{open} *18.606 b^2t_p
+\end{equation}
+Here the conclusion is the exact same,  the Web has the highest maximum torsion moment, the flange the lowest and the outer plate is in the middle.
+  
 \end{enumerate}
-
-\finalanswer{
-\begin{enumerate}[label=\alph*., leftmargin=*]
-  \item $I_{p,1} = 57.14\,b^3t_p + 8.33\,bt_p^3 \approx 57.1\,b^3t_p$ and $M_{t,1} = 40.0\,b^2t_p\tau_{max}$; $I_{p,2} = 58.30\,b^3t_p + 4.67\,bt_p^3 \approx 58.3\,b^3t_p$ and $M_{t,2} = 39.7\,b^2t_p\tau_{max}$. Specific: $I_p/A = 1.50$ and $1.59\,b^2$.
-  \item Configuration~3 is the stiffest ($61.6\,b^3t_p$, +8\,\%) because it has the most closed walls, but the weakest ($36.1\,b^2t_p\tau_{max}$, $-10$\,\%) because the flow concentrates in the middle cells.
-  \item The open parts give only $0.146(t_p/b)^2$ (Config.~1) and $0.080(t_p/b)^2$ (Config.~2) of the stiffness and torque, and their stress is a factor $\approx1.4\,t_p/b$ lower. The closed parts decide both stiffness and strength.
-\end{enumerate}}
