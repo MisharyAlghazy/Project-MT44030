@@ -260,7 +260,7 @@ The shear stress in a wall follows from the net shear flow in that wall and the 
     \tau(s_i) = \frac{q_i}{t_p(s_i)} .
     \label{eq:shear_stress}
 \end{equation}
-For an outer wall (or a wall facing the open hold) $q_i$ is the flow of that cell, for a wall between two cells it is the difference between the two flows. So the maximum does not have to be in the cell with the largest flow: a thin plate with a smaller flow can give a higher stress. Table~\ref{tab:B2walls} gives all walls of the starboard half.
+For an outer wall (or a wall facing the open hold) $q_i$ is the flow of that cell, for a wall between two cells it is the difference between the two flows. The maxmum is not always in the cell with the largest flow because the plate thickness also matters. Table~\ref{tab:B2walls} gives all walls of the starboard half.
 
 \begin{table}[h]
   \centering
@@ -301,7 +301,7 @@ The largest stress is in the longitudinal bulkhead of the lower wing tank (cell~
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
   \item \textbf{Strength vs.\ stiffness.}
-  Stiffness says how much a structure deforms under a load. For torsion this is $GI_p$ in $M_t = G\theta I_p$: a stiffer section twists less for the same torque. Strength says how much load the structure can take before the stress reaches the allowable value. For torsion this is the torque $M_t$ at which the highest shear stress in the section reaches $\tau_{max}$. A section can be stiff and still weak, for example when one thin plate gets a high stress.
+  Stiffness says how much a structure deforms under a load. For torsion this is $GI_p$ in $M_t = G\theta I_p$: a stiffer section twists less for the same torque. Strength says how much load the structure can take before the stress reaches the allowable value. For torsion this is the torque $M_t$ at which the highest shear stress in the section reaches $\tau_{max}$.
 
   \item \textbf{Torsional stiffness of B2.}
   From the $M_t$--$\theta$ relation of the lectures, using the full-section value of Question~\ref{sec:a2-2}:
@@ -715,7 +715,7 @@ The warping constant is
   \label{eq:a26-Iw-def}
 \end{equation}
 
-For $\omega$ we use the sectorial coordinate from Section~\ref{sec:a2-5}. This one is taken around CT, as it should be.
+For $\omega$ we use the sectorial coordinate from Section~\ref{sec:a2-5}. $\omega$ was calculated with CT as pool (section 2.5)
 
 The thickness is constant per plate, so we do the integral piecewise with the same parts and local $s$ as in Section~\ref{sec:a2-5}:
 
@@ -767,7 +767,6 @@ so
   I_w = 2\,(387.7 + 775.3)\,a^5t_p = 2326\,a^5t_p \approx 2.33\cdot10^3\,a^5t_p .
 \end{equation}
 The side shells give $2\cdot775.3/2326 = 0.67$, so about two thirds of $I_w$.
-That makes sense, since the warping is largest at the top of the side shells
 ($|\omega| = 13.31a^2$) and $\omega$ is squared.
 
 \subsection{Closed-form expression}
@@ -886,7 +885,6 @@ With the numbers:
   &= \left(\frac{8}{6.5} + \frac{2\cdot5}{3.5} + \frac{8}{2.5}\right)\frac{a}{t_p} \nonumber\\
   &= \left(1.231 + 2.857 + 3.200\right)\frac{a}{t_p} = 7.288\,\frac{a}{t_p} .
 \end{align}
-The hatch cover gives the largest term: it is as long as the bottom plate but much thinner.
 
 \paragraph{Torsion constant.}
 Putting this in Equation~\eqref{eq:a27-bredt}:
@@ -909,8 +907,7 @@ The ratio between the two is
 \end{equation}
 So closing the hatch cover increases $I_p$ by a factor $(a/t_p)^2$. Since $t_p$ is much smaller than $a$ this is a very large number. For example, with $a = 1$\,m and $t_p = 10$\,mm we get $a/t_p = 100$, so the section becomes about $10^4$ times stiffer in torsion. This is the same kind of result as the open and closed circular section from the lectures, where the closed one also came out a factor $3\,(r/t_p)^2$ stiffer.
 
-\paragraph{Why the difference is so big.}
-In the open section BU the shear stresses can only go up and down within the thickness of each plate, so the lever arm is of the order of $t_p$. That is why $I_{p,BU}$ scales with $t_p^3$. In the closed section the shear flow $q$ goes around the whole cell, so the lever arm is of the order of the size of the cell ($a$). That is why $I_{p,BUH}$ scales with $\Omega^2 t_p$, so with $a^3 t_p$.
+The open section scaled with t_p³ and the closed section with a²·t_p, which is why the factor (a/t_p)².
 
 
 \finalanswer{

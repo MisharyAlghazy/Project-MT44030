@@ -3,43 +3,31 @@
 
 \begingroup\itshape Assignment 5 --- 17 points\endgroup
 
-\workedby{\tbd{naam}}
-
 \bigskip
-\tbd{Inleiding van dit hoofdstuk: het hele schip opgebouwd uit vijf secties
-(A, 3$\times$B, C) van elk \tbd{lengte}, de torsie-eigenschappen per sectie
-($I_p$, $I_w$) uit de vorige hoofdstukken, de materiaaleigenschappen
-($E$, $G$) en de aangebrachte torsiebelasting.}
 
 \section{Generalised torsion equation and boundary conditions}
 \label{sec:a5-1}
 
-\questionbox{Provide the generalized torsion equation and the necessary boundary
-conditions (both between adjacent sections and at the ends of the vessel) to
-solve it for the entire ship (composed of five sections). Explain the choice of
-boundary conditions. \textbf{(5 pts)}}
+\textbf{HET OPSTELLEN VAN HET PROBLEEM}
 
-\tbd{Uitwerking: differentiaalvergelijking, algemene oplossing per sectie,
-overgangsvoorwaarden bij de schotten en randvoorwaarden aan de uiteinden.}
+Uitwerking: differentiaalvergelijking, algemene oplossing per sectie, overgangsvoorwaarden bij de schotten en randvoorwaarden aan de uiteinden.
 
 \finalanswer{\tbd{kort en expliciet antwoord}}
 
 \section{Twist deformation and rate over the ship length}
 \label{sec:a5-2}
 
-\questionbox{Use the torsional characteristics of each of the five ship sections
-to calculate and plot the twist deformation and rate over the ship length under
-constant torsional moment for the situation with configuration B1 and B2 (many
-and few cells). \textbf{(7 pts)}}
+\textbf{HET OPLOSSEN VAN HET PROBLEEM}
 
-\tbd{Uitwerking}
+omdat phi' = 0 aan beide kanten van elk schot, ligt de vorm van de verdraaiing binnen elk blok al vast zonder dat je de buren nodig hebt. Het enige wat een blok doorgeeft aan het volgende is de hoek phi aan het eind.
 
-% \begin{figure}[htb]
-%   \centering
-%   \includegraphics[width=0.9\textwidth]{figures/<bestandsnaam>}
-%   \caption{\tbd{onderschrift}}
-%   \label{fig:a5B1B2}
-% \end{figure}
+Per blok ziet het er dan zo uit:
+
+\begin{enumerate}
+    \item Het moment legt C1 vast: C1 = $M_T$ / ($GI_p$).
+    \item De twee voorwaarden aan de randen van het blok leggen C2 en C3 vast. Voor de middelste blokken is dat phi' = 0 links en rechts. Voor A en C is het phi'' = 0 aan het vrije uiteinde en phi' = 0 bij het schot.
+    \item C0 volgt uit de hoek: bij blok A is dat phi(0) = 0, bij elk volgend blok de eindhoek van het vorige blok.
+\end{enumerate}
 
 \finalanswer{\tbd{kort en expliciet antwoord}}
 

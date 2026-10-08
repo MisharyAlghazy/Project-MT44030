@@ -3,21 +3,31 @@
 
 \begingroup\itshape Assignment 4 --- 20 points\endgroup
 
-\workedby{\tbd{naam}}
 
 \bigskip
-\tbd{Inleiding van dit hoofdstuk: de geidealiseerde sectie BU uit
-Assignment~2.5--2.6 ($I_p$, $I_w$, $e$, $\omega(s)$, $S_\omega(s)$), de
-gegeneraliseerde torsievergelijking $GI_p\theta'-EI_w\theta'''=M_t$ met
-$\lambda=\sqrt{GI_p/(EI_w)}$, en de randvoorwaarden van het beschouwde
-balkgeval.}
+
 
 \section{Analytical model vs.\ ANSYS model}
 \label{sec:a4-1}
 
-\paragraph{Parameter matching.}
-\tbd{Lees $a$, $t_p$, $L$, $E$, $\nu$ en $M_t$ uit het ANSYS-script van
-Brightspace en zet de analytische uitdrukkingen op dezelfde waarden.}
+\begin{table}[h]
+\begin{tabular}{|l|l|l|}
+\hline
+-                         & \textbf{value} & \textbf{unit} \\ \hline
+\textbf{Length}           & 20000          & {[}mm{]}      \\ \hline
+\textbf{width}            & 8000           & {[}mm{]}      \\ \hline
+\textbf{density}          & 7,850          & {[}ton/m3{]}  \\ \hline
+\textbf{Torsional moment} & 1000           & {[}Nmm{]}     \\ \hline
+\textbf{Depth}            & 5000           & {[}mm{]}      \\ \hline
+\textbf{Side thickness}   & 70             & {[}mm{]}      \\ \hline
+\textbf{Bottom thickness} & 130            & {[}mm{]}      \\ \hline
+\textbf{Youngs modulus (E)}   & 205000         & n/mm2         \\ \hline
+\textbf{Shear modulus (G)}   & 81000         & n/mm2         \\ \hline
+\textbf{Poisson ratio}    & 0.3            & {[}-{]}       \\ \hline
+\textbf{Ip side}    &    $775.3a^5t_p$      &    mm^4  \\ \hline
+\textbf{Ip bottom}    &    $387.7a^5t_p$    &    mm^4  \\ \hline
+\end{tabular}
+\end{table}
 
 \paragraph{Modelling approach in ANSYS (common to all sub-questions).}
 \begin{enumerate}[label=(\arabic*), leftmargin=*]
@@ -31,16 +41,50 @@ Brightspace en zet de analytische uitdrukkingen op dezelfde waarden.}
 \subsection{Free warping shear stress}
 \label{sec:a4-a}
 
-\questionbox{Calculate and compare the analytical and numerical free warping
-shear stress components $\tau_{xy}$ and $\tau_{xz}$ (through-thickness
-distribution) in all structural members. Use $I_p$ obtained in
-Assignment~2.6. \textbf{(5 pts)}}
 
 \begin{enumerate}[label=\roman*., leftmargin=*]
-  \item Analytical $\tau_{xy}(y,z)$ and $\tau_{xz}(y,z)$ in all structural
-        members. \textbf{(1 pt)} \\ \tbd{Uitwerking}
-  \item ANSYS plot of $\tau_{xy}$ and $\tau_{xz}$ in all members, with input and
-        settings. \textbf{(1 pt)} \\ \tbd{screenshot en instellingen}
+  \item 
+\begin{align}
+    \tau_{xs} &= G\left(\frac{\partial u}{\partial s} + \rho\theta\right) \\
+    u &= \theta\,\omega(s) \rightarrow \frac{\partial u}{\partial s} = \theta \frac{\partial\omega}{\partial s} \\
+    \theta &= \frac{M_t}{GI_p}
+\end{align}
+
+Then for each member, with e as the distance to the CoR:
+\begin{align}
+    u_{32} = &\frac{M_t}{GI_p}*\omega_{32} = \frac{M_t}{GI_p}*e*s\\
+    u_{34} = &\frac{M_t}{GI_p}*\omega_{34} = \frac{M_t}{GI_p}*-e*s\\
+     u_{21} = &\frac{M_t}{GI_p}*\omega_{21} = \frac{M_t}{GI_p} (B/2)(s-e)   \\
+       u_{45} = &\frac{M_t}{GI_p}*\omega_{45} = \frac{M_t}{GI_p} (B/2)(-s+e) 
+\end{align}
+This gives the following stress equations, where in the side plating the $\tau_{xz}$ direction is important, and in the bottom plating the $\tau_{xy}$ direction.
+\begin{align}
+    \tau_{xz} &= \frac{M_t}{GI_p} *(B/2-B/2*t_p/2) \\
+    \tau_{xz} &=  \frac{M_t}{GI_p}* (e-e*t_p/2)
+\end{align}
+
+        
+  \item 
+  The 2 images below show both the $\tau_{xy}$ and $\tau_{xz}$ respectively for the same idealized U section. Here one end has a completely fixed boundary condition and the other a free-rotating BC. Here the CW = 1. \textbf{CW moet 0 zijn want het is free warping. dus opnieuw plots maken. En analytical moet je de waardes uit de notepad in de formules van som 2 stampen.}
+
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{tauXY.png}
+        \caption{TauXY shear stress in ANSYS model}
+        \label{fig:tauXY}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{TauXZ.png}
+        \caption{TauXZ shear stress in ANSYS model}
+        \label{fig:tauXZ}
+    \end{minipage}
+\end{figure}
+
   \item Analytical and numerical solution in a single plot per component.
         \textbf{(1 pt)} \\ \tbd{overlay-plot}
   \item Discussion of the through-thickness distribution and maximum values.
@@ -50,14 +94,28 @@ Assignment~2.6. \textbf{(5 pts)}}
 \subsection{Free warping displacement}
 \label{sec:a4-b}
 
-\questionbox{Calculate and compare the analytical and numerical free warping
-displacement distribution $u(s)$. Use $\omega(s)$ obtained in
-Assignment~2.5. \textbf{(5 pts)}}
-
+ 
 \begin{enumerate}[label=\roman*., leftmargin=*]
-  \item Analytical $u(s)$. \textbf{(1 pt)} \\ \tbd{Uitwerking}
-  \item ANSYS plot of $u(s)$ in all members, with settings. \textbf{(1 pt)}
-        \\ \tbd{screenshot en instellingen}
+\item
+Because the saection remains the same, the sectorial coordinates can remain the same as in the previous assignment.
+\begin{align}
+    u &= \theta*\omega(s)\\
+    u_{32} = &\frac{M_t}{GI_p}*\omega_{32} = \frac{M_t}{GI_p}*z_ss\\
+    u_{34} = &\frac{M_t}{GI_p}*\omega_{34} = \frac{M_t}{GI_p}*-z_ss\\
+     u_{21} = &\frac{M_t}{GI_p}*\omega_{21} = \frac{M_t}{GI_p} (B/2)(s-z_s)   \\
+  u_{45} = &\frac{M_t}{GI_p}*\omega_{45} = \frac{M_t}{GI_p} (B/2)(-s+z_s)     
+\end{align}
+
+  
+  \item This section request specifically free warping displacement, thus CW is set to 0.
+
+  \begin{figure}[h]
+      \centering
+      \includegraphics[width=0.5\linewidth]{X_displacement.png}
+      \caption{u(s) in x direction is ANSYS model}
+      \label{fig:placeholder}
+  \end{figure}
+        
   \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}
   \item Discussion of the $s$-distribution and extreme values. \textbf{(2 pts)}
         \\ \tbd{discussie}
@@ -65,13 +123,15 @@ Assignment~2.5. \textbf{(5 pts)}}
 
 \subsection{Constrained warping stress}
 \label{sec:a4-c}
-
-\questionbox{Calculate and compare the analytical and numerical constrained
-warping stress distribution $\sigma_{xx}(s)$. Use $I_w$ obtained in
-Assignment~2.6. \textbf{(5 pts)}}
+ Use $I_w$ obtained in
+Assignment~2.6. \textbf{(5 pts)}
 
 \begin{enumerate}[label=\roman*., leftmargin=*]
-  \item Analytical $\sigma_{xx}(s)$. \textbf{(1 pt)} \\ \tbd{Uitwerking}
+  \item Analytical $\sigma_{xx}(s) =E * \frac{d\theta}{dx} *\omega(s)$ \\
+
+
+
+  
   \item ANSYS plot of $\sigma_{xx}(s)$ with settings. \textbf{(1 pt)}
         \\ \tbd{screenshot en instellingen}
   \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}

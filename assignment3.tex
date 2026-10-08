@@ -1,22 +1,22 @@
 \chapter{Closed Cells in Sections B}
 \label{ch:assignment3}
 
-\begingroup\itshape Assignment 3 --- 19 points\endgroup
+\begingroup\itshape Assignment 3 (19 points)\endgroup
+
+\bigskip
 
 
-\section{Shear flow sketch for Configurations 1 and 2}
+\section{Shear flow sketch for configurations 1 and 2}
 \label{sec:a3-1}
 
 
 \paragraph{Configuration 1.}
-The box is one closed cell, so the shear flow $q$ is constant along all four
-plates.
+The box is one closed cell, so the shear flow $q$ is constant along all four plates. The T-stiffeners are open sections. They have a linear stress over their thickness, but no net shear flow.
 
 \paragraph{Configuration 2.}
-The trapezoids form three extra closed cells with the bottom plate. In the legs and top of the trapezoids the flows of the two cells go against each other, so only the small difference $q_m - q_t$ is left there.
+The trapezoids form three extra closed cells together with the bottom plate. The main cell has flow $q_m$ and each trapezoid has flow $q_t$, both counter-clockwise. In the legs and crown of the trapezoids the two flows go against each other, so only $q_m - q_t$ is left there. The bottom plate under a trapezoid only carries $q_t$.
 
-
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \begin{tikzpicture}[scale=2.0, >={Stealth[length=2mm,width=1.6mm]}]
         \tikzset{
@@ -81,239 +81,198 @@ The trapezoids form three extra closed cells with the bottom plate. In the legs 
     \end{tikzpicture}
     \caption{Shear flow for a counter-clockwise torque $M_t$ in (a) Configuration~1
     and (b) Configuration~2. The arrow thickness gives the size of the shear flow.
-    The T-stiffeners are open sections and carry no shear flow.}
+    The T-stiffeners are open sections and have no net shear flow.}
     \label{fig:a3flow}
 \end{figure}
 
-
-
-\newpage
 \section{T-stiffener versus L-stiffener}
-By shifting the flange to an off-center position the center of rotation also moves, due to the non-symmetry of the new section. which results in more warping during torsional loading, which means that the torsional resistance will be less.
+\label{sec:a3-2}
 
+
+For open sections the torsion stiffness is the sum over the separate plates, $I_{p,o} = \frac13\sum_j b_{p,j}\,t_{p,j}^3$. As shown in the lectures, the orientation and location of the plates in the cross-section do not matter for this. An L-stiffener with the same web and flange has the same plates as the T-stiffener, so its contribution stays the same: $\frac13\left(\frac{b}{2}t_p^3 + \frac{b}{4}(2t_p)^3\right) = \frac56\,bt_p^3$ per stiffener. Since $M_t$ acts through CT, there is no extra bending either.
+
+\finalanswer{There is no change: the open-section stiffness $\tfrac13\sum b_pt_p^3$ only depends on the plate dimensions, not on where the flange is.}
 
 \section{Shear flow components}
 \label{sec:a3-3}
 
 
-Both configurations have closed parts (the cells) and open parts (the T-stiffeners). We use the same approach as in the lectures. Here the first 10 entries in both Ap and Tp are the web and the last 10 are the flanges.
-
+Both configurations are hybrid sections: closed cells plus open stiffeners. From the lectures, with the same twist rate $\theta$ for all parts:
+\begin{equation}
+  \{\mathbf{q}_c\} = \frac{M_t}{2}\cdot\frac{[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\}}{\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} + \frac{1}{12}\{\mathbf{A}_p\}^T\{\mathbf{t}_p^2\}},
+  \qquad
+  \{\mathbf{q}_o\} = \frac{M_t}{4}\cdot\frac{\{\mathbf{t}_p^2\}}{\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} + \frac{1}{12}\{\mathbf{A}_p\}^T\{\mathbf{t}_p^2\}}
+  \label{eq:a3-q}
+\end{equation}
+where $\{\mathbf{A}_p\}$ contains $b_{p,j}t_{p,j}$ of every open plate (web and flange separately) and $\{\mathbf{t}_p^2\}$ their thickness squared.
 
 \paragraph{Configuration 1.}
-
-$\Omega = 10b^2 $   \\
-S = $\frac{14b}{t_p} \rightarrow S^{-1} = \frac{t_p}{14b}$\\
-
-$[A_p]^T \frac{bt_p}{2} = [1 \space 1 \space 1\space 1\space 1\space 1\space 1\space 1\space 1\space 1 \space 1 \space 1 \space 1\space 1\space 1\space 1\space 1\space 1\space 1\space 1 ]^T $\\
-
-$[t_p^2]^T = t_p^2 [11111111114444444444]^T$
-These values allow for the calculation of $q_c $ as follows:
-
+One cell with $\Omega = 5b\cdot2b = 10b^2$ and $S = \oint\frac{\mathrm{d}s}{t_p} = \frac{14b}{2t_p} = 7\frac{b}{t_p}$, so $\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = \frac{100}{7}b^3t_p$.
+The open part is 10 webs and 10 flanges:
+\begin{equation*}
+  \{\mathbf{A}_p\}^T = \frac{bt_p}{2}\,[\,1\ \cdots\ 1\,]_{1\times20}, \qquad
+  \{\mathbf{t}_p^2\}^T = t_p^2\,[\,\underbrace{1\ \cdots\ 1}_{\text{10 webs}}\ \underbrace{4\ \cdots\ 4}_{\text{10 flanges}}\,]
+  \quad\rightarrow\quad
+  \tfrac{1}{12}\{\mathbf{A}_p\}^T\{\mathbf{t}_p^2\} = \tfrac{25}{12}\,bt_p^3 .
+\end{equation*}
+With Eq.~\eqref{eq:a3-q}:
 \begin{equation}
-    q_c = \frac{M_t}{2}*\frac{[S^{-1}]*[\Omega]}{[\Omega]^T*[S^{-1}]*[\Omega]+\frac{1}{12}*[A_p]^T*[t_p]^2} \rightarrow \frac{6*M_t}{120*b^2+35*t_p^2}
+  q_c = \frac{12\,M_t}{240\,b^2 + 35\,t_p^2} \approx 0.0500\,\frac{M_t}{b^2},
 \end{equation}
 \begin{equation}
-    q_o = \frac{M_t}{4}*\frac{[t_p^2]}{[\Omega]^T *[S^{-1}]*[\Omega]+\frac{1}{12}*[A_p]^T*[t_p]^2}
+  q_{o,web} = \frac{21\,M_t\,t_p}{1200\,b^3 + 175\,b\,t_p^2} \approx 0.0175\,\frac{M_tt_p}{b^3},
+  \qquad
+  q_{o,flange} = \frac{84\,M_t\,t_p}{1200\,b^3 + 175\,b\,t_p^2} \approx 0.0700\,\frac{M_tt_p}{b^3}.
 \end{equation}
-$q_o$ is a 20x1 matrix with $\frac{21*M_t*t_p}{600*b^3+175*t_p^2}$ for the first 10 entries and $\frac{84*M_t*t_p}{600*b^3+175*t_p^2}$ for the last 10 entries.
-
- 
 
 \paragraph{Configuration 2.}
-
-Here fore $A_p $ the first 8 entries are the webs for the lower stiffeners and higher stiffeners respectively. the following 8 entries are the flanges in the same order. \\
-
-
-$\Omega = b^2[\frac{225}{24} \frac{5}{24} \frac{5}{24} \frac{5}{24}] $
-
-$[A_p]^T \frac{bt_p}{4} = [1 1 1 2 2 2 2 2 1 1 1 2 2 2 2 2   ]^T $ \\
-
-$[t_p^2]^T = t_p^2  [1 1 1 1 1 1 1 1 1 1 1 1 4 4 4 4 4 ] $
- \begin{equation}
+Four cells: the main cell (1) and the three trapezoids (2--4). The areas are
+\begin{equation*}
+  \{\boldsymbol{\Omega}\} = b^2\left\{10-3\cdot\tfrac{7}{48},\ \tfrac{7}{48},\ \tfrac{7}{48},\ \tfrac{7}{48}\right\}^T
+  = b^2\left\{9.5625,\ 0.1458,\ 0.1458,\ 0.1458\right\}^T .
+\end{equation*}
+For the contour integrals: the main cell has $11.5b$ of plating at $2t_p$ and runs over the legs and crown of the three trapezoids; a trapezoid cell has its base ($5b/6$, $2t_p$), two legs and the crown; the legs and crown are shared:
+\begin{align*}
+  S_{11} &= \frac{11.5}{2} + 3\left(2\cdot\frac{\sqrt2/4}{1/2} + \frac{1/3}{1}\right) = \frac{27}{4} + 3\sqrt2 = 10.99\,\frac{b}{t_p},\\
+  S_{ii} &= \frac{5/6}{2} + \sqrt2 + \frac13 = \frac34 + \sqrt2 = 2.164\,\frac{b}{t_p}, \qquad
+  S_{1i} = -\left(\sqrt2 + \frac13\right) = -1.748\,\frac{b}{t_p} \qquad (i=2,3,4),
+\end{align*}
+\begin{equation*}
   [\mathbf{S}] = \frac{b}{t_p}
   \begin{bmatrix}
-    12.5+3\sqrt{2} & \frac{-3\sqrt{2}-1}{3} & \frac{-3\sqrt{2}-1}{3} & \frac{-3\sqrt{2}-1}{3} \\
-    \frac{-3\sqrt{2}-1}{3} & \tfrac76+\sqrt{2}  & 0      & 0      \\
-   \frac{-3\sqrt{2}-1}{3} & 0      & \tfrac76+\sqrt{2}\  & 0      \\
-    \frac{-3\sqrt{2}-1}{3} & 0      & 0      & \tfrac76+\sqrt{2}
-  \end{bmatrix},
-\end{equation} \\
-Using the same formulas as before:
-
+    10.99 & -1.748 & -1.748 & -1.748 \\
+    -1.748 & 2.164 & 0 & 0 \\
+    -1.748 & 0 & 2.164 & 0 \\
+    -1.748 & 0 & 0 & 2.164
+  \end{bmatrix}
+  \ \rightarrow\
+  [\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = bt_p\left\{1.4670,\ 1.2519,\ 1.2519,\ 1.2519\right\}^T,
+\end{equation*}
+\begin{equation*}
+  \{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} = 14.576\,b^3t_p .
+\end{equation*}
+The open part is 5 large T's on the deck and 3 small T's on the crowns:
+\begin{gather*}
+  \{\mathbf{A}_p\}^T = bt_p\,[\,\underbrace{\tfrac12\ \cdots\ \tfrac12}_{\text{5 webs, 5 flanges}}\ \underbrace{\tfrac14\ \cdots\ \tfrac14}_{\text{3 webs, 3 flanges}}\,],
+  \qquad
+  \{\mathbf{t}_p^2\}^T = t_p^2\,[\,\underbrace{1\ \cdots\ 1}_{\text{5}}\ \underbrace{4\ \cdots\ 4}_{\text{5}}\ \underbrace{1\ \cdots\ 1}_{\text{6}}\,]\\
+  \rightarrow\quad
+  \tfrac{1}{12}\{\mathbf{A}_p\}^T\{\mathbf{t}_p^2\} = \tfrac{7}{6}\,bt_p^3 .
+\end{gather*}
+With Eq.~\eqref{eq:a3-q}:
 \begin{equation}
-    q_c = \frac{M_t}{2}*\frac{S^{-1}*\Omega}{\Omega^T*S^{-1}*\Omega+\frac{1}{12}*A_p^T*t_p^2} \rightarrow
-\begin{bmatrix}
-\frac{0.4187M_tbt_p}{9.303b^3t_p+1.167bt_p^3} \\
-\frac{0.3229M_tbt_p}{9.303b^3t_p+1.167bt_p^3}\\
-\frac{0.3229M_tbt_p}{9.303b^3t_p+1.167bt_p^3}\\
-\frac{0.3229M_tbt_p}{9.303b^3t_p+1.167bt_p^3}
-\end{bmatrix}
+  \{\mathbf{q}_c\} = \frac{M_t\,bt_p}{2\left(14.576\,b^3t_p + 1.167\,bt_p^3\right)}
+  \begin{Bmatrix} 1.4670\\ 1.2519\\ 1.2519\\ 1.2519 \end{Bmatrix}
+  \approx \frac{M_t}{b^2}\begin{Bmatrix} 0.0503\\ 0.0429\\ 0.0429\\ 0.0429 \end{Bmatrix},
 \end{equation}
-\begin{equation}
-    q_o = \frac{M_t}{4}*\frac{t_p^2}{\Omega^T *S^{-1}*\Omega+\frac{1}{12}*A_p^T*t_p^2} \rightarrow \frac{M_tt_p^2}{4(9,303b^3t_p+1.167bt_p^3)}[1111111111144444]
-\end{equation}
+\begin{gather}
+  q_{o,j} = \frac{M_t\,t_{p,j}^2}{4\left(14.576\,b^3t_p + 1.167\,bt_p^3\right)}:\\
+  q_{o,web} \approx 0.0172\,\frac{M_tt_p}{b^3}\ \text{(all webs and small flanges)},
+  \qquad
+  q_{o,flange} \approx 0.0686\,\frac{M_tt_p}{b^3}\ \text{(large flanges)} .\nonumber
+\end{gather}
 
+\finalanswer{Configuration 1: $q_c = \dfrac{12M_t}{240b^2+35t_p^2}\approx0.0500\,\dfrac{M_t}{b^2}$, $q_{o,web}\approx0.0175\,\dfrac{M_tt_p}{b^3}$, $q_{o,flange}\approx0.0700\,\dfrac{M_tt_p}{b^3}$.\\
+Configuration 2: $q_m = q_1\approx0.0503\,\dfrac{M_t}{b^2}$, $q_t = q_{2,3,4}\approx0.0429\,\dfrac{M_t}{b^2}$, so $q_m-q_t\approx0.0074\,\dfrac{M_t}{b^2}$ in the legs and crowns; $q_{o,web}\approx0.0172\,\dfrac{M_tt_p}{b^3}$, $q_{o,flange}\approx0.0686\,\dfrac{M_tt_p}{b^3}$.}
 
+\newpage
 \section{Maximum shear stress}
 \label{sec:a3-4}
 
 
+
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item 
-\begin{equation}
-    \tau_i = \frac{q_i}{t_p} 
-\end{equation}
-\textbf{For configuration 1}
-\begin{equation}
-    \tau_o = \frac{21*M_t}{600*b^3+175*t_p}* [11111111112222222222]^T
-\end{equation}
-\begin{equation}
-    \tau_c = \frac{6*M_t}{120*b^2*t_p+35*t_p^3}
-\end{equation}
-Comparing these 2 equations gives that:
-\begin{equation}
-    \tau_{max} = \frac{6*M_t}{120*b^2*t_p+35*t_p^3}
-\end{equation}
-and therfore the shear stress will be highest in the deck, sides and bottom plating.
+  \item In every wall $\tau = q/t_p$, with the net flow in walls between two cells. In the open plates the stress is linear over the thickness and $\tau = q_o/t_p$ is the value at the surface.
 
-\textbf{For configuration 2}
-\begin{equation}
-    \tau_o =  \frac{M_tt_p}{4(9,303b^3t_p+1.167bt_p^3)}[1111111111144444]
-\end{equation}
-\begin{equation}
-    \tau_c = \begin{bmatrix}
-\frac{0.4187M_tb}{9.303b^3t_p+1.167bt_p^3} \\
-\frac{0.3229M_tb}{9.303b^3t_p+1.167bt_p^3}\\
-\frac{0.3229M_tb}{9.303b^3t_p+1.167bt_p^3}\\
-\frac{0.3229M_tb}{9.303b^3t_p+1.167bt_p^3}
-\end{bmatrix}
-\end{equation}
+  \textbf{Configuration 1.} In the box plating ($2t_p$):
+  \begin{equation*}
+    \tau_c = \frac{q_c}{2t_p} = \frac{6\,M_t}{240\,b^2t_p + 35\,t_p^3} \approx 0.0250\,\frac{M_t}{b^2t_p} .
+  \end{equation*}
+  In the stiffeners: $\tau_{o,web} = q_{o,web}/t_p \approx 0.0175\,M_t/b^3$ and $\tau_{o,flange} = q_{o,flange}/2t_p \approx 0.0350\,M_t/b^3$. This is a factor $1.4\,t_p/b$ of the stress in the plating, so for $b\gg t_p$ the stiffeners are not critical.
 
-given b >> $t_p$ , the highest torsional strain is  $\frac{0.4187M_t}{9.303b^2t_p+1.167t_p^3}$, again at the deck, bottom and side plating.
+  \textbf{Configuration 2.} The walls of the closed part:
+  \begin{center}\small
+  \begin{tabular}{lccc}
+    \toprule
+    Wall & $t$ & $q_{net}$ [$M_t/b^2$] & $\tau$ [$M_t/(b^2t_p)$] \\
+    \midrule
+    \textbf{Deck, sides, bottom between trapezoids} & $\boldsymbol{2t_p}$ & $\boldsymbol{q_m = 0.0503}$ & $\boldsymbol{0.0252}$ \\
+    Bottom under a trapezoid                & $2t_p$   & $q_t = 0.0429$     & $0.0215$ \\
+    Trapezoid legs                          & $t_p/2$  & $q_m-q_t = 0.0074$ & $0.0148$ \\
+    Trapezoid crown                         & $t_p$    & $q_m-q_t = 0.0074$ & $0.0074$ \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  The stiffeners again give only $\mathcal{O}(t_p/b)$ of this (largest in the large flanges, $0.0343\,M_t/b^3$).
 
-  \item
-  as per given the maximum shear stress for configuration 3 is:
+  \finalanswer{Configuration 1: $\tau_{max,1} \approx 0.0250\,\dfrac{M_t}{b^2t_p}$, constant in the whole box plating (deck, sides and bottom).\\
+  Configuration 2: $\tau_{max,2} \approx 0.0252\,\dfrac{M_t}{b^2t_p}$, in the box plating of the main cell (deck, sides and the bottom between the trapezoids).}
 
-$t_{max3} = \frac{0.02769M_t}{b^2t_p}$
+  \item Compared with the given value of configuration 3:
+  \begin{equation*}
+    \tau_{max,1} = 0.0250\,\frac{M_t}{b^2t_p},\qquad
+    \tau_{max,2} = 0.0252\,\frac{M_t}{b^2t_p},\qquad
+    \tau_{max,3} = 0.0277\,\frac{M_t}{b^2t_p}.
+  \end{equation*}
+  Configurations 1 and 2 are almost the same. In both, the torque is carried by one large flow around the box, $q\approx M_t/(2\cdot10b^2)$, because the box encloses almost all of the area. In configuration 2 the trapezoid cells carry a bit less flow than the main cell, so $q_m$ is slightly higher.
 
-  comparing these to the other sections: (ignoring the very small $t_p $terms and rewriting to the same form)\\ 
-$\tau_{max2} =\frac{0.045M_t}{b^2t_p}$
-$\tau_{max1} = \frac{0.05*M_t}{b*t_p}$
-
-These 3 equations show a clear trend of decreasing shear stress with the addition of more closed cells in the cross-section.
-  
+  Configuration 3 has about 10\,\% higher stress, even though it has more closed cells. The vertical webs split the box into four cells. The two middle cells are bounded by webs on both sides and get a higher flow than the two outer cells. The dek and bottom plating of these middle cells carry this full flow, so the peak stress goes up. So adding the cels does not always lower the maximum stress
 \end{enumerate}
 
-
-
-\newpage
-\section{Specific torsion stiffness and strength}
+\section{(Specific) torsion stiffness and strength}
 \label{sec:a3-5}
 
 
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item 
-\textbf{Configuration 1}
+  \item From the lectures, $I_p = 4\{\boldsymbol{\Omega}\}^T[\mathbf{S}]^{-1}\{\boldsymbol{\Omega}\} + \frac13\{\mathbf{A}_p\}^T\{\mathbf{t}_p^2\}$. The strength follows from setting the maximum stress of Question~\ref{sec:a3-4} equal to $\tau_{max}$.
 
-\begin{equation}
-    I_{p,1}= 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = \frac{200b^3t_p}{7}+\frac{25bt_p^3}{3}
-    \end{equation}
-  \begin{equation}
-      \tau_{max,1} = \frac{6*M_t}{120*b^2*t_p+35*t_p^3} \rightarrow M_{t,1} = \frac{\tau_{max,1}(120*b^2*t_p+35*t_p^3)}{6} 
-  \end{equation}
-\textbf{Configuration 2}
+  \textbf{Configuration 1.}
+  \begin{gather*}
+    I_{p,1} = \frac{400}{7}\,b^3t_p + \frac{25}{3}\,bt_p^3 = 57.14\,b^3t_p + 8.33\,bt_p^3,\\
+    M_{t,1} = \frac{240\,b^2t_p + 35\,t_p^3}{6}\,\tau_{max} = \left(40.0\,b^2t_p + 5.83\,t_p^3\right)\tau_{max}.
+  \end{gather*}
 
+  \textbf{Configuration 2.}
+  \begin{gather*}
+    I_{p,2} = 4\cdot14.576\,b^3t_p + \frac{14}{3}\,bt_p^3 = 58.30\,b^3t_p + 4.67\,bt_p^3,\\
+    M_{t,2} = \frac{4\left(14.576\,b^2t_p + 1.167\,t_p^3\right)}{1.4670}\,\tau_{max} = \left(39.7\,b^2t_p + 3.18\,t_p^3\right)\tau_{max}.
+  \end{gather*}
 
-\begin{equation}
-    I_{p,2} = 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = 37.21b^3t_p+4.667bt_p^3
-\end{equation}
-\begin{equation}
-     \tau_{max,2} = \frac{0.4187M_t}{9.303b^2t_p+1.167t_p^3} \rightarrow M_{t,2} =\frac{\tau_{max,2}*(9.303b^2t_p+1.167t_p^3)}{0.4187}
-\end{equation}
+  For the \emph{specific} values we divide by the material area of the cross-section, $A$ (box plating $28\,bt_p$ plus the stiffeners; for configuration 3 the webs are taken as $t_p$ thick). For $b\gg t_p$:
+  \begin{center}\small
+  \begin{tabular}{lccc}
+    \toprule
+     & config.\ 1 & config.\ 2 & config.\ 3 (given) \\
+    \midrule
+    $I_p$ [$b^3t_p$]                    & 57.1  & 58.3  & 61.6 \\
+    $M_t$ [$b^2t_p\tau_{max}$]          & 40.0  & 39.7  & 36.1 \\
+    $A$ [$bt_p$]                        & 38.0  & 36.6  & 36.6 \\
+    $I_p/A$ [$b^2$]                     & 1.50  & 1.59  & 1.68 \\
+    $M_t/A$ [$b\,\tau_{max}$]           & 1.05  & 1.09  & 0.99 \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
 
+  \finalanswer{$I_{p,1} = 57.1\,b^3t_p + 8.33\,bt_p^3$, $M_{t,1} = 40.0\,b^2t_p\tau_{max}$; $I_{p,2} = 58.3\,b^3t_p + 4.67\,bt_p^3$, $M_{t,2} = 39.7\,b^2t_p\tau_{max}$ (for $b\gg t_p$). Specific values: see the table above.}
 
+  \item \emph{Stiffness.} Configuration 3 is 8\,\% stiffer than configuration 1 and 6\,\% stiffer than configuration 2. Per unit of material the gap with configuration 1 is even larger (12\,\%), because configuration 1 uses the most material. All three have the same box with the same plating, which gives the base value $57.1\,b^3t_p$. Adding closed walls inside the box increases I_p. In configuration 2 only three small cells are added at the bottom, which gives 2\,\%. In configuration 3 the webs connect the deck and bottom and divide the whole box, which gives more. The open stiffeners hardly count (see c.).
 
+  \emph{Strength.} Configuration 3 is about 10\,\% weaker than 1 and 2, because the flow in the middle cells is higher than in the outer cells (Question~\ref{sec:a3-4}b). Configurations 1 and 2 load the box plating almost evenly. Per unit of material, configuration 2 is the best for strength, because it uses less material than configuration 1 for the same strength.
 
-
-  \item 
-
-In this comparison section the $T_p $ term is again ignored, due to the very small size and the eqautions for oth the $I_p \& M_t$  are rewritten as follows:
-\[
-I_{p,1}=28.57b^3t_p
-\qquad
-I_{p,2}=37.21b^3t_p
-\qquad
-I_{p,3}=61.558b^3t_p
-\]
-
-\[
-M_{t,1} = \tau_{max,1}(20b^2t_p)
-\qquad
-M_{t,2} = \tau_{max,2}(22.219b^2t_p)
-\qquad
-M_{t,3} = \tau_{max,3}(36.114b^2t_p)
-\]
-The three different equation sets show that the torsional resistance and maximum allowed stress increases with the 3 different configurations. This is mainly due to the increase in material area in the section as well as the addition of cells away from the neutral axis.
-  
-
-  \item 
-\textbf{Configuration 1}
-
-\begin{equation}\label{Cheese}
-    I_{p,1}= 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = \frac{200b^3t_p}{7}+\frac{25bt_p^3}{3}
-    \end{equation}
-The first part of equation \ref{Cheese} represents the closed part of the section while the second term represents the open part. As concluded previously also, the contribution of the first (closed) term is much bigger as stated that b >> $t_p$.
-
-This can also shown by calculating the maximum torsional load for each individual part of the equation:
-
-\[
-\begin{aligned}
-M_{t,\mathrm{open\ Web}}
-&= \frac{\tau_{\mathrm{open},1}\left(600b^2t_p+175t_p^2\right)}{21} \rightarrow 28.57 \tau_{\mathrm{open}}b^2
-\\[6pt]
-M_{t,\mathrm{open\ Flange}}
-&= \frac{\tau_{\mathrm{open},1}\left(600b^2t_p+175t_p^2\right)}{84} \rightarrow 7.14\tau_{\mathrm{open}}  b^2
-\\[6pt]
-M_{t,\mathrm{closed}}
-&= \frac{\tau_{\mathrm{closed},1}\left(120b^2t_p+35t_p^3\right)}{6} \rightarrow 20b^2t_p\tau_{closed}b^2
-\end{aligned}
-\]
-From this can be concluded that maximum torsional moment is largest for the webs and the smallest for the flanges, with the outer plating in between.
-\newpage
-
-\textbf{Configuration 2}
-
-\begin{equation}
-    I_{p,2} = 4[\Omega]^T[S^{-1}][\Omega]+\tfrac13[A_p]^T[t_p^2] = 37.21b^3t_p+4.667bt_p^3
-\end{equation}
-The first part of equation \ref{Cheese} represents the closed part of the section while the second term represents the open part. As concluded previously also, the contribution of the first (closed) term is much bigger as stated that b >> $t_p$.
-
-here the bendingmoments are as follows:
-
-\begin{equation}
-    M_{t,closed} = \tau_{closed}*  \begin{bmatrix}
-\frac{9.303b^2t_p+1.167t_p^3}{0.4187} \\
-\frac{b9.303b^2t_p+1.167t_p^3}{0.3229}\\
-\frac{9.303b^2t_p+1.167t_p^3}{0.3229}\\
-\frac{9.303b^2t_p+1.167t_p^3}{0.3229}
-\end{bmatrix}  \rightarrow \tau_{closed}* \begin{bmatrix}
-{22.2187b^2t_p} \\
-{28.802b^2t_p}\\
-{28.802b^2t_p}\\
-{28.802b^2t_p}
-\end{bmatrix}
-\end{equation}
-
-
-\begin{equation}
-    M_{t,\mathrm{open\ Web}} = 4\tau_{open}* ({9.303b^2t_p+1.167t_p^3}) \rightarrow \tau_{open}* 37.212b^2t_p
-\end{equation}
-
-
-\begin{equation}
-    M_{t,\mathrm{open\ Flange}} = 2\tau_{open}* ({9.303b^2t_p+1.167t_p^3})\rightarrow \tau_{open} *18.606 b^2t_p
-\end{equation}
-Here the conclusion is the exact same,  the Web has the highest maximum torsion moment, the flange the lowest and the outer plate is in the middle.
-  
+  \item The twist rate is the same for the open and closed parts, so the torque is divided in the same ratio as the stiffness:
+  \begin{center}\small
+  \begin{tabular}{lcc}
+    \toprule
+     & config.\ 1 & config.\ 2 \\
+    \midrule
+    $I_{p,closed}$ & $57.14\,b^3t_p$ & $58.30\,b^3t_p$ \\
+    $I_{p,open}$   & $8.33\,bt_p^3$  & $4.67\,bt_p^3$ \\
+    $M_{t,open}/M_{t,closed} = I_{p,open}/I_{p,closed}$ & $0.146\,(t_p/b)^2$ & $0.080\,(t_p/b)^2$ \\
+    example $b/t_p = 50$ & $0.006\,\%$ & $0.003\,\%$ \\
+    $\tau_{open,max}/\tau_{closed,max}$ & $1.40\,t_p/b$ & $1.36\,t_p/b$ \\
+    \bottomrule
+  \end{tabular}
+  \end{center}
+  For stiffness the open stiffeners only give a part of order $(t_p/b)^2$, which is negligible. For strength the open parts are not critical either: their maximum stress is a factor $\approx1.4\,t_p/b$ (a few \%) of the stress in the closed walls. So in both configurations the closed cells carry almost all the torque and set both the stiffness and the strength. In configuration 2 the open part is even smaller than in configuration 1, because three bottom T-stiffeners have been replaced by closed trapezoids with smaller T's on top
 \end{enumerate}
