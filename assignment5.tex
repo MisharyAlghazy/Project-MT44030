@@ -24,11 +24,12 @@ The moment is constant, so there is no particular solution and for every block w
 We use a local $x$ from 0 to 20~m in every block. With five blocks there are 20 constants, so we need 20 boundary conditions:
 \begin{itemize}
   \item \textbf{Moment (5):} Equation~\ref{eq:a5-gte} has to hold in every block, because every block carries the same $M_T$.
-  \item \textbf{Aft end (2):} $\varphi_A(0) = 0$ and $\varphi_A''(0) = 0$. The first one is our reference, because we can only find the twist relative to one point. The second one is there because the end is free to warp, so the warping stress is zero.
-  \item \textbf{Bow (1):} $\varphi_C''(20) = 0$, also a free end.
+  \item \textbf{Aft end (2):} $\varphi_A(0) = 0$ and $\varphi_A'(0) = 0$. We model the ship as a cantilever that is clamped at the aft end, like the example in the lectures. So there is no rotation and no warping there.
+  \item \textbf{Bow (1):} $\varphi_C''(20) = 0$. The bow is a free end, so it can warp freely and the warping stress is zero.
   \item \textbf{Bulkheads, twist rate (8):} $\varphi' = 0$ on both sides of the four bulkheads. The bulkheads are very stiff, so they stop the section from warping. Since $u = \theta\,\omega$, this means $\theta = \varphi' = 0$.
   \item \textbf{Bulkheads, twist angle (4):} $\varphi_i(20) = \varphi_{i+1}(0)$. The blocks are connected, so the angle has to be the same on both sides.
 \end{itemize}
+Normally the warping stress also has to be equal on both sides of an element boundary. We do not use that condition here, because the stiff bulkhead already fixes $\varphi' = 0$ on both sides.
 
 \finalanswer{Equation~\ref{eq:a5-gte} with solution~\ref{eq:a5-phi} for every block, and the $5 + 2 + 1 + 8 + 4 = 20$ boundary conditions above.}
 
@@ -53,17 +54,17 @@ We filled in the 20 boundary conditions and solved the 20 constants with a scrip
     \toprule
      & B1 & B2 & BU & BUH \\
     \midrule
-    Twist angle at the bow [deg] & 1.84 & 1.86 & 2.90 & 0.929 \\
+    Twist angle at the bow [deg] & 1.82 & 1.85 & 2.88 & 0.915 \\
     Maximum twist rate in the holds [mrad/m] & 0.599 & 0.615 & 1.08 & 0.162 \\
     \bottomrule
   \end{tabular}
 \end{table}
 
-The twist rate is zero at every bulkhead, as we imposed, and has a peak in the middle of each hold. Sections A and C are closed and stiff. They twist at a constant rate of about 0.2~mrad/m and only drop to zero just before the bulkhead. Most of the twist comes from the three holds.
+The twist rate is zero at every bulkhead, as we imposed, and has a peak in the middle of each hold. Sections A and C are closed and stiff. They twist at a constant rate of about 0.2~mrad/m and only drop to zero close to a bulkhead and at the clamped aft end. Most of the twist comes from the three holds.
 
 B1 and B2 are almost the same. B2 has a lower $I_p$ (0.86 against 1.05~m$^4$), so we expected it to twist more. But it also has a higher $I_w$ (25.7 against 23.6~m$^6$), and between the bulkheads the constrained warping carries a large part of the moment. So the difference is small: the maximum twist rate of B2 is only 3\,\% higher.
 
-\finalanswer{B1: $\varphi = 1.84^\circ$ at the bow and $\theta_{max} = 0.599$~mrad/m. B2: $\varphi = 1.86^\circ$ and $\theta_{max} = 0.615$~mrad/m. The maximum is in the middle of each hold ($x = 30$, 50 and 70~m).}
+\finalanswer{B1: $\varphi = 1.82^\circ$ at the bow and $\theta_{max} = 0.599$~mrad/m. B2: $\varphi = 1.85^\circ$ and $\theta_{max} = 0.615$~mrad/m. The maximum is in the middle of each hold ($x = 30$, 50 and 70~m).}
 
 
 \section{Open versus closed hatch covers}
@@ -79,11 +80,11 @@ We used the same method with BU (hatches open) and BUH (hatches closed) as hold 
 \end{figure}
 
 \begin{enumerate}[label=\alph*., leftmargin=*]
-  \item With open hatches the bow twists $2.90^\circ$, with closed hatches $0.929^\circ$. That is about three times less. Sections A and C stay the same, so the difference comes from the holds. For BU the angle goes up in steps, with most of the twist in the middle of each hold. For BUH the line is almost straight, because the closed holds twist at a constant rate.
+  \item With open hatches the bow twists $2.88^\circ$, with closed hatches $0.915^\circ$. That is about three times less. Sections A and C stay the same, so the difference comes from the holds. For BU the angle goes up in steps, with most of the twist in the middle of each hold. For BUH the line is almost straight, because the closed holds twist at a constant rate.
 
   \item For BU the twist rate has a large peak of 1.08~mrad/m in the middle of each hold. The open section has almost no $I_p$, so the moment is carried by constrained warping between the bulkheads. For BUH the twist rate is almost constant at 0.162~mrad/m and only goes to zero close to the bulkheads. Here the closed section carries the moment by free warping. The twist rate in the closed holds is even a bit lower than in sections A and C.
 
   \item The maximum twist rate in the holds goes from 1.08 to 0.162~mrad/m. This is a factor $1.08/0.162 = 6.67$, or 85\,\% lower. This is much less than the difference in $I_p$, which is almost a factor 9000. The open hold is already helped a lot by the bulkheads through $I_w$, so it does not depend on $I_p$ alone.
 \end{enumerate}
 
-\finalanswer{Closing the hatch covers lowers the twist angle at the bow from $2.90^\circ$ to $0.929^\circ$ and the maximum twist rate in the holds from 1.08 to 0.162~mrad/m (factor 6.67).}
+\finalanswer{Closing the hatch covers lowers the twist angle at the bow from $2.88^\circ$ to $0.915^\circ$ and the maximum twist rate in the holds from 1.08 to 0.162~mrad/m (factor 6.67).}
