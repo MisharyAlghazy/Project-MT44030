@@ -16,27 +16,20 @@
 -                         & \textbf{value} & \textbf{unit} \\ \hline
 \textbf{Length}           & 20000          & {[}mm{]}      \\ \hline
 \textbf{width}            & 8000           & {[}mm{]}      \\ \hline
-\textbf{density}          & 7,850          & {[}ton/m3{]}  \\ \hline
+\textbf{density}          & 7850          & {[}kg/m3{]}  \\ \hline
 \textbf{Torsional moment} & 1000           & {[}Nmm{]}     \\ \hline
 \textbf{Depth}            & 5000           & {[}mm{]}      \\ \hline
 \textbf{Side thickness}   & 70             & {[}mm{]}      \\ \hline
 \textbf{Bottom thickness} & 130            & {[}mm{]}      \\ \hline
 \textbf{Youngs modulus (E)}   & 205000         & n/mm2         \\ \hline
-\textbf{Shear modulus (G)}   & 81000         & n/mm2         \\ \hline
+\textbf{Shear modulus (G)}   & 78846         & n/mm2         \\ \hline
 \textbf{Poisson ratio}    & 0.3            & {[}-{]}       \\ \hline
-\textbf{Ip side}    &    $775.3a^5t_p$      &    mm^4  \\ \hline
-\textbf{Ip bottom}    &    $387.7a^5t_p$    &    mm^4  \\ \hline
+\textbf{Ip}    &    $\tfrac13*(8000*130^3+2*5000*70^3) = 7.002*10^9 [mm4]$      &    mm^4  \\ \hline
+\textbf{Iw}    &  $4.652*10^{19}mm^6$      &    mm^4  \\ \hline
+\textbf{Center of rotation (e)}    & 1672            & {[mm]}       \\ \hline
+\textbf{k}    &  & {[-]}       \\ \hline
 \end{tabular}
 \end{table}
-
-\paragraph{Modelling approach in ANSYS (common to all sub-questions).}
-\begin{enumerate}[label=(\arabic*), leftmargin=*]
-  \item \emph{Geometry}: \tbd{model, elementtype}
-  \item \emph{Mesh}: \tbd{meshdichtheid en convergentiecheck}
-  \item \emph{Free-warping load case}: \tbd{belasting en opleggingen}
-  \item \emph{Constrained-warping load case}: \tbd{belasting en opleggingen}
-  \item \emph{Post-processing}: \tbd{paden, uitvoer en export}
-\end{enumerate}
 
 \subsection{Free warping shear stress}
 \label{sec:a4-a}
@@ -45,7 +38,7 @@
 \begin{enumerate}[label=\roman*., leftmargin=*]
   \item 
 \begin{align}
-    \tau_{xs} &= G\left(\frac{\partial u}{\partial s} + \rho\theta\right) \\
+    \tau_{xs} &= G*\theta*t_{platezone}\\
     u &= \theta\,\omega(s) \rightarrow \frac{\partial u}{\partial s} = \theta \frac{\partial\omega}{\partial s} \\
     \theta &= \frac{M_t}{GI_p}
 \end{align}
@@ -54,41 +47,67 @@ Then for each member, with e as the distance to the CoR:
 \begin{align}
     u_{32} = &\frac{M_t}{GI_p}*\omega_{32} = \frac{M_t}{GI_p}*e*s\\
     u_{34} = &\frac{M_t}{GI_p}*\omega_{34} = \frac{M_t}{GI_p}*-e*s\\
-     u_{21} = &\frac{M_t}{GI_p}*\omega_{21} = \frac{M_t}{GI_p} (B/2)(s-e)   \\
-       u_{45} = &\frac{M_t}{GI_p}*\omega_{45} = \frac{M_t}{GI_p} (B/2)(-s+e) 
+     u_{21} = &\frac{M_t}{GI_p}*\omega_{21} = \frac{M_t}{GI_p} (A/2)(s-e)   \\
+       u_{45} = &\frac{M_t}{GI_p}*\omega_{45} = \frac{M_t}{GI_p} (A/2)(-s+e) 
 \end{align}
-This gives the following stress equations, where in the side plating the $\tau_{xz}$ direction is important, and in the bottom plating the $\tau_{xy}$ direction.
+This gives the following stress equations, where in the side plating the $\tau_{xz}$ direction is important, and in the bottom plating the $\tau_{xy}$ direction, by rewriting the open section function for shear stress according to formula 4.1.
 \begin{align}
-    \tau_{xz} &= \frac{M_t}{GI_p} *(B/2-B/2*t_p/2) \\
-    \tau_{xz} &=  \frac{M_t}{GI_p}* (e-e*t_p/2)
+    \tau_{xz} &= G* \frac{M_t}{GI_p} *t_p  \\
+    \tau_{xy} &=  G* \frac{M_t}{GI_p}* t_p
 \end{align}
 
         
   \item 
-  The 2 images below show both the $\tau_{xy}$ and $\tau_{xz}$ respectively for the same idealized U section. Here one end has a completely fixed boundary condition and the other a free-rotating BC. Here the CW = 1. \textbf{CW moet 0 zijn want het is free warping. dus opnieuw plots maken. En analytical moet je de waardes uit de notepad in de formules van som 2 stampen.}
+  The 2 images below show both the $\tau_{xy}$ and $\tau_{xz}$ respectively for the same idealized U section. Here one end has a completely fixed boundary condition and the other a free-rotating BC. Here the CW = 0.
 
 
 \begin{figure}[h]
     \centering
     \begin{minipage}{0.48\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{tauXY.png}
-        \caption{TauXY shear stress in ANSYS model}
-        \label{fig:tauXY}
+        \includegraphics[width=\linewidth]{tauXY1.png}
+        \caption{TauXY shear stress in ANSYS model in the bottom plating}
+        \label{fig:tauXY1}
     \end{minipage}
     \hfill
     \begin{minipage}{0.48\linewidth}
         \centering
-        \includegraphics[width=\linewidth]{TauXZ.png}
-        \caption{TauXZ shear stress in ANSYS model}
+        \includegraphics[width=\linewidth]{TauXZ1.png}
+        \caption{TauXZ shear stress in ANSYS model`in the side plating}
         \label{fig:tauXZ}
     \end{minipage}
 \end{figure}
+\newpage
 
   \item Analytical and numerical solution in a single plot per component.
-        \textbf{(1 pt)} \\ \tbd{overlay-plot}
-  \item Discussion of the through-thickness distribution and maximum values.
-        \textbf{(2 pts)} \\ \tbd{discussie}
+By filling out the different variables in the equations for $\tau_{32}$ and $\tau_{21}$ the following results are obtained:
+\begin{align}
+    \tau_{xz} &=78846* \frac{1000}{78846*7.002*10^9}*70 =1e^{-05} \\
+    \tau_{xy} &= 78846*\frac{1000}{78846**7.002*10^9}**130  =1.86e^{-05}
+\end{align}
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{NvsA1.png}
+        \caption{Numerical vs analytical $\tau_{xy}$}
+        \label{fig:tau_xy}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{tauxz1.png}
+        \caption{Numerical vs analytical $\tau_{xz}$}
+        \label{fig:tau_xz}
+    \end{minipage}
+\end{figure}
+
+
+  \item 
+
+As can be seen from the figures of the FEA results and the comparison to the analytical calculation, the results match. And thus the analytical method is accurate enough for an ideal beam to determine its shear stress.
+
 \end{enumerate}
 
 \subsection{Free warping displacement}
@@ -102,10 +121,10 @@ Because the saection remains the same, the sectorial coordinates can remain the 
     u &= \theta*\omega(s)\\
     u_{32} = &\frac{M_t}{GI_p}*\omega_{32} = \frac{M_t}{GI_p}*z_ss\\
     u_{34} = &\frac{M_t}{GI_p}*\omega_{34} = \frac{M_t}{GI_p}*-z_ss\\
-     u_{21} = &\frac{M_t}{GI_p}*\omega_{21} = \frac{M_t}{GI_p} (B/2)(s-z_s)   \\
-  u_{45} = &\frac{M_t}{GI_p}*\omega_{45} = \frac{M_t}{GI_p} (B/2)(-s+z_s)     
+     u_{21} = &\frac{M_t}{GI_p}*\omega_{21} = \frac{M_t}{GI_p} (A/2)(s-z_s)   \\
+  u_{45} = &\frac{M_t}{GI_p}*\omega_{45} = \frac{M_t}{GI_p} (A/2)(-s+z_s)     
 \end{align}
-
+\newpage
   
   \item This section request specifically free warping displacement, thus CW is set to 0.
 
@@ -116,24 +135,78 @@ Because the saection remains the same, the sectorial coordinates can remain the 
       \label{fig:placeholder}
   \end{figure}
         
-  \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}
-  \item Discussion of the $s$-distribution and extreme values. \textbf{(2 pts)}
-        \\ \tbd{discussie}
+  \item ANalytical vesus numerical plot\\
+The maximum and minimum displacement in x direction are expected at the top edges of the section. These can anlytically be determined by filling out the s value Thus:
+
+\begin{align}
+    u_{1} &= \frac{M_t}{GI_p} (A/2)(B-z_s) = \frac{1000}{78846*7.002*10^9}*(8000/2)*(3328) =0.2411*10^{-4}   \\
+    u_2 &=  \frac{M_t}{GI_p}*z_ss  =\frac{1000}{78846*7.002*10^9}*1672* (8000/2) = -1.211*10^{-5}  \\
+    u_3 &=  0    \\
+    u_4 &=  \frac{M_t}{GI_p}*-z_ss  =   1.211*10^{-5}\\
+    u_5 &= \frac{M_t}{GI_p} (A/2)(-B+z_s) = -0.2411*10^{-4} \\
+\end{align}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{u(s)1.png}
+    \caption{Displacement in x direction per point in the section [mm]}
+    \label{fig:placeholder}
+\end{figure}
+
+  
+  \item Discussion of the $s$-distribution and extreme values.\\
+
+  Figure 4.6  shows the comparison of the anaytical results versus the numerical results. A difference of around 1.5\% maximum is found at the outer ends (point 1 and 5) and around 12\% at point 4 and 2. This determines that the analytical approach is more than sufficient for the largest displacement but is a little less accurate for the connecting corners of the section.
 \end{enumerate}
 
 \subsection{Constrained warping stress}
 \label{sec:a4-c}
- Use $I_w$ obtained in
-Assignment~2.6. \textbf{(5 pts)}
+The generalized torsion equation is as follows:
+\begin{equation}
+    \varphi =C_0+C_1x+C_2cosh(kx)+C_3sinh(kx)
+\end{equation}
+To solve this equation the following boundary conditions are applied:\\
+BC1 $\rightarrow \varphi(0) = 0$ there is zero twist angle at the clamped end. \\
+BC2 $\rightarrow \dot\varphi (0) = 0$ there is no warping displacement at the clamped end.\\
+BC3 $\rightarrow \dot\varphi (L) = 0$ there is no warping stress at the non-clamped end.\\
+BC4 $\rightarrow$ the mremote mechanical moment $M_t$ at clamped end is related to the internal one, thus $\frac{M_t}{EI_w} =C_1*K^2$ with $k = \sqrt{\frac{GI_p}{EW_p}} =1.047*10^{-18} mm^{-1}$\\
+This gives that: $\theta = \frac{d\varphi}{dx}$\\
+Furthermore: \\
+\begin{align}
+    C_0 &= -\frac{1-cosh(\kappa L)}{sinh(\kappa L)}*\frac{M_T}{EI_wk^3} = -1.808*10^{08} &
+    C_1 &= \frac{M_T}{EI_wk^2} = 1.81*10^{-12} \\
+    C_2 &= \frac{1-cosh(\kappa L)}{sinh(\kappa L)}*\frac{M_T}{EI_wk^3} = 1.808*10^{08} &
+    C_3 &= -\frac{M_T}{EI_wk^3} =  2.38*10^{-07}
+\end{align}
+
 
 \begin{enumerate}[label=\roman*., leftmargin=*]
-  \item Analytical $\sigma_{xx}(s) =E * \frac{d\theta}{dx} *\omega(s)$ \\
+  \item Analytical $\sigma_{xx}(s) =E * \frac{d\theta}{dx} *\omega(s)$ with $ \frac{d\theta}{dx} =C_2k^2cosh(kx)+C_3k^2sinh(kx) $ \\
+The $\omega$ remains the same as in 4.1.2 because the section has not changed. Based on this data the following sigmas per point can be determined:
 
+\begin{align}
+   \sigma_{xx1} &= E*(A/2)(B-e)* \frac{d\theta}{dx} = 205000*4000*(3328)*1.047*10^{-18} = 2.86*10^{-06} \\
+    \sigma_{xx2} &= E*z_s*(A/2)* \frac{d\theta}{dx} = 205000*1672*4000*1.047*10^{-18} = 1.44*10^{-06}  \\
+   \sigma_{xx3} &= 0 \\
+    \sigma_{xx4} &= -E*z_s*(A/2)* \frac{d\theta}{dx} =-1.44*10^{-06} \\
+    \sigma_{xx5} &=-E*(A/2)(B-e)* \frac{d\theta}{dx} = - 2.86*10^{-06}\\
+\end{align}
 
-
+\newpage
   
-  \item ANSYS plot of $\sigma_{xx}(s)$ with settings. \textbf{(1 pt)}
-        \\ \tbd{screenshot en instellingen}
+  \item ANSYS plot of $\sigma_{xx}(s)$ with settings.\\
+  
+ CW is set  to 1 as it is a constrained beam in this case.
+\\
+    
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{sigma_xx.png}
+    \caption{constrained warping stress distribution $\sigma_{xx}$ in all members}
+    \label{fig:placeholder}
+\end{figure}
+
+        
   \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}
   \item Discussion. \textbf{(2 pts)} \\ \tbd{discussie}
 \end{enumerate}
@@ -146,8 +219,14 @@ distribution $\tau_{xy}(s)$ and $\tau_{xz}(s)$. Use $S_\omega(s)$ obtained in
 Assignment~2.5. \textbf{(5 pts)}}
 
 \begin{enumerate}[label=\roman*., leftmargin=*]
-  \item Analytical $\tau_{xy}(s)$, $\tau_{xz}(s)$. \textbf{(1 pt)}
-        \\ \tbd{Uitwerking}
+  \item Analytical $\tau_{xy}(s)$, $\tau_{xz}(s)$.\\
+For constraint warping shear stress the following equation is used:
+\begin{equation}
+    \tau_{xs}(s) =\frac{E}{t_p}*\frac{\partial^2 \theta }{\partial x^2} *S_{\omega}(s)
+\end{equation}
+Where $\omega_s$ has laready be predetermined in 2.5. and $\frac{\partial^2 \theta }{\partial x^2}$
+
+  
   \item ANSYS plot with settings. \textbf{(1 pt)}
         \\ \tbd{screenshot en instellingen}
   \item Overlay plot per component. \textbf{(1 pt)} \\ \tbd{overlay-plot}

@@ -3,44 +3,73 @@
 
 \begingroup\itshape Assignment 7 --- 8 points\endgroup
 
-\workedby{\tbd{naam}}
-
-\bigskip
-\tbd{Inleiding van dit hoofdstuk: welke grootheden gemeten worden, welke
-sensoren de opgave noemt en welke aannames je maakt over de plaatsing
-en de balktheorie ter plaatse van de instrumentatie.}
 
 \section{Inclinometer array for warping identification}
 \label{sec:a7-1}
 
-\questionbox{Conventional inclinometers are rotation sensors used to measure the
-pitching and rolling of a vessel. High-end electronic inclinometers can provide
-resolutions in the order of microradians, hence may also be used to measure the
-twist angle at any point along the ship. If an array of inclinometers is used as
-a monitoring system, how can the contributions of free and constrained warping
-be identified with the help of the generalised torsion equation (inertia effects
-are neglected)? Furthermore, how can the location of the maximum warping stress
-be identified? \textbf{(4 pts)}}
 
-\tbd{Uitwerking}
+\paragraph{Measuring the twist.} Each inclinometer measures the roll angle at its own position $x_k$. This includes the roll of the ship as a rigid body, which is the same at every station. If we subtract the value of a reference sensor (for example at the stiff engine room), only the elastic twist $\varphi(x_k)$ is left.
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+\paragraph{Free and constrained warping.} The generalised torsion equation (Eq.~\ref{eq:a5-gte}) splits the torque into two parts:
+\begin{equation}
+  M_T = \underbrace{G I_p\,\varphi'}_{\text{free warping (St.\ Venant)}} \;\underbrace{-\,E I_w\,\varphi'''}_{\text{constrained warping}} .
+  \label{eq:a7-split}
+\end{equation}
+So if we know $\varphi(x)$ and its derivatives, we know both parts. The free part follows from the twist rate $\theta = \varphi'$, the constrained part from the third derivative $\varphi'''$.
+
+Taking the third derivative of a few measured points directly gives a lot of noise. A better way is to fit the solution of Assignment~5 (Eq.~\ref{eq:a5-phi}) to the measurements of every hold:
+\begin{equation}
+  \varphi(x) = C_0 + C_1 x + C_2\cosh(\kappa x) + C_3\sinh(\kappa x).
+\end{equation}
+With $I_p$ and $I_w$ known, only the constants $C_0$ to $C_3$ are unknown. These follow from a least-squares fit, and then all derivatives are known exactly. The fit also gives the actual torque, since $C_1 = M_T/(GI_p)$.
+
+What you then see in the data:
+\begin{itemize}
+  \item Where $\varphi$ is a straight line ($\varphi'$ constant, $\varphi''' = 0$), the warping is free and the whole torque is carried by St.\ Venant torsion. This is the case in the closed sections A and C and in BUH (Figure~\ref{fig:a5-BUBUH}).
+  \item Where $\varphi'$ changes along $x$, constrained warping is active. This happens near the bulkheads, where the twist rate is forced to zero, and over almost the whole hold for the open section BU.
+\end{itemize}
+The array needs enough sensors near the bulkheads to capture these boundary layers, which have a length of the order of $1/\kappa$.
+
+\paragraph{Location of the maximum warping stress.} The warping normal stress is
+\begin{equation}
+  \sigma_{w}(x,s) = E\,\varphi''(x)\,\omega(s).
+\end{equation}
+\begin{itemize}
+  \item \emph{Along the length}, it is largest where $|\varphi''|$ is largest. That is where the measured twist rate changes fastest, which is right next to the bulkheads. In the middle of a hold, where $\varphi'$ has its peak, $\varphi''=0$ and there is no warping stress.
+  \item \emph{In the section}, it is largest where $|\omega|$ is largest. For the U-section that is the top of the side shells ($\omega = \pm13.31a^2$, Section~\ref{sec:a2-5}).
+\end{itemize}
+
+\finalanswer{Subtract the rigid-body roll and fit the analytical solution of the generalised torsion equation to the measured twist per hold. Then $GI_p\varphi'$ is the free warping (St.\ Venant) part of the torque and $-EI_w\varphi'''$ the constrained warping part. The maximum warping stress $\sigma_w = E\varphi''\omega$ is where $|\varphi''|$ is largest, so next to the bulkheads, at the top of the side shells where $|\omega|$ is largest.}
 
 \section{Long-base strain gauges}
 \label{sec:a7-2}
 
-\questionbox{Consider a cross-section instrumented for longitudinal normal
-strain monitoring on the inner shell. The total strain is the combination of the
-horizontal bending, vertical bending and warping strain,
-$\varepsilon_{xx,tot}=\varepsilon_{xx,vb}+\varepsilon_{xx,hb}+\varepsilon_{xx,warp}$.
-In fatigue assessment, a multiaxial stress state may significantly reduce the
-lifetime of a structure. Through a monitoring system composed of long-base
-strain gauges, the longitudinal normal strain at any point along the inner shell
-of a cross section can be measured. Discuss how the torsion and vertical and
-horizontal bending responses may be separated using multiple long-base strain
-gauges in the cross-section. Should these strain gauges be placed on a
-cross-section close to a bulkhead or away from it? \textbf{(4 pts)}}
 
-\tbd{Uitwerking}
+\paragraph{Strain at one gauge.} Take $y$ as the distance from the centre line and $z$ as the height above the neutral axis (the two dashed lines in Figure~12 of the assignment). A gauge at position $(y_k, z_k)$ with sectorial coordinate $\omega_k$ then measures
+\begin{equation}
+  \varepsilon_{xx,k}
+  = \underbrace{\frac{M_v}{E I_{yy}}\,z_k}_{\varepsilon_{xx,vb}}
+  + \underbrace{\frac{M_h}{E I_{zz}}\,y_k}_{\varepsilon_{xx,hb}}
+  + \underbrace{\varphi''\,\omega_k}_{\varepsilon_{xx,warp}} .
+  \label{eq:a7-strain}
+\end{equation}
+The geometry ($y_k$, $z_k$, $\omega_k$) and the section properties are known. The only unknowns are the three loads $M_v$, $M_h$ and $\varphi''$. So every gauge gives one linear equation, and with at least three gauges at different positions the three responses can be solved at every time step. In practice we would use more gauges and a least-squares fit, so one broken or noisy gauge does not spoil the result.
 
-\finalanswer{\tbd{kort en expliciet antwoord}}
+\paragraph{Where to put them.} The three parts have a different shape over the section, and that makes the separation easy:
+\begin{itemize}
+  \item Vertical bending is \emph{symmetric} about the centre line and linear in $z$.
+  \item Horizontal bending is \emph{antisymmetric} and on the inner side walls it does not change with height.
+  \item Warping is also \emph{antisymmetric} (because $\omega$ is), but on the side walls it changes linearly with height and is zero at the height where $\omega = 0$ (for the U-section at a distance $e$ above the bottom, Section~\ref{sec:a2-5}).
+\end{itemize}
+So we put gauges in port/starboard pairs on the inner side walls, at two different heights:
+\begin{itemize}
+  \item The \emph{sum} of a pair only contains vertical bending, because the antisymmetric parts cancel.
+  \item The \emph{difference} of a pair contains horizontal bending and warping. Comparing the differences at the two heights separates them: the horizontal bending part is the same at both heights, the warping part is not.
+\end{itemize}
+A gauge high on the side wall, where $|\omega|$ is largest, is the most sensitive to warping. A gauge on the inner bottom is less useful here, because on the bottom both $\omega$ and $y$ change linearly with $y$, so horizontal bending and warping look the same there.
+
+\paragraph{Close to a bulkhead or away from it?} The warping strain is $\varphi''\omega$. From Question~7.1 and Assignment~5, $\varphi''$ is largest next to the bulkheads and zero in the middle of the hold. In the middle of the hold there is almost no warping signal, so torsion cannot be measured there. Near the bulkhead the warping signal is largest. This is also the fatigue-critical place, where the warping stress comes on top of the bending stresses.
+
+Directly at the bulkhead, however, the local stiffness of the bulkhead, its brackets and the hatch corners disturb the strain field, and Eq.~\ref{eq:a7-strain} is no longer valid. Long-base gauges already average out small local peaks, but not this. So the gauges should be placed close to the bulkhead, but just outside its local influence, for example one or two web frames away.
+
+\finalanswer{Use at least three, but preferably more, long-base gauges in one section, in port/starboard pairs on the inner side walls at two heights. The sum of a pair gives the vertical bending, and the differences at the two heights separate horizontal bending (constant with height) from warping (linear with height via $\omega$). Solve Eq.~\ref{eq:a7-strain} with least squares at every time step. Place the section close to a bulkhead, where the warping strain is largest and fatigue is critical, but just outside the local disturbance of the bulkhead itself.}

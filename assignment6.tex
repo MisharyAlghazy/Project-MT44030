@@ -3,29 +3,18 @@
 
 \begingroup\itshape Assignment 6 --- 7 points\endgroup
 
-\workedby{\tbd{naam}}
-
 \bigskip
-\tbd{Noem hier het artikel uit de opgave, vat in enkele zinnen samen wat de
-auteurs onderzoeken en welke conclusies zij trekken, en voeg de referentie toe
-aan \texttt{report.bib} zodat je met \texttt{\textbackslash textcite\{\ldots\}}
-kunt citeren.}
+\textcite{SilvaCampillo2022} study how the height and width of the upper wing torsion box of a 2400\,TEU feeder container ship affect the local stresses in the box and the fatigue life of the side shell details. They change both dimensions by up to $\pm3\,\%$. For fatigue they model several longitudinal--web frame connections in ANSYS, and for the box itself they look at the normal, shear, buckling and warping stresses around its perimeter. Their main conclusion is that the two criteria pull in opposite directions: fatigue prefers a small box, while the local stresses go down when the box gets larger. The width has more effect than the height, but a wider box costs cargo space.
 
 \section{Adapting the torsion box for a heavier storm}
 \label{sec:a6-1}
 
-\questionbox{Given the conclusions drawn by the authors, how would you adapt the
-dimensions of the torsion box for a container ship that has a heavier 10-year
-return period storm and why? (max.\ 100 words, no calculations needed)
-\textbf{(3 pts)}}
 
-\tbd{Antwoord in maximaal 100 woorden}
+A heavier 10-year storm increases the extreme hull girder loads, so the local stresses and buckling of the torsion box plates become more critical. According to the authors, a larger torsion box lowers these stresses. We would therefore make the box larger, mainly by increasing its height (lowering the second deck). A wider box works better (2.31\,\% vs.\ 1.65\,\% less stress per 1\,\% change), but it takes away cargo space, while a higher box hardly affects the cargo and ballast capacity. Since a larger box is worse for fatigue, the side shell details should then get better brackets.
 
 \section{Role of plate thickness}
 \label{sec:a6-2}
 
-\questionbox{Why do the authors not vary plate thicknesses in the torsion box?
-What is the role of plate thickness in the structural response to torsion?
-(100 words) \textbf{(4 pts)}}
+The plate thicknesses follow from the class rules for the midship section. By keeping them fixed, only the geometry changes, so the effect of height and width can be seen on its own. A thicker plate would also change the weight and the section properties of the whole hull girder.
 
-\tbd{Antwoord in ongeveer 100 woorden}
+The torsion box is a closed cell. Its shear flow $q = M_t/(2\Omega)$ does not depend on $t$, the thickness only turns it into a stress, $\tau = q/t$. The stiffness $I_p = 4\Omega^2/\oint \mathrm{d}s/t$ grows linearly with $t$, but with the enclosed area squared. Thickness does matter for buckling, since $\sigma_E \propto (t/b)^2$.
