@@ -14,22 +14,14 @@ The shear stresses follow from the derivatives of the Prandtl stress function:
 \end{equation}
 So the shear stress is always tangent to the contour lines of $\phi$, and its size is equal to the slope of $\phi$. In a contour plot the slope is large where the contour lines are close together. Each stress component only depends on the slope in one direction: $\tau_{xy}$ on the slope in $z$-direction and $\tau_{xz}$ on the slope in $y$-direction.
 
-In Figure~\ref{fig:a1-prandtl} we see the following:
+In Figure~\ref{fig:a1-prandtl} (Appendix~\ref{app:part1}) we see the following:
 \begin{itemize}
     \item At the \emph{middle of the top plate}, around $(y,z)=(0,a)$, all contour lines are squeezed into the thin top wall and they run horizontally. So $\phi$ changes fast in $z$-direction and not at all in $y$-direction. From Eq.~\eqref{eq:a1-tau} this means that $\tau_{xy}$ is maximal here and $\tau_{xz}=0$.
     \item On the \emph{inclined side walls}, just below the $y$-axis, the contour lines are also close together, but here they run steeply. So $\phi$ now changes mostly in $y$-direction, which gives the maximum $\tau_{xz}$. Because the flow goes around the section, $\tau_{xz}$ has opposite signs on the left and right wall.
 \end{itemize}
 At the bottom of the section the contour lines are far apart, so the stress is low there. In the outer top corners the contour lines bend away from the corner, so the stress goes to zero there.
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.95\linewidth]{figures/A1_prandtl (2).jpeg}
-    \caption{Contours of the Prandtl stress function in the wall of section A (based on Figure~4 of the assignment, $k=0.8$). Marked are the locations of maximum $|\tau_{xy}|$ and $|\tau_{xz}|$ (Question~\ref{sec:a1-1}) and the regions with the highest inaccuracy (dashed, Question~\ref{sec:a1-2}).}
-    \label{fig:a1-prandtl}
-\end{figure}
-
 \finalanswer{$|\tau_{xy}|$ is maximal at the middle of the top plate, $(y,z)=(0,a)$. $|\tau_{xz}|$ is maximal on the two inclined side walls just below the $y$-axis (on both sides, with opposite sign).}
-
 
 \section{Inaccuracies of the Prandtl-based prediction}
 \label{sec:a1-2}
@@ -70,35 +62,7 @@ In the lectures, the hollow ellipse was solved by subtracting the torsional cons
     = \frac{(1-k^2)(1+k^2)}{1-k^2}
     = 1+k^2
 \end{equation}
-This is the same result as for the hollow circle in the lectures. It is plotted in Figure~\ref{fig:efficiency}.
-
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \begin{axis}[
-            width=0.7\textwidth,
-            height=0.45\textwidth,
-            xlabel={Scaling factor $k$ [-]},
-            ylabel={Ratio hollow / solid [-]},
-            xmin=0, xmax=1,
-            ymin=0, ymax=2.1,
-            grid=major,
-            legend pos=north west,
-            legend cell align=left,
-            domain=0:1,
-            samples=100,
-        ]
-            \addplot[thick, blue] {1 + x^2};
-            \addlegendentry{$\eta(k) = 1+k^2$}
-            \addplot[thick, red, dashed] {1 - x^4};
-            \addlegendentry{$I_{p,hollow}/I_{p,solid} = 1-k^4$ (stiffness, strength)}
-            \addplot[thick, black, dotted] {1 - x^2};
-            \addlegendentry{$A_{hollow}/A_{solid} = 1-k^2$}
-        \end{axis}
-    \end{tikzpicture}
-    \caption{Cross-sectional efficiency $\eta(k)$ and the relative stiffness, strength and area of the hollow section as a function of $k$.}
-    \label{fig:efficiency}
-\end{figure}
+This is the same result as for the hollow circle in the lectures. It is plotted in Figure~\ref{fig:efficiency} (Appendix~\ref{app:part1}).
 
 \paragraph{Efficiency versus strength.}
 The efficiency increases with $k$, from 1 for the solid section to 2 for a very thin wall. Taking material away from the core is efficient, because the core only carries a small part of the stress. But the absolute stiffness goes down with $(1-k^4)$. The strength goes down in the same way: the maximum shear stress stays on the outer boundary, and for the same torque it becomes a factor $1/(1-k^4)$ higher (compare $\phi \propto M_t/(1-k^4)$ for the hollow ellipse in the lectures). So

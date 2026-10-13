@@ -1,6 +1,7 @@
 \documentclass[
   % fourier,
   % print,
+  open=any,
 ]{tudelft-report}[2026/06/01]
 
 % UK English is the default language; Dutch for designated parts
@@ -61,6 +62,9 @@
   \bigskip\noindent\textbf{Final answer.} #1\par}
 
 
+% no page number on the part pages
+\renewcommand*{\partpagestyle}{empty}
+
 \begin{document}
 
 % metadata such as author, title, etc. are defined in cover.tex
@@ -82,19 +86,20 @@
 
 %\include{introduction}
 
-\part{Part 1}
+\part{Part 1}\addtocounter{page}{-1}
 \include{assignment1}
 \include{assignment2}
 \include{assignment3}
 
-\part{Part 2}
+\part{Part 2}\addtocounter{page}{-1}
 \include{assignment4}
 \include{assignment5}
 \include{assignment6}
 \include{assignment7}
 
 % Use letters for the chapter numbers of the appendices.
-%\appendix
+\appendix
+\include{appendix-part1}
 
 %\include{appendix}
 
