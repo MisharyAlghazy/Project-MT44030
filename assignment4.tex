@@ -169,13 +169,13 @@ To solve this equation the following boundary conditions are applied:\\
 BC1 $\rightarrow \varphi(0) = 0$ there is zero twist angle at the clamped end. \\
 BC2 $\rightarrow \dot\varphi (0) = 0$ there is no warping displacement at the clamped end.\\
 BC3 $\rightarrow \dot\varphi (L) = 0$ there is no warping stress at the non-clamped end.\\
-BC4 $\rightarrow$ the mremote mechanical moment $M_t$ at clamped end is related to the internal one, thus $\frac{M_t}{EI_w} =C_1*K^2$ with $k = \sqrt{\frac{GI_p}{EW_p}} =1.047*10^{-18} mm^{-1}$\\
-This gives that: $\theta = \frac{d\varphi}{dx}$\\
+BC4 $\rightarrow$ the mremote mechanical moment $M_t$ at clamped end is related to the internal one, thus $\frac{M_t}{EI_w} =C_1*K^2$ with $k = \sqrt{\frac{GI_p}{EW_p}} = 7.609*10^{-6} $\\
+This gives that: $\theta = \frac{d\varphi}{dx} =  1.047*10^{-18} mm^{-1}$\\
 Furthermore: \\
 \begin{align}
-    C_0 &= -\frac{1-cosh(\kappa L)}{sinh(\kappa L)}*\frac{M_T}{EI_wk^3} = -1.808*10^{08} &
+    C_0 &= -\frac{1-cosh(\kappa L)}{sinh(\kappa L)}*\frac{M_T}{EI_wk^3} = -1.808*10^{-08} &
     C_1 &= \frac{M_T}{EI_wk^2} = 1.81*10^{-12} \\
-    C_2 &= \frac{1-cosh(\kappa L)}{sinh(\kappa L)}*\frac{M_T}{EI_wk^3} = 1.808*10^{08} &
+    C_2 &= \frac{1-cosh(\kappa L)}{sinh(\kappa L)}*\frac{M_T}{EI_wk^3} = 1.808*10^{-08} &
     C_3 &= -\frac{M_T}{EI_wk^3} =  2.38*10^{-07}
 \end{align}
 
@@ -207,29 +207,99 @@ The $\omega$ remains the same as in 4.1.2 because the section has not changed. B
 \end{figure}
 
         
-  \item Overlay plot. \textbf{(1 pt)} \\ \tbd{overlay-plot}
-  \item Discussion. \textbf{(2 pts)} \\ \tbd{discussie}
+  \item Overlay plot\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.5\linewidth]{analytical_vs_numerical_sigxx.png}
+    \caption{analyitcal vesus numerical resutls sigma-xx}
+    \label{fig:sigxx}
+\end{figure}
+
+ 
+  \item Discussion.\\
+
+As can be seen in \ref{fig:sigxx} there are some small errors between the numbered points of the section, but the largest errors occur at the points 2 and 4. These could be stress peaks originating in the numerical software due to topology errors. however overall, the analytical approach will be sufficient to determine the $\sigma_{xx}$ value of the cross-section.
+
+
+
+
+
+  
 \end{enumerate}
 
 \subsection{Constrained warping shear stress}
 \label{sec:a4-d}
-
-\questionbox{Calculate and compare the constrained warping shear stress
-distribution $\tau_{xy}(s)$ and $\tau_{xz}(s)$. Use $S_\omega(s)$ obtained in
-Assignment~2.5. \textbf{(5 pts)}}
-
 \begin{enumerate}[label=\roman*., leftmargin=*]
+
+
+
+
   \item Analytical $\tau_{xy}(s)$, $\tau_{xz}(s)$.\\
-For constraint warping shear stress the following equation is used:
-\begin{equation}
-    \tau_{xs}(s) =\frac{E}{t_p}*\frac{\partial^2 \theta }{\partial x^2} *S_{\omega}(s)
-\end{equation}
-Where $\omega_s$ has laready be predetermined in 2.5. and $\frac{\partial^2 \theta }{\partial x^2}$
+For constraint warping shear stress the following equation is used
+
+\begin{align}
+    \tau_{xs}(s) =&\frac{E}{t_p}*\frac{\partial^2 \theta }{\partial x^2} *S_{\omega}(s)\\
+    \frac{\partial^2\theta}{\partial x^2} =& C_2\kappa^3sinh(kx)+C_3\kappa^3cosh(kx) = 1.07*10^{-22}
+\end{align}
+
+Where $\omega_s$ has already be predetermined in 2.5. and $\frac{\partial^2 \theta }{\partial x^2}$ These are as follows:
+\begin{align}
+ \frac{\partial^2 \theta }{\partial x^2} = & 11.07*10^{-22} \\
+    S_{\omega12}(s) =& t_{sp} \frac{A}{2}[\frac{s^2}{2}-(B-e)s]  \\
+    S_{\omega23}(s) =& t_{bp}*e*((\frac{A}{2})s-\frac{s^2}{2})+t_sp(\frac{A}{2})(e*B-\frac{B^2}{2})\\
+    S_{\omega34}(s) =& S_{\omega23}(s)   \\
+    S_{\omega45}(s) =& t_{sp}(\frac{A}{2})(\frac{s^2}{2}-e*s-\frac{B^2}{2}+e*B)  \\
+\end{align}
+
+
+
+
+
+
+
 
   
-  \item ANSYS plot with settings. \textbf{(1 pt)}
-        \\ \tbd{screenshot en instellingen}
-  \item Overlay plot per component. \textbf{(1 pt)} \\ \tbd{overlay-plot}
+  \item ANSYS plot with settings.\\
+ THe Beam in this situation is still clamped on both sides, thus CW=1. For each direction of shear stress the code is changed to xy or xz.
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Tau_xz.png}
+        \caption{Shear stress $\tau_{xz}$ distribution}
+        \label{fig:tau_xz}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{shear stress in XY dircetion.png}
+        \caption{Shear stress $\tau_{xy}$ distribution}
+        \label{fig:tau_xy}
+    \end{minipage}
+\end{figure}
+\newpage
+        
+  \item Overlay plot. \\
+
+\begin{figure}[htbp]
+    \centering
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Tauxz.png}
+        \caption{Analytical $\tau_{xz}$ shear stress}
+        \label{fig:tauxz}
+    \end{minipage}
+    \hfill
+    \begin{minipage}{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{Tauxy.png}
+        \caption{Analytical $\tau_{xy}$ shear stress}
+        \label{fig:tauxy}
+    \end{minipage}
+\end{figure}
+```
+  
   \item Discussion of through-thickness and $s$-distribution and maxima.
         \textbf{(2 pts)} \\ \tbd{discussie}
 \end{enumerate}
