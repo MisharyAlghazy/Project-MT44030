@@ -1,0 +1,99 @@
+\chapter{Bonus: Strain Decomposition}
+\label{ch:bonus}
+
+\begingroup\itshape Bonus question --- 5 points\endgroup
+
+
+\section{Decomposition of the measured strains}
+\label{sec:b1-1}
+
+\paragraph{Method.} \textcite{ChoiKang2003} find the hull girder loads of a container ship from four long-base gauges in one cross-section, two at the top and two at the bottom. The strain in gauge $i$ is the sum of four parts,
+\begin{equation}
+  \varepsilon_i = \varepsilon_{iy} + \varepsilon_{iz} + \varepsilon_{iw} + \varepsilon_{iT} ,
+  \label{eq:b-sum}
+\end{equation}
+from horizontal bending ($y$), vertical bending ($z$), warping torsion ($w$) and St.\ Venant torsion ($T$). Each part has a known shape over the section, so its value in a gauge is a fixed ratio times its value in gauge 1. Horizontal bending is linear in $y$, so it has the opposite sign on port and starboard. Vertical bending is linear in the distance to the neutral axis: $z_T$ for the top gauges and $-z_B$ for the bottom gauges. The warping strain is $\varphi''\omega$ (Eq.~\ref{eq:a7-strain}), so it follows the sectorial coordinate of the gauge. The St.\ Venant part is the same in all four gauges. This gives four equations with four unknowns:
+\begin{equation}
+  \bar\varepsilon_m = \bar A\,\bar\varepsilon , \qquad
+  \bar A =
+  \begin{bmatrix}
+    -1 & 1 & 1 & 1\\
+    1 & 1 & -1 & 1\\
+    y_B/y_T & -z_B/z_T & \omega_3/\omega_1 & 1\\
+    -y_B/y_T & -z_B/z_T & -\omega_3/\omega_1 & 1
+  \end{bmatrix} , \qquad
+  \bar\varepsilon =
+  \begin{bmatrix} \varepsilon_y\\ \varepsilon_z\\ \varepsilon_w\\ \varepsilon_T \end{bmatrix} ,
+  \label{eq:b-system}
+\end{equation}
+where $\bar\varepsilon_m$ holds the four readings and $\bar\varepsilon$ the four parts in gauge 1. The decomposed strains follow from $\bar\varepsilon = \bar A^{-1}\bar\varepsilon_m$.\footnote{In the third column of $\bar A$ the paper writes $U_1/U_3$. With its own Eq.~(A1), $\sigma_{iw} = E\,U_i\,\mathrm{d}w/\mathrm{d}x$, this ratio should be $U_3/U_1$, which is $\omega_3/\omega_1$ here. For these readings it makes no difference, because $\varepsilon_w = 0$.}
+
+Figure~14 of the brief numbers the gauges clockwise, the paper counter-clockwise. This is the same layout seen from the other end of the ship: gauges 1 and 2 are at the top, 1 and 4 are on the same side and 1 and 3 are on a diagonal. So $\bar A$ can be used as it is.
+
+\paragraph{Input for section BU.} The section is the U-section of Assignment~4: $A = 8a$, $B = 5a$, $t_{bp} = 6.5t_p$ and $t_{sp} = 3.5t_p$, with $z = 0$ at the bottom plate. All four gauges are on the side shells, so $y_B/y_T = 1$. The neutral axis of vertical bending lies at
+\begin{equation}
+  z_{na} = \frac{2\,Bt_{sp}\cdot B/2}{A\,t_{bp} + 2\,Bt_{sp}} = \frac{87.5}{87}\,a = 1.006\,a ,
+\end{equation}
+so $z_T = 3.994a$, $z_B = 1.006a$ and $z_B/z_T = 0.252$. Because of the thick bottom plate the neutral axis is low.
+
+For warping we use $\omega$ from Section~\ref{sec:a2-5}, with the pole at CT. Gauge 1 is point 1 there, gauge 2 is point 5, gauge 3 is point 4 and gauge 4 is point 2, so (subscript = gauge number)
+\begin{equation}
+  \omega_1 = +13.31a^2,\qquad \omega_2 = -13.31a^2,\qquad \omega_3 = +6.69a^2,\qquad \omega_4 = -6.69a^2 .
+\end{equation}
+This is the same sign pattern as in the paper, with $\omega_3/\omega_1 = 0.502$.
+
+\paragraph{Solution.} Filling in gives
+\begin{equation}
+  \bar A =
+  \begin{bmatrix}
+    -1 & 1 & 1 & 1\\
+    1 & 1 & -1 & 1\\
+    1 & -0.252 & 0.502 & 1\\
+    -1 & -0.252 & -0.502 & 1
+  \end{bmatrix} ,
+  \qquad
+  |\det\bar A| = 4\left(1+\frac{\omega_3}{\omega_1}\right)\left(1+\frac{z_B}{z_T}\right) = 7.52 .
+\end{equation}
+This is not zero, so $\bar A$ can be inverted:
+\begin{equation}
+  \bar\varepsilon = \bar A^{-1}\,\bar\varepsilon_m =
+  \begin{bmatrix}
+    -0.167 & 0.167 & 0.333 & -0.333\\
+    0.399 & 0.399 & -0.399 & -0.399\\
+    0.333 & -0.333 & 0.333 & -0.333\\
+    0.101 & 0.101 & 0.399 & 0.399
+  \end{bmatrix}
+  \begin{bmatrix} -10\\ -10\\ 10\\ 10 \end{bmatrix}
+  =
+  \begin{bmatrix} 0\\ -15.98\\ 0\\ 5.98 \end{bmatrix}\mu\varepsilon .
+\end{equation}
+Multiplying each column of $\bar A$ by its part gives the strains per gauge in Table~\ref{tab:b-decomp}.
+
+\begin{table}[H]
+  \centering
+  \caption{Decomposed strains per gauge [$\mu\varepsilon$].}
+  \label{tab:b-decomp}
+  \begin{tabular}{llccccc}
+    \toprule
+    Gauge & Position & Hor.\ bending & Vert.\ bending & Warping & St.\ Venant & Total \\
+    \midrule
+    1 & top left     & 0 & $-15.98$ & 0 & 5.98 & $-10$ \\
+    2 & top right    & 0 & $-15.98$ & 0 & 5.98 & $-10$ \\
+    3 & bottom right & 0 & 4.02     & 0 & 5.98 & 10 \\
+    4 & bottom left  & 0 & 4.02     & 0 & 5.98 & 10 \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+\paragraph{Discussion.} The readings are the same on port and starboard. Horizontal bending and warping are both antisymmetric, so they are zero. This can be seen directly in $\bar A^{-1}$: $\varepsilon_y$ and $\varepsilon_w$ only use the differences between port and starboard, and $\varepsilon_z$ and $\varepsilon_T$ only the sums (the same idea as in Section~\ref{sec:a7-2}).
+
+What is left is compression at the top and tension at the bottom, so the section is in sagging. Vertical bending alone cannot give the same strain at the top and the bottom, because the neutral axis is low: with $-10\,\mu\varepsilon$ at the top, pure bending would give only $0.252\cdot10 = 2.5\,\mu\varepsilon$ at the bottom. The method puts the rest in the part that is the same in all gauges, the St.\ Venant part:
+\begin{equation}
+  \varepsilon_z = -20\,\frac{z_T}{z_T+z_B} = -15.98\,\mu\varepsilon ,\qquad
+  \varepsilon_T = 10\,\frac{z_T-z_B}{z_T+z_B} = 5.98\,\mu\varepsilon .
+\end{equation}
+So $\varepsilon_T$ would only be zero if the neutral axis were at half the depth.
+
+This last part has to be used with care. In linear theory St.\ Venant torsion gives no longitudinal strain at all. In the paper it is a second-order effect, $T_p = \sqrt{2}\,GJ\sqrt{\varepsilon_T}/l$ (their Table~1), so it can only be positive, which is true here. But an axial force or a temperature change also gives the same strain in all four gauges, and four gauges cannot tell these apart. So the $5.98\,\mu\varepsilon$ is not necessarily caused by a torque.
+
+\finalanswer{$\bar\varepsilon = [\varepsilon_y,\ \varepsilon_z,\ \varepsilon_w,\ \varepsilon_T]^T = [0,\ -15.98,\ 0,\ 5.98]^T\,\mu\varepsilon$ (parts in gauge 1). Horizontal bending: $0$ in all gauges. Warping torsion: $0$ in all gauges. Vertical bending (sagging): $-15.98\,\mu\varepsilon$ in the top gauges 1 and 2 and $+4.02\,\mu\varepsilon$ in the bottom gauges 3 and 4. St.\ Venant torsion: $+5.98\,\mu\varepsilon$ in all four gauges.}

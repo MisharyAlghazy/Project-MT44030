@@ -298,8 +298,33 @@ Where $\omega_s$ has already be predetermined in 2.5. and $\frac{\partial^2 \the
         \label{fig:tauxy}
     \end{minipage}
 \end{figure}
-```
+
+\begin{figure}[h]
+    \centering
+    \begin{minipage}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{tauXZ_numerical.png}
+        \caption{Numerical ANSYS $\tau_{xz} $ results}
+        \label{fig:tauXZ_numerical}
+    \end{minipage}
+    \hfill
+    \begin{minipage}[t]{0.48\linewidth}
+        \centering
+        \includegraphics[width=\linewidth]{TauXYnumerical.png}
+        \caption{Numerical ANSYS $\tau_{xy} $ results}
+        \label{fig:TauXYnumerical}
+    \end{minipage}
+\end{figure}
+
+
+  \item Discussion of comparison.\\
+
+  The results between the numerical and analytical differs in some parts of the graphs. the $\tau_{xz}$ seems to have the right shape in the non zerop parts of the function however they have shifted into the negative region. This is most likely due to the boundary conditions, that Point 2 and 4 must be equal to zero.\\
+
+  the $\tau_{xy}$ Look much more alike, only that the analytical calculates the shear stress to be higher than the numerical does. This is most likely cuased by the thim walled assumptions in the analytical model.\\
   
-  \item Discussion of through-thickness and $s$-distribution and maxima.
-        \textbf{(2 pts)} \\ \tbd{discussie}
+
+  Overall, $\tau_{xz}$ analytical method is not very accurate to determine the shear stress. However, the $\tau_{xy}$ seems to be accurate enough.
+
+  
 \end{enumerate}
